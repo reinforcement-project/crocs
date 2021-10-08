@@ -15,17 +15,6 @@ const Modal = styled.div`
   align-items: center;
   justify-content: center;
 `
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-`
-const Close = styled.span`
-  &:hover {
-    color: rgb(101, 101, 101);
-    cursor: pointer;
-  }
-`
 const ModalContent = styled.div`
   background-color: #fff;
 `
@@ -223,10 +212,6 @@ const PopUpReg = ({ onClose, show, auth, setAuth }) => {
     <Modal onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <RegistrationForm>
-          <ModalHeader>
-            <h4>Sign Up</h4>
-            <Close onClick={onClose}>&times;</Close>
-          </ModalHeader>
           {errorOnSignup === true && (
             <div className="loginerror-message">
               This email is registered in our system. Please try to login.

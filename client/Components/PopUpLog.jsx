@@ -13,17 +13,6 @@ const Modal = styled.div`
   align-items: center;
   justify-content: center;
 `
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-`
-const Close = styled.span`
-  &:hover {
-    color: rgb(101, 101, 101);
-    cursor: pointer;
-  }
-`
 const ModalContent = styled.div`
   background-color: #fff;
 `
@@ -165,10 +154,6 @@ const PopUpLog = ({ auth, setAuth, onClose, show }) => {
     <Modal onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <LoginForm>
-          <ModalHeader>
-            <h4>Log In</h4>
-            <Close onClick={onClose}>&times;</Close>
-          </ModalHeader>
           {errorOnLogin && (
             <div className="loginerror-message">
               Information you provided does not match our records.

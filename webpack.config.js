@@ -44,7 +44,6 @@ module.exports = {
       },
       {
         test: /.(css|scss)$/,
-        exclude: /node_modules/,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
@@ -67,6 +66,6 @@ module.exports = {
   ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".scss"],
   },
 }
