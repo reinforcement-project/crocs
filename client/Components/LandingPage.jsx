@@ -18,7 +18,6 @@ const LandingPage = (props) => {
   //states to open/close modal, passed as props to PopUpLog, PopUpReg components;
   const [showLogin, setShowLogin] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
-  const [seenSignUp, setSeenSignUp] = useState(false)
 
   return (
     <div className="parent landing-page-bg">
