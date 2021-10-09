@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react"
 import SkillButton from "./SkillButton"
+// Components
+import Input from "./Input"
+import Label from "./Label"
+import Button from "./Button"
+import Form from "./Form"
 
 import styled from "styled-components"
-
 // Styles
 const Modal = styled.div`
   position: fixed;
@@ -18,59 +22,17 @@ const Modal = styled.div`
 const ModalContent = styled.div`
   background-color: #fff;
 `
-const RegistrationForm = styled.form`
-  width: 400px;
-  border: 1px dotted silver;
-  padding: 26px 32px 32px;
-  border-radius: 2px;
-`
-const FormLabel = styled.label`
-  display: block;
-  margin-bottom: 16px;
-`
-const FormInput = styled.input`
-  display: block;
-  width: 100%;
-  border: 1px solid black;
-  border-bottom-width: 2px;
-  padding: 6px 8px;
-  margin-top: 4px;
-  border-radius: 2px 2px 3px 3px;
-
-  &::focus {
-    outline: 3px auto blue;
-    outline-offset: 2px;
-    border-color: transparent;
-  }
-`
-const SubmitButton = styled.button`
-  display: block;
-  margin-top: 40px;
-  width: 100%;
-  background: black;
-  color: white;
-  padding: 8px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 3px;
-
-  &::focus {
-    outline: 3px auto blue;
-    background: blue;
-    outline-offset: 2px;
-  }
-`
+// const RegistrationForm = styled.form`
+//   width: 400px;
+//   border: 1px dotted silver;
+//   padding: 26px 32px 32px;
+//   border-radius: 2px;
+// `
 
 /*
 signup pop up component
  */
-const PopUpReg = ({ onClose, show, auth, setAuth }) => {
-  if (!show) {
-    return null
-  }
-
+const FormRegister = ({ auth, setAuth }) => {
   // initial state info for authorization
   const info = {
     firstName: null,
@@ -157,7 +119,9 @@ const PopUpReg = ({ onClose, show, auth, setAuth }) => {
   // finds if user is admin, has messages and stores data in localStorage;
   // sets auth to true and redirects to '/main';
 
-  const submitInfo = async () => {
+  const submitInfo = async (e) => {
+    e.preventDefault()
+
     try {
       const res = await fetch("/auth/signup", {
         method: "POST",
@@ -209,80 +173,68 @@ const PopUpReg = ({ onClose, show, auth, setAuth }) => {
   }, [errorOnSignup])
 
   return (
-    <Modal onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        <RegistrationForm>
-          {errorOnSignup === true && (
-            <div className="loginerror-message">
-              This email is registered in our system. Please try to login.
-            </div>
-          )}
-          {errorOnSignup === "empty" && (
-            <div className="loginerror-message">All fields are required.</div>
-          )}
-          {errorOnSignup === "format" && (
-            <div className="errordiv">
-              <div className="loginerror-message">
-                Incorrect email format. Please enter valid email.
-              </div>
-            </div>
-          )}
-          <FormLabel>
-            Email:
-            <FormInput
-              type="email"
-              placeholder="Enter email"
-              onChange={emailEntered}
-            />
-          </FormLabel>
-          <FormLabel>
-            Password:
-            <FormInput
-              type="password"
-              placeholder="Enter password"
-              onChange={passwordEntered}
-            />
-          </FormLabel>
-          <FormLabel>
-            First Name:
-            <FormInput
-              type="name"
-              placeholder="Enter first name"
-              onChange={firstNameEntered}
-            />
-          </FormLabel>
-          <FormLabel>
-            Last Name:
-            <FormInput
-              type="name"
-              placeholder="Enter last name"
-              onChange={lastNameEntered}
-            />
-          </FormLabel>
-          <div className="form-group-add">
-            Please select skills you can help others with
+    <Form>
+      {errorOnSignup === true && (
+        <div className="loginerror-message">
+          This email is registered in our system. Please try to login.
+        </div>
+      )}
+      {errorOnSignup === "empty" && (
+        <div className="loginerror-message">All fields are required.</div>
+      )}
+      {errorOnSignup === "format" && (
+        <div className="errordiv">
+          <div className="loginerror-message">
+            Incorrect email format. Please enter valid email.
           </div>
-          <div>
-            {skills.map((skill) => (
-              <SkillButton
-                key={skill}
-                id={skill}
-                onClick={skillButtonClick}
-                skill={skill}
-              />
-            ))}
-          </div>
-          <SubmitButton
-            type="button"
-            className="signupbutton"
-            onClick={submitInfo}
-          >
-            Sign Up
-          </SubmitButton>
-        </RegistrationForm>
-      </ModalContent>
-    </Modal>
+        </div>
+      )}
+      <Label>
+        Email:
+        <Input type="email" placeholder="Enter email" onChange={emailEntered} />
+      </Label>
+      <Label>
+        Password:
+        <Input
+          type="password"
+          placeholder="Enter password"
+          onChange={passwordEntered}
+        />
+      </Label>
+      <Label>
+        First Name:
+        <Input
+          type="name"
+          placeholder="Enter first name"
+          onChange={firstNameEntered}
+        />
+      </Label>
+      <Label>
+        Last Name:
+        <Input
+          type="name"
+          placeholder="Enter last name"
+          onChange={lastNameEntered}
+        />
+      </Label>
+      <div className="form-group-add">
+        Please select skills you can help others with
+      </div>
+      <div>
+        {skills.map((skill) => (
+          <SkillButton
+            key={skill}
+            id={skill}
+            onClick={skillButtonClick}
+            skill={skill}
+          />
+        ))}
+      </div>
+      <Button type="submit" variant="submit" onClick={(e) => submitInfo(e)}>
+        Sign Up
+      </Button>
+    </Form>
   )
 }
 
-export default PopUpReg
+export default FormRegister

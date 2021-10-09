@@ -1,71 +1,12 @@
 import React, { useState, useEffect } from "react"
-import styled from "styled-components"
 
-// Styles
-const Modal = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const ModalContent = styled.div`
-  background-color: #fff;
-`
-const LoginForm = styled.form`
-  width: 400px;
-  border: 1px dotted silver;
-  padding: 26px 32px 32px;
-  border-radius: 2px;
-`
-const FormLabel = styled.label`
-  display: block;
-  margin-bottom: 16px;
-`
-const FormInput = styled.input`
-  display: block;
-  width: 100%;
-  border: 1px solid black;
-  border-bottom-width: 2px;
-  padding: 6px 8px;
-  margin-top: 4px;
-  border-radius: 2px 2px 3px 3px;
+// Components
+import Input from "./Input"
+import Label from "./Label"
+import Button from "./Button"
+import Form from "./Form"
 
-  &::focus {
-    outline: 3px auto blue;
-    outline-offset: 2px;
-    border-color: transparent;
-  }
-`
-const SubmitButton = styled.button`
-  display: block;
-  margin-top: 40px;
-  width: 100%;
-  background: black;
-  color: white;
-  padding: 8px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 3px;
-
-  &::focus {
-    outline: 3px auto blue;
-    background: blue;
-    outline-offset: 2px;
-  }
-`
-
-const PopUpLog = ({ auth, setAuth, onClose, show }) => {
-  if (!show) {
-    return null
-  }
-
+const FormLogin = ({ auth, setAuth }) => {
   //data to set initial state
   const [login, setLogin] = useState(info)
   const [errorOnLogin, setErrorOnLogin] = useState(false)
@@ -151,38 +92,29 @@ const PopUpLog = ({ auth, setAuth, onClose, show }) => {
   }
 
   return (
-    <Modal onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        <LoginForm>
-          {errorOnLogin && (
-            <div className="loginerror-message">
-              Information you provided does not match our records.
-            </div>
-          )}
-          <FormLabel>
-            Email:
-            <FormInput
-              className="input"
-              type="email"
-              placeholder="me@you.com"
-              onChange={emailEntered}
-            />
-          </FormLabel>
-          <FormLabel>
-            Password:
-            <FormInput
-              className="input"
-              type="password"
-              onChange={passwordEntered}
-            />
-          </FormLabel>
-          <SubmitButton type="submit" onClick={(e) => submitInfo(e)}>
-            Log In
-          </SubmitButton>
-        </LoginForm>
-      </ModalContent>
-    </Modal>
+    <Form>
+      {errorOnLogin && (
+        <div className="loginerror-message">
+          Information you provided does not match our records.
+        </div>
+      )}
+      <Label>
+        Email:
+        <Input
+          type="email"
+          placeholder="me@you.com"
+          onChange={(e) => emailEntered(e)}
+        />
+      </Label>
+      <Label>
+        Password:
+        <Input type="password" onChange={passwordEntered} />
+      </Label>
+      <Button type="submit" variant="submit" onClick={(e) => submitInfo(e)}>
+        Log In
+      </Button>
+    </Form>
   )
 }
 
-export default PopUpLog
+export default FormLogin

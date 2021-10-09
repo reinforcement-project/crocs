@@ -21,7 +21,7 @@ const SIZES = {
   },
 }
 
-const Button = ({ variant, size, onClick, children }) => {
+const Button = ({ type = "button", variant, size, onClick, children }) => {
   const styles = SIZES[size]
 
   let Component
@@ -31,12 +31,14 @@ const Button = ({ variant, size, onClick, children }) => {
     Component = OutlineButton
   } else if (variant === "ghost") {
     Component = GhostButton
+  } else if (variant === "submit") {
+    Component = SubmitButton
   } else {
     throw new Error(`Unrecognized Button variant: ${variant}`)
   }
 
   return (
-    <Component style={styles} onClick={onClick}>
+    <Component type={type} style={styles} onClick={onClick}>
       {children}
     </Component>
   )
@@ -80,6 +82,25 @@ const GhostButton = styled(ButtonBase)`
   &:hover {
     background: ${COLORS.transparentGray15};
     color: ${COLORS.black};
+  }
+`
+const SubmitButton = styled.button`
+  display: block;
+  margin-top: 40px;
+  width: 100%;
+  background: black;
+  color: white;
+  padding: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  &::focus {
+    outline: 3px auto blue;
+    background: blue;
+    outline-offset: 2px;
   }
 `
 
