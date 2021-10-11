@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-
+import React, { useState } from "react"
 /*
 Rendered component in SettingsAdmin
-OnClick triggers handleClick in parent component passing id as arg. 
+OnClick triggers handleClick in parent component passing id as arg.
  */
 
 const SkillAdmin = (props) => {
   const buttonClicked = (e) => {
-    props.handleClick(e.target.id);
-  };
+    props.handleClick(e.target.id)
+  }
 
   return (
     <div className="skill-admin">
@@ -16,16 +15,16 @@ const SkillAdmin = (props) => {
       <button
         type="button"
         className={
-          props.functionality === '-' ? 'skill-admin-delete' : 'skill-admin-add'
+          props.functionality === "-" ? "skill-admin-delete" : "skill-admin-add"
         }
         id={props.name}
         onClick={buttonClicked}
       >
-        {' '}
+        {" "}
         {props.functionality}
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default SkillAdmin;
+export default SkillAdmin

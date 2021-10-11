@@ -8,11 +8,11 @@ import "./index.scss"
 import { CircularProgress } from "@material-ui/core"
 
 //lazy loading components to split bundle.js into chunks
-const LandingPage = lazy(() => import("./Components/LandingPage"))
-const MainPage = lazy(() => import("./Components/MainPage"))
-const ErrorPage = lazy(() => import("./Components/ErrorPage"))
-const RequestsPage = lazy(() => import("./Components/RequestsPage"))
-const Settings = lazy(() => import("./Components/Settings"))
+const LandingPage = lazy(() => import("./Components/Pages/LandingPage"))
+const MainPage = lazy(() => import("./Components/Pages/MainPage"))
+const ErrorPage = lazy(() => import("./Components/Pages/ErrorPage"))
+const RequestsPage = lazy(() => import("./Components/Pages/RequestsPage"))
+const Settings = lazy(() => import("./Components/Pages/Settings"))
 
 const App = (props) => {
   //state updated on login, signup

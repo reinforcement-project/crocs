@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 // Components
 import Input from "./Input"
 import Label from "./Label"
-import Button from "./Button"
+import Button from "../Button"
 import Form from "./Form"
 
 const FormLogin = ({ auth, setAuth }) => {

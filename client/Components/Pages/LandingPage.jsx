@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react"
 
 // Components
-import Modal from "./Modal"
-import FormLogin from "./FormLogin"
-import FormRegister from "./FormRegister"
-import Button from "./Button"
-
-// Styles
-import styled from "styled-components"
-
-const ButtonGroup = styled.div`
-  display: flex;
-
-  > * {
-    margin-right: 8px;
-  }
-`
+import Modal from "../Modal"
+import Login from "../Forms/Login"
+import Signup from "../Forms/Signup"
+import Button from "../Button"
+import ButtonGroup from "../ButtonGroup"
 
 const LandingPage = (props) => {
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -25,15 +15,12 @@ const LandingPage = (props) => {
     <div className="parent landing-page-bg">
       {showLoginModal && (
         <Modal close={() => setShowLoginModal(false)}>
-          <FormLogin auth={props.auth} setAuth={props.setAuth}></FormLogin>
+          <Login auth={props.auth} setAuth={props.setAuth}></Login>
         </Modal>
       )}
       {showRegistrationModal && (
         <Modal close={() => setShowRegistrationModal(false)}>
-          <FormRegister
-            auth={props.auth}
-            setAuth={props.setAuth}
-          ></FormRegister>
+          <Signup auth={props.auth} setAuth={props.setAuth}></Signup>
         </Modal>
       )}
       <div className="children">

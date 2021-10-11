@@ -5,59 +5,6 @@ $base-text-color-light-bg: #667085;
 $base-text-color-dark-bg: #ffffff;
 $base-font-family: Inter;
 
-/*
-# CSS Preset
-## version 1.0.0
-A simple CSS preset to enable box-sizing, set some text rendering options to decrease the differences between browsers, and set a couple of nice defaults.
-## Usage
-    <link href=preset.css rel=stylesheet>
-## Info
-- author: Tommy Hodgins
-- license: MIT
-- website: https://github.com/tomhodgins/preset
-*/
-
-* {
-  box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-kerning: auto;
-  overflow: hidden;
-}
-
-input:focus {
-outline: 1px solid $primary-color;
-}
-
-html {
-  font-family: $base-font-family;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-}
-
-body {
-  background-color: white;
-  margin: 0;
-}
-
-.landingpage {
-  width: 100vw;
-  height: 100vh;
-
-  .logocontainer {
-    height: 92vh;
-    margin: 2vh 0 0 10vw;
-
-    .logoImg {
-      max-height: 100%;
-    }
-  }
-}
-
 .landing-page-bg {
   /* The image used */
   background-image: url("./images/landing-page.jpg");
@@ -139,18 +86,15 @@ body {
   align-items: center;
   padding: 0px 32px;
 
-
   .main-navbuttoncontainer1 {
     width: 70vw;
     color: white;
-    flex:1;
+    flex: 1;
   }
-
 
   // **********
   // Buttons
   // **********
-
 
   .requestsbutton {
     background: transparent;
@@ -258,8 +202,8 @@ body {
 
 .logout {
   width: 86px;
-    &:hover {
-      border: 1px solid #fefefe;
+  &:hover {
+    border: 1px solid #fefefe;
   }
 }
 
@@ -611,7 +555,7 @@ body {
   border: 1px solid #dfdfdf;
   border-radius: 3px;
   background-color: white;
-  height: calc((100% - 220px)/2);
+  height: calc((100% - 220px) / 2);
 }
 
 .listofskills {

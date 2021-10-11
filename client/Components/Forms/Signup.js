@@ -1,38 +1,12 @@
 import React, { useState, useEffect } from "react"
-import SkillButton from "./SkillButton"
+import SkillButton from "../SkillButton"
 // Components
 import Input from "./Input"
 import Label from "./Label"
-import Button from "./Button"
+import Button from "../Button"
 import Form from "./Form"
 
-import styled from "styled-components"
-// Styles
-const Modal = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const ModalContent = styled.div`
-  background-color: #fff;
-`
-// const RegistrationForm = styled.form`
-//   width: 400px;
-//   border: 1px dotted silver;
-//   padding: 26px 32px 32px;
-//   border-radius: 2px;
-// `
-
-/*
-signup pop up component
- */
-const FormRegister = ({ auth, setAuth }) => {
+const Signup = ({ auth, setAuth }) => {
   // initial state info for authorization
   const info = {
     firstName: null,
@@ -237,4 +211,4 @@ const FormRegister = ({ auth, setAuth }) => {
   )
 }
 
-export default FormRegister
+export default Signup
