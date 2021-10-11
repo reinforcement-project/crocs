@@ -97,11 +97,6 @@ export function runForceGraph(
     .select(container)
     .append("svg")
     .attr("viewBox", [-width / 2, -height / 2, width, height])
-    .call(
-      d3.zoom().on("zoom", function () {
-        svg.attr("transform", d3.event.transform)
-      })
-    )
 
   // Append a group and line for each elem of the links array to the svg
   const link = svg
