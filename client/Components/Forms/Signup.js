@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
-import SkillButton from "../SkillButton"
+import SkillButton from "../Skill/SkillButton"
 // Components
 import Input from "./Input"
 import Label from "./Label"
-import Button from "../Button"
+import Button from "../Button/Button"
 import Form from "./Form"
 
 const Signup = ({ auth, setAuth }) => {

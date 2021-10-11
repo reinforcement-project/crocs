@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import SkillAdmin from "./SkillAdmin"
+import SkillAdmin from "../../components/Skill/SkillAdmin"
 
 const SettingsReg = (props) => {
   //holds newSkills state

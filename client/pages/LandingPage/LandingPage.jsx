@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 
 // Components
-import Modal from "../Modal"
-import Login from "../Forms/Login"
-import Signup from "../Forms/Signup"
-import Button from "../Button"
-import ButtonGroup from "../ButtonGroup"
+import Modal from "../../components/Modal/Modal"
+import Login from "../../components/Forms/Login"
+import Signup from "../../components/Forms/Signup"
+import Button from "../../components/Button/Button"
+import ButtonGroup from "../../components/Button/ButtonGroup"
 
 const LandingPage = (props) => {
   const [showLoginModal, setShowLoginModal] = useState(false)

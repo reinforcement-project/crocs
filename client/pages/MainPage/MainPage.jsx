@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { useEffect } from "react"
-import { ForceGraph } from "../ForceGraph/ForceGraph"
+import { ForceGraph } from "../../components/ForceGraph/ForceGraph"
 import { CircularProgress } from "@material-ui/core"
-import SendMessage from "../SendMessage"
-import SkillsList from "../SkillsList"
-import Navbar from "../Navbar/Navbar"
+import SendMessage from "./SendMessage"
+import SkillsList from "../../components/Skill/SkillsList"
+import Navbar from "../../components/Navbar/Navbar"
 
 const MainPage = (props) => {
   //state passed to nodes of ForceGraph to select user on click on node in graph

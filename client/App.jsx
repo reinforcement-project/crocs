@@ -8,11 +8,12 @@ import "./index.scss"
 import { CircularProgress } from "@material-ui/core"
 
 //lazy loading components to split bundle.js into chunks
-const LandingPage = lazy(() => import("./Components/Pages/LandingPage"))
-const MainPage = lazy(() => import("./Components/Pages/MainPage"))
-const ErrorPage = lazy(() => import("./Components/Pages/ErrorPage"))
-const RequestsPage = lazy(() => import("./Components/Pages/RequestsPage"))
-const Settings = lazy(() => import("./Components/Pages/Settings"))
+const HomePage = lazy(() => import("./pages/HomePage/Home"))
+const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"))
+const MainPage = lazy(() => import("./pages/MainPage/MainPage"))
+const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"))
+const RequestsPage = lazy(() => import("./pages/RequestsPage/RequestsPage"))
+const Settings = lazy(() => import("./pages/SettingsPage/Settings"))
 
 const App = (props) => {
   //state updated on login, signup
@@ -82,7 +83,7 @@ const App = (props) => {
               {auth ? (
                 <Redirect to="/main" />
               ) : (
-                <LandingPage auth={auth} setAuth={setAuth} />
+                <HomePage auth={auth} setAuth={setAuth} />
               )}
             </Route>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Request from "./Request"
 import { CircularProgress } from "@material-ui/core"
-import Navbar from "../Navbar/Navbar"
+import Navbar from "../../components/Navbar/Navbar"
 
 /*
 fetches data on mount and renders Request Components;

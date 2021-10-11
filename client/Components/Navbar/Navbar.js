@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { FaBars, FaTimes } from "react-icons/fa"
 import { IconContext } from "react-icons/lib"
 import logo from "../../images/logo-graph.png"
-import Button from "../Button"
+import Button from "../Button/Button"
 import {
   Nav,
   NavbarContainer,
@@ -13,7 +13,6 @@ import {
   NavItem,
   NavItemBtn,
   NavLinks,
-  NavBtnLink,
 } from "./Navbar.elements"
 
 function Navbar({ setAuth, isAdmin, newMessage }) {

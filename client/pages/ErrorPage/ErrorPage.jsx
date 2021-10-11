@@ -1,18 +1,16 @@
-import React from 'react';
+import React from "react"
 
 /*
   Component renders when visiting not existing route
 */
 
 const ErrorPage = (props) => {
-  return(
+  return (
     <div className="errorPage">
       <p className="404">404</p>
-      <p className='pageNotFound'> Page Not Found</p>
+      <p className="pageNotFound"> Page Not Found</p>
     </div>
-  );
-};
+  )
+}
 
-
-
-export default ErrorPage;
+export default ErrorPage
