@@ -4,16 +4,16 @@ import styled from "styled-components"
 const InputElement = styled.input`
   display: block;
   width: 100%;
-  border: 1px solid black;
-  border-bottom-width: 2px;
-  padding: 6px 8px;
-  margin-top: 4px;
-  border-radius: 2px 2px 3px 3px;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  padding: 10px 14px;
 
-  &::focus {
-    outline: 3px auto blue;
-    outline-offset: 2px;
-    border-color: transparent;
+  &:focus {
+    border: 1px solid #d6bbfb;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f4ebff;
+    border-radius: 8px;
+    outline: none;
   }
 `
 

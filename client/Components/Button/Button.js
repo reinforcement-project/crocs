@@ -86,9 +86,9 @@ const GhostButton = styled(ButtonBase)`
 `
 const SubmitButton = styled.button`
   display: block;
-  margin-top: 40px;
+  margin-top: 20px;
   width: 100%;
-  background: black;
+  background: ${COLORS.primary};
   color: white;
   padding: 8px;
   border: none;
@@ -97,10 +97,15 @@ const SubmitButton = styled.button`
   text-transform: uppercase;
   border-radius: 3px;
 
-  &::focus {
-    outline: 3px auto blue;
-    background: blue;
-    outline-offset: 2px;
+  &:hover {
+    background-color: ${COLORS.primaryHover};
+  }
+
+  &:focus {
+    border: 1px solid #d6bbfb;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f4ebff;
+    border-radius: 8px;
+    outline: none;
   }
 `
 

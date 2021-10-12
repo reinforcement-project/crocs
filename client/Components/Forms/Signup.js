@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react"
+import styled from "styled-components"
 import SkillButton from "../Skill/SkillButton"
 // Components
 import Input from "./Input"
 import Label from "./Label"
 import Button from "../Button/Button"
 import Form from "./Form"
+
+const SkillWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 4px;
+`
 
 const Signup = ({ auth, setAuth }) => {
   // initial state info for authorization
@@ -191,19 +201,19 @@ const Signup = ({ auth, setAuth }) => {
           onChange={lastNameEntered}
         />
       </Label>
-      <div className="form-group-add">
-        Please select skills you can help others with
-      </div>
-      <div>
-        {skills.map((skill) => (
-          <SkillButton
-            key={skill}
-            id={skill}
-            onClick={skillButtonClick}
-            skill={skill}
-          />
-        ))}
-      </div>
+      <Label>
+        Select skills would you like to teach:
+        <SkillWrapper>
+          {skills.map((skill) => (
+            <SkillButton
+              key={skill}
+              id={skill}
+              onClick={skillButtonClick}
+              skill={skill}
+            />
+          ))}
+        </SkillWrapper>
+      </Label>
       <Button type="submit" variant="submit" onClick={(e) => submitInfo(e)}>
         Sign Up
       </Button>

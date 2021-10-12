@@ -1,4 +1,4 @@
-export const homeObjOne = {
+export const data = {
   primary: false,
   lightBg: true,
   lightTopLine: false,

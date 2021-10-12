@@ -9,7 +9,6 @@ import { CircularProgress } from "@material-ui/core"
 
 //lazy loading components to split bundle.js into chunks
 const HomePage = lazy(() => import("./pages/HomePage/Home"))
-const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"))
 const MainPage = lazy(() => import("./pages/MainPage/MainPage"))
 const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"))
 const RequestsPage = lazy(() => import("./pages/RequestsPage/RequestsPage"))
