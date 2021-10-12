@@ -6,6 +6,8 @@ const SettingsReg = (props) => {
   const [newSkills, setNewSkills] = useState([])
   //holds skills user already teaches
   const [userSkills, setUserSkills] = useState([])
+  // 
+  const [checked, setChecked] = useState(false)
   //states below represent different errors
   const [error, setError] = useState(false)
   const [errorExist, setErrorExist] = useState(false)
@@ -23,6 +25,10 @@ const SettingsReg = (props) => {
     return re.test(String(str).toLowerCase())
   }
 
+  // handles changes to checked state
+  const handleChecked = () => {
+    setChecked(!checked);
+  };
   // calls func to fetch allSkills on mount;
   useEffect(() => {
     fetchData()
@@ -215,6 +221,7 @@ const SettingsReg = (props) => {
       }
       setNewSkills(availableSkills)
       setUserSkills(thisSkills)
+      setChecked(!checked)
     } catch (err) {
       console.log(err)
     }
@@ -222,32 +229,59 @@ const SettingsReg = (props) => {
 
   return (
     <div className="admin-settings-internal">
-      <div className="updateEmail">
-        <div className="form-title">UPDATE EMAIL</div>
+      <div> 
+        <h1> Settings </h1>
+        <p> The adjustments made here will effect as soon as they are set. </p> 
+      </div>
+      <hr></hr>
+      <div>
+        <h2>Email</h2>
         {emailChange && (
-          <div className="email-changed">Email successfully updated</div>
+          <div>Email successfully updated</div>
         )}
         {errorEmail && (
-          <div className="skill-add-error">
+          <div>
             Technical error occured. Please contact Support
           </div>
         )}
         {wrongEmail && (
-          <div className="skill-add-error">Please enter correct email</div>
+          <div>Please enter correct email</div>
         )}
-        <form className="change-email-form">
+        <div>
+          <p>Update your email here.</p>
           <input
             type="text"
-            className="update-email-input"
-            placeholder={`current email: ${email}`}
+            placeholder={`${email}`}
             onChange={emailTyped}
           />
-          <button type="button" className="update-email" onClick={updateEmail}>
+          <button type="button" onClick={updateEmail}>
             Update
           </button>
-        </form>
+        </div>
       </div>
-
+      <hr></hr>
+      <h2>Skills</h2>
+      <div>
+        <p>Select your skills.</p>
+        <div>
+          {newSkills.map((skill) => {
+            return (
+              <label key={skill._id}>
+                <input type='checkbox' checked={checked} onChange={(e) => console.log(e.target.data)} data-name={skill.name} />
+                {skill.name}
+              </label>
+            )
+          })}
+          {userSkills.map((skill) => {
+            return (
+              <label key={skill._id}>
+                <input type='checkbox' checked={!checked} onChange={handleChecked}/>
+                {skill.name}
+              </label>
+            )
+          })}
+        </div>
+      </div>
       <div className="user-settings-newskills">
         <div className="form-title">ADD SKILLS TO TEACH</div>
         {newSkills.length === 0 && (
