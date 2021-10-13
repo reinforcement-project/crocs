@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import SkillButton from "../Skill/SkillButton"
+import findSSIDCookie from "../../utils/findSSIDCookie"
 // Components
+import SkillButton from "../Skill/SkillButton"
 import Input from "./Input"
 import Label from "./Label"
 import Button from "../Button/Button"
@@ -17,22 +18,17 @@ const SkillWrapper = styled.div`
 `
 
 const Signup = ({ auth, setAuth }) => {
-  // initial state info for authorization
-  const info = {
+  //state to hold info for authorization
+  const [data, setData] = useState({
     firstName: null,
     lastName: null,
     email: null,
     password: null,
     skillsToTeach: {},
-  }
-  //state to hold info for authorization
-  const [data, setData] = useState(info)
+  })
   //state to handle skills available in database
   const [skills, setSkills] = useState([])
-
   const [skillId, setSkillId] = useState({})
-  //loading component while awaiting data
-  const [isLoading, setIsLoading] = useState(true)
   //state to conditionally render error message on unsuccessfull signup
   const [errorOnSignup, setErrorOnSignup] = useState(false)
 
@@ -53,13 +49,14 @@ const Signup = ({ auth, setAuth }) => {
         })
       }
       setSkills(skillNames)
-    } finally {
-      setIsLoading(false)
+    } catch (err) {
+      console.log(err)
     }
   }
 
   //if skills to teach weren't added to array - add, otherwise remove from array
   const skillButtonClick = (e) => {
+    console.log("Skill button e ", e)
     data.skillsToTeach[e]
       ? setData((prevstate) => {
           delete prevstate.skillsToTeach[e]
@@ -71,73 +68,44 @@ const Signup = ({ auth, setAuth }) => {
         })
   }
 
-  const passwordEntered = (e) => {
-    setData((data) => ({ ...data, password: e.target.value }))
-  }
-
-  const emailEntered = (e) => {
-    setData((data) => ({ ...data, email: e.target.value }))
-  }
-
-  const firstNameEntered = (e) => {
-    setData((data) => ({ ...data, firstName: e.target.value }))
-  }
-
-  const lastNameEntered = (e) => {
-    setData((data) => ({ ...data, lastName: e.target.value }))
-  }
-  // func to find right cookie on successfull auth that holds token;
-  const findCookie = (cookies) => {
-    let res = cookies.split("; ")
-    let rightCookie = ""
-    for (let i = 0; i < res.length; i++) {
-      if (res[i].includes("ssid=")) {
-        rightCookie = res[i].trim()
-      }
-    }
-    res = rightCookie.split("=")[1]
-    return res
-  }
   // func to submit auth info. updates states of errors on unsuccessful signup.
   // on successful signup stores cookie as token in localStorage;
   // finds if user is admin, has messages and stores data in localStorage;
   // sets auth to true and redirects to '/main';
+  const postSignup = async (signupData) => {
+    return fetch("/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signupData),
+    })
+  }
 
-  const submitInfo = async (e) => {
-    e.preventDefault()
-
+  const authorize = async () => {
     try {
-      const res = await fetch("/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-      const resp = await res.json()
-      if (!resp.hasLogged) {
+      const signupData = await postSignup(data)
+      const signupResponse = await signupData.json()
+      if (!signupResponse.hasLogged) {
         setErrorOnSignup(true)
-      } else if (resp.hasLogged === "format") {
+      } else if (signupResponse.hasLogged === "format") {
         setErrorOnSignup("format")
-      } else if (resp.hasLogged === "empty") {
+      } else if (signupResponse.hasLogged === "empty") {
         setErrorOnSignup("empty")
-      } else if (resp.hasLogged) {
-        const rightCookie = findCookie(document.cookie)
+      } else if (signupResponse.hasLogged) {
+        const ssidToken = findSSIDCookie(document.cookie)
         localStorage.setItem("email", `${data.email}`)
-        if (rightCookie) {
-          localStorage.setItem("token", rightCookie)
+        if (ssidToken) {
+          localStorage.setItem("token", ssidToken)
           localStorage.setItem(
             "name",
-            `${resp.userInfo.firstName} ${resp.userInfo.lastName}`
+            `${signupResponse.userInfo.firstName} ${signupResponse.userInfo.lastName}`
           )
         }
-        if (resp.userInfo.isAdmin) {
+        if (signupResponse.userInfo.isAdmin) {
           localStorage.setItem("admin", "true")
         }
-        if (resp.userInfo.newMessage === true) {
-          localStorage.setItem("newMessage", "true")
-        }
-        props.setAuth(true)
+        setAuth(true)
       }
     } catch (err) {
       console.log(err)
@@ -175,14 +143,22 @@ const Signup = ({ auth, setAuth }) => {
       )}
       <Label>
         Email:
-        <Input type="email" placeholder="Enter email" onChange={emailEntered} />
+        <Input
+          type="email"
+          placeholder="Enter email"
+          onChange={(e) =>
+            setData((data) => ({ ...data, email: e.target.value }))
+          }
+        />
       </Label>
       <Label>
         Password:
         <Input
           type="password"
           placeholder="Enter password"
-          onChange={passwordEntered}
+          onChange={(e) =>
+            setData((data) => ({ ...data, password: e.target.value }))
+          }
         />
       </Label>
       <Label>
@@ -190,7 +166,9 @@ const Signup = ({ auth, setAuth }) => {
         <Input
           type="name"
           placeholder="Enter first name"
-          onChange={firstNameEntered}
+          onChange={(e) =>
+            setData((data) => ({ ...data, firstName: e.target.value }))
+          }
         />
       </Label>
       <Label>
@@ -198,7 +176,9 @@ const Signup = ({ auth, setAuth }) => {
         <Input
           type="name"
           placeholder="Enter last name"
-          onChange={lastNameEntered}
+          onChange={(e) =>
+            setData((data) => ({ ...data, lastName: e.target.value }))
+          }
         />
       </Label>
       <Label>
@@ -214,7 +194,7 @@ const Signup = ({ auth, setAuth }) => {
           ))}
         </SkillWrapper>
       </Label>
-      <Button type="submit" variant="submit" onClick={(e) => submitInfo(e)}>
+      <Button variant="submit" onClick={authorize}>
         Sign Up
       </Button>
     </Form>

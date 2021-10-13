@@ -26,7 +26,7 @@ function Landing({ auth, setAuth }) {
       <InfoSec lightBg={data.lightBg}>
         {showLoginModal && (
           <Modal close={() => setShowLoginModal(false)}>
-            <Login auth={auth} setAuth={setAuth}></Login>
+            <Login setAuth={setAuth}></Login>
           </Modal>
         )}
         {showRegistrationModal && (
