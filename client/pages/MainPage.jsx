@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { useEffect } from "react"
-import { ForceGraph } from "../../components/ForceGraph/ForceGraph"
+import { Loading } from "../GlobalStyles"
+import { ForceGraph } from "../components/ForceGraph/ForceGraph"
 import { CircularProgress } from "@material-ui/core"
-import SendMessage from "./SendMessage"
-import SkillsList from "../../components/Skill/SkillsList"
-import Navbar from "../../components/Navbar/Navbar"
+import SendMessage from "../components/SendMessage"
+import SkillsList from "../components/Skill/SkillsList"
+import Navbar from "../components/Navbar/Navbar"
 
 const MainPage = (props) => {
   //state passed to nodes of ForceGraph to select user on click on node in graph
@@ -12,11 +13,8 @@ const MainPage = (props) => {
   const [selectedUser, setSelectedUser] = useState({})
   //state to hold all data fetched on mount and passed to ForceGraph
   const [graphData, setGraphData] = useState({})
-
   const [isLoading, setIsLoading] = useState(true)
-  //
   const [activeStyle, setActiveStyle] = useState("text-active")
-
   // checking if user has new messages/requests in localStorage
   // stored upon successful auth
   const newMessage = localStorage.getItem("newMessage")
@@ -90,11 +88,10 @@ const MainPage = (props) => {
         newMessage={newMessage}
         setAuth={props.setAuth}
       />
-
       {isLoading && (
-        <div className="loading">
+        <Loading>
           <CircularProgress />
-        </div>
+        </Loading>
       )}
       {!isLoading && (
         <section>

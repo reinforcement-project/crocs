@@ -73,6 +73,8 @@ export const NavMenu = styled.ul`
 `
 
 export const NavItem = styled.li`
+  display: flex;
+  align-items: center;
   height: 80px;
   border-bottom: 2px solid transparent;
 

@@ -50,10 +50,10 @@ const SkillsList = (props) => {
         {allSkills.map((skill) => (
           <button
             type="button"
-            id={skill}
-            className={classname}
-            onClick={handleClick}
             key={skill}
+            id={skill}
+            onClick={handleClick}
+            className={classname}
           >
             {skill}
           </button>

@@ -5,16 +5,16 @@ import Chat from "./Components/Chat.jsx"
 
 // Styles
 import "@fontsource/inter"
-import GlobalStyles from "./GlobalStyles"
+import GlobalStyles, { Loading } from "./GlobalStyles"
 import "./index.scss"
 import { CircularProgress } from "@material-ui/core"
 
 //lazy loading components to split bundle.js into chunks
-const HomePage = lazy(() => import("./pages/HomePage/Home"))
-const MainPage = lazy(() => import("./pages/MainPage/MainPage"))
-const ErrorPage = lazy(() => import("./pages/ErrorPage/ErrorPage"))
-const RequestsPage = lazy(() => import("./pages/RequestsPage/RequestsPage"))
-const Settings = lazy(() => import("./pages/SettingsPage/Settings"))
+const Landing = lazy(() => import("./pages/LandingPage/Landing"))
+const MainPage = lazy(() => import("./pages/MainPage"))
+const ErrorPage = lazy(() => import("./pages/ErrorPage"))
+const RequestsPage = lazy(() => import("./pages/RequestsPage"))
+const Settings = lazy(() => import("./pages/SettingsPage/SettingsPage"))
 
 const App = (props) => {
   //state updated on login, signup
@@ -65,16 +65,16 @@ const App = (props) => {
   return (
     <div className="maindiv">
       {isLoading && (
-        <div className="loading">
+        <Loading>
           <CircularProgress />
-        </div>
+        </Loading>
       )}
       {!isLoading && (
         <Suspense
           fallback={
-            <div className="loading">
+            <Loading>
               <CircularProgress />
-            </div>
+            </Loading>
           }
         >
           <Switch>
@@ -87,7 +87,7 @@ const App = (props) => {
               {auth ? (
                 <Redirect to="/main" />
               ) : (
-                <HomePage
+                <Landing
                   setCurrentUser={setCurrentUser}
                   auth={auth}
                   setAuth={setAuth}

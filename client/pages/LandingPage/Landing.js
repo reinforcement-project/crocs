@@ -16,9 +16,9 @@ import {
   Subtitle,
   ImgWrapper,
   Img,
-} from "./Home.elements"
+} from "./Landing.elements"
 
-function Home({ auth, setAuth }) {
+function Landing({ auth, setAuth }) {
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showRegistrationModal, setShowRegistrationModal] = useState(false)
   return (
@@ -75,4 +75,4 @@ function Home({ auth, setAuth }) {
   )
 }
 
-export default Home
+export default Landing

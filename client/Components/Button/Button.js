@@ -46,7 +46,7 @@ const Button = ({ type = "button", variant, size, onClick, children }) => {
 
 const ButtonBase = styled.button`
   font-size: var(--fontSize);
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", sans-serif;
   padding: var(--padding);
   border-radius: var(--borderRadius);
   border: 2px solid transparent;
