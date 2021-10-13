@@ -24,7 +24,6 @@ const Navbar = (props) => {
         </button>
       </Link>
 
-      <Link to="/chat">Chat</Link>
       <Link to="/settings">
         <button className="btn btn-text">Settings</button>
       </Link>
