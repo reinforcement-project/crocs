@@ -42,6 +42,19 @@ const MainPage = (props) => {
     return setSelectedUser(nodeInfo)
   }
 
+  //fetches graphData on mount and updates state
+  const dataFetch = async () => {
+    try {
+      const resp = await fetch("/api/nodes/all")
+      const data = await resp.json()
+      setGraphData(data)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   // updates class in SkillsList after 2 sec
   useEffect(() => {
     setTimeout(() => {
@@ -72,6 +85,7 @@ const MainPage = (props) => {
   return (
     <div className="mainpage">
       <Navbar
+        setCurrentUser={props.setCurrentUser}
         isAdmin={isAdmin}
         newMessage={newMessage}
         setAuth={props.setAuth}
