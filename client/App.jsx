@@ -105,11 +105,6 @@ const App = (props) => {
               )}
             </Route>
 
-            <Route exact path="/chat">
-              {' '}
-              <Chat recipient={recipient} currentUser={currentUser} />
-            </Route>
-
             <Route exact path="/requests">
               {auth ? <RequestsPage auth={auth} setAuth={setAuth} /> : <Redirect to="/" />}
             </Route>
