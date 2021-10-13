@@ -1,5 +1,10 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
-import SkillAdmin from '../../components/Skill/SkillAdmin';
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 const SettingsReg = (props) => {
   // holds the new skills the user may want to teach 
@@ -7,8 +12,7 @@ const SettingsReg = (props) => {
   // holds skills the user already teaches
   const [currentSkills, setCurrentSkills] = useState([]);
   // slice of state that holds info for all skills (available and current) on whether the checkboxes assigned to them in the settings page are checked (true) or not checked (false)
-  const skillsObj = {};
-  const [userSkills, setUserSkills] = useState(skillsObj);
+  const [userSkills, setUserSkills] = useState({});
   // states below represent different errors
   const [error, setError] = useState(false);
   const [errorExist, setErrorExist] = useState(false);
@@ -26,7 +30,13 @@ const SettingsReg = (props) => {
     return re.test(String(str).toLowerCase());
   }
 
-  // updates userSkills whenever newSkills or currentSkills are changed
+  // handle changes to availableSkills and currentSkills based on checkbox click
+  const handleSkillsChange = (e) => {
+    setAvailableSkills();
+    setCurrentSkills();
+  };
+
+  // updates userSkills whenever availableSkills or currentSkills are changed
   useEffect(() => {
     const newSkillsObj = {};
     for (const x of availableSkills) {
@@ -237,6 +247,14 @@ const SettingsReg = (props) => {
     }
   };
 
+  // create error variable for MUI FormControl that evaluates true if user doesn't select at least one skill 
+  const userSkillsBooleanArr = [];
+  for (const skill in userSkills) {
+    userSkillsBooleanArr.push(userSkills[skill]);
+  }
+  console.log('userSkillsBooleanArr is -->', userSkillsBooleanArr);
+  const err = userSkillsBooleanArr.filter((skillBoolean) => skillBoolean).length < 1;
+
   return (
     <div className="admin-settings-internal">
       <div> 
@@ -244,7 +262,7 @@ const SettingsReg = (props) => {
         <p> The adjustments made here will take effect as soon as they are set. </p> 
       </div>
       <hr></hr>
-      <div>
+      <div id='settings-update-email'>
         <h2>Email</h2>
         {emailChange && (
           <div>Email successfully updated</div>
@@ -271,30 +289,42 @@ const SettingsReg = (props) => {
       </div>
       <hr></hr>
       <h2>Skills</h2>
-      <div>
-        <p>Select your skills.</p>
+      <div id='settings-update-skills'>
         <div>
-          {availableSkills.map((skill) => {
-            return (
-              <label key={skill._id}>
-                {/* render separate component here instead of input tag */}
-                <input type='checkbox' checked={userSkills} onChange={(e) => console.log(e.target)} data-name={skill.name} />
-                {skill.name}
-              </label>
-            );
-          })}
-          {currentSkills.map((skill) => {
-            return (
-              <label key={skill._id}>
-                {/* render separate component here instead of input tag */}
-                <input type='checkbox' checked={!userSkills} onChange={(e) => console.log(e.target)}/>
-                {skill.name}
-              </label>
-            );
-          })}
+          <FormControl
+            required
+            error={err}
+            component="fieldset"
+            sx={{ m: 3 }}
+            variant="standard"
+          >
+            <FormLabel component="legend">Pick at least one skill.</FormLabel>
+            <FormGroup>
+              {availableSkills.map((skill) => {
+                return (
+                  <FormControlLabel
+                    control={
+                      <Checkbox key={skill._id} checked={userSkills[skill.name]} onChange={handleSkillsChange} name={skill.name}  />
+                    }
+                    label={skill.name}
+                  />
+                );
+              })}
+              {currentSkills.map((skill) => {
+                return (
+                  <FormControlLabel
+                    control={
+                      <Checkbox key={skill._id} checked={userSkills[skill.name]} onChange={handleSkillsChange} name={skill.name}  />
+                    }
+                    label={skill.name}
+                  />
+                );
+              })}
+            </FormGroup>
+          </FormControl>
         </div>
       </div>
-      <div className="user-settings-newskills">
+      {/* <div className="user-settings-newskills">
         <div className="form-title">ADD SKILLS TO TEACH</div>
         {availableSkills.length === 0 && (
           <div className="noskills">No new skills at this time</div>
@@ -328,8 +358,7 @@ const SettingsReg = (props) => {
               />
             );
           })}
-        </div>
-      </div>
+        </div> */}
     </div>
   );
 };
