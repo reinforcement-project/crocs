@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import socket from '../socket';
-import axios from 'axios';
 import './Chat.css';
 import genRoomId from '../utils/genRoomId';
-import { Hidden } from '@material-ui/core';
+
 import formatDate from '../utils/formatDate';
 
 const Chat = ({ currentUser, recipient, setRecipient }) => {
