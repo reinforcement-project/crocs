@@ -49,6 +49,10 @@ const CheckboxControl = styled.span`
   }
 `
 
+const LabelSpan = styled.span`
+  color: black;
+`
+
 export const Checkbox = ({ data, setData, skillId, label, setSkill }) => {
   const [checked, setChecked] = useState(false)
 
@@ -96,7 +100,7 @@ export const Checkbox = ({ data, setData, skillId, label, setSkill }) => {
             </svg>
           </CheckboxControl>
         </CheckboxSpan>
-        <span>{label}</span>
+        <LabelSpan>{label}</LabelSpan>
       </CheckboxWrapper>
     </>
   )
