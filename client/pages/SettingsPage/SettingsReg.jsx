@@ -1,10 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import { FormLabel, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+
 
 const SettingsReg = (props) => {
   // holds the new skills the user may want to teach 

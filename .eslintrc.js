@@ -26,7 +26,13 @@ module.exports = {
     'quotes': ['warn', 'single'],
     'react/prop-types': 'off',
     'semi': ['warn', 'always'],
-    'space-infix-ops': 'warn'
+    'space-infix-ops': 'warn',
+    'no-restricted-imports': [
+      'error',
+      {
+        'patterns': ['@material-ui/*/*/*']
+      }
+    ]
   },
   'settings': {
     'react': { 'version': 'detect'}

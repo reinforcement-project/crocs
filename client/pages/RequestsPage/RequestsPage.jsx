@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
-import Request from "./Request"
-import { CircularProgress } from "@material-ui/core"
-import Navbar from "../../components/Navbar/Navbar"
+import React, { useState, useEffect } from 'react';
+import Request from './Request';
+import { CircularProgress } from '@mui/material';
+import Navbar from '../../components/Navbar/Navbar';
 
 /*
 fetches data on mount and renders Request Components;
@@ -9,43 +9,43 @@ handleClick sends delete request and receives new data, updates requests state a
  */
 
 const RequestsPage = (props) => {
-  localStorage.removeItem("newMessage")
-  const isAdmin = localStorage.getItem("admin")
-  const [requests, setRequests] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const newMessage = null
+  localStorage.removeItem('newMessage');
+  const isAdmin = localStorage.getItem('admin');
+  const [requests, setRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const newMessage = null;
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
-  const email = localStorage.getItem("email")
+  const email = localStorage.getItem('email');
 
   const handleClick = async (arg) => {
     try {
-      const response = await fetch("/api/delMessage", {
-        method: "DELETE",
+      const response = await fetch('/api/delMessage', {
+        method: 'DELETE',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
         body: JSON.stringify({ messageID: arg, targetEmail: email }),
-      })
-      const newReq = await response.json()
-      setRequests(newReq)
+      });
+      const newReq = await response.json();
+      setRequests(newReq);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const getData = async () => {
     try {
-      const resp = await fetch("/api/messages/" + email)
-      const data = await resp.json()
-      setRequests(data)
+      const resp = await fetch('/api/messages/' + email);
+      const data = await resp.json();
+      setRequests(data);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="requestspage">
@@ -82,7 +82,7 @@ const RequestsPage = (props) => {
                       sourceName={request.sourceName}
                       requestBody={request.messageBody}
                     />
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -90,7 +90,7 @@ const RequestsPage = (props) => {
         )}
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default RequestsPage
+export default RequestsPage;
