@@ -1,5 +1,5 @@
 // GlobalStyles.js
-import { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 const GlobalStyles = createGlobalStyle`
 /* Box sizing rules */
 *,
@@ -20,6 +20,8 @@ blockquote,
 dl,
 dd {
   margin: 0;
+  padding: 0;
+  font-family: Inter;
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
@@ -75,6 +77,28 @@ select {
     scroll-behavior: auto !important;
   }
 }
-
 `
+
+export const Container = styled.div`
+  z-index: 1;
+  width: 100%;
+  max-width: 1300px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 50px;
+  padding-left: 50px;
+  @media screen and (max-width: 991px) {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+`
+
+export const Loading = styled.div`
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
+
 export default GlobalStyles
