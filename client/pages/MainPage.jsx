@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { ForceGraph } from './ForceGraph/ForceGraph';
+import { Loading } from '../GlobalStyles';
+import { ForceGraph } from '../components/ForceGraph/ForceGraph';
 import { CircularProgress } from '@material-ui/core';
-import SendMessage from './SendMessage';
-import SkillsList from './SkillsList';
-import Navbar from './Navbar';
+import SendMessage from '../components/SendMessage';
+import SkillsList from '../components/Skill/SkillsList';
+import Navbar from '../components/Navbar/Navbar';
 import Chat from './Chat';
 
 const MainPage = (props) => {
@@ -13,11 +14,8 @@ const MainPage = (props) => {
   const [selectedUser, setSelectedUser] = useState({});
   //state to hold all data fetched on mount and passed to ForceGraph
   const [graphData, setGraphData] = useState({});
-
   const [isLoading, setIsLoading] = useState(true);
-  //
   const [activeStyle, setActiveStyle] = useState('text-active');
-
   // checking if user has new messages/requests in localStorage
   // stored upon successful auth
   const newMessage = localStorage.getItem('newMessage');
@@ -35,6 +33,8 @@ const MainPage = (props) => {
   // func triggered onclick on node in ForceGraph.
   // sets selectedUser state to render SendMessage component
   function getNodeInfo(nodeInfo) {
+    console.log('result from setSelectedUser(nodeInfo) --> ', setSelectedUser(nodeInfo));
+    console.log('nodeInfo is -->', nodeInfo);
     return setSelectedUser(nodeInfo);
   }
 
@@ -60,8 +60,19 @@ const MainPage = (props) => {
 
   // IIFY syntax: https://dev.to/stlnick/useeffect-and-async-4da8
   useEffect(() => {
-    dataFetch();
+    (async () => {
+      try {
+        const resp = await fetch('/api/nodes/all');
+        const data = await resp.json();
+        setGraphData(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
+
   //sets selectedUser to empty object to unmount SendMessage component on click on span in SendMessage component
   const cancelMessage = () => {
     setSelectedUser({});
@@ -76,12 +87,18 @@ const MainPage = (props) => {
         setAuth={props.setAuth}
       />
 
-      {props.recipient && <Chat currentUser={props.currentUser} recipient={props.recipient} />}
+      {props.recipient && (
+        <Chat
+          currentUser={props.currentUser}
+          recipient={props.recipient}
+          setRecipient={props.setRecipient}
+        />
+      )}
 
       {isLoading && (
-        <div className="loading">
+        <Loading>
           <CircularProgress />
-        </div>
+        </Loading>
       )}
       {!isLoading && (
         <section>
