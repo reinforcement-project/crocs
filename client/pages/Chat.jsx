@@ -53,7 +53,9 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
 
   // Connect to socket io on component mount
   useEffect(async () => {
+    console.log('in useEffect 1')
     socket.auth = { user: currentUser, room: genRoomId(currentUser.email, recipient.email) };
+    console.log('users in the room',currentUser.email,recipient.email);
     socket.connect();
   }, []);
 

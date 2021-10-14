@@ -58,7 +58,8 @@ const Login = ({ setAuth }) => {
           localStorage.setItem(
             "name",
             `${loginResponse.userInfo.firstName} ${loginResponse.userInfo.lastName}`
-          )
+          );
+          
         }
         // Set the state of the app to reflect administrative privileges
         if (loginResponse.userInfo.isAdmin) {
