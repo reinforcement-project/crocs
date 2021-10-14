@@ -54,9 +54,14 @@ const Chat = ({ currentUser, recipient }) => {
     const self = from === currentUser.email;
 
     return (
+      
       <li id={(self && 'self') || ''} key={i}>
-        <div>{content}</div>
+        <div>
+          {content}
+        </div>
       </li>
+
+       
     );
   });
 
