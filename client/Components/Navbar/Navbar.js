@@ -1,44 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import logo from '../../images/logo-graph.png';
-import Button from '../Button/Button';
+import React, { useState } from "react";
+import logo from "../../images/logo-graph.png";
+import Button from "../Button/Button";
 import {
   Nav,
   NavbarContainer,
   NavIcon,
   NavLogo,
-  MobileIcon,
   NavMenu,
   NavItem,
-  NavItemBtn,
   NavLinks,
-} from './Navbar.elements';
+} from "./Navbar.elements";
 
-function Navbar({ setAuth, isAdmin, newMessage, setCurrentUser }) {
+function Navbar({ setAuth, setCurrentUser }) {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
 
   const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
-
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
-    }
-  };
-
-  useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener('resize', showButton);
 
   return (
     <>
       <Nav>
         <NavbarContainer>
-          <NavLogo to="/" onClick={closeMobileMenu}>
+          <NavLogo to="/">
             <NavIcon src={logo} alt="scratchLogo" />
           </NavLogo>
           <NavMenu onClick={handleClick} click={click}>
@@ -49,7 +31,7 @@ function Navbar({ setAuth, isAdmin, newMessage, setCurrentUser }) {
               <Button
                 variant="fill"
                 size="medium"
-                onClick={(e) => {
+                onClick={() => {
                   localStorage.clear();
                   setAuth(false);
                   setCurrentUser(null);

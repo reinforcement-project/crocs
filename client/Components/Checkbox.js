@@ -1,6 +1,5 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import "./Checkbox.css"
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const CheckboxWrapper = styled.label`
   display: grid;
@@ -10,7 +9,7 @@ const CheckboxWrapper = styled.label`
   align-items: center;
   font-size: 1rem;
   color: #7e55d8;
-`
+`;
 
 const CheckboxSpan = styled.span`
   display: grid;
@@ -19,7 +18,7 @@ const CheckboxSpan = styled.span`
   > * {
     grid-area: checkbox;
   }
-`
+`;
 
 const CheckboxInput = styled.input`
   opacity: 0;
@@ -33,7 +32,7 @@ const CheckboxInput = styled.input`
   &:checked + span svg {
     transform: scale(1);
   }
-`
+`;
 
 const CheckboxControl = styled.span`
   display: inline-grid;
@@ -47,32 +46,32 @@ const CheckboxControl = styled.span`
     transform: scale(0);
     transform-origin: bottom left;
   }
-`
+`;
 
 const LabelSpan = styled.span`
   color: black;
-`
+`;
 
-export const Checkbox = ({ data, setData, skillId, label, setSkill }) => {
-  const [checked, setChecked] = useState(false)
+export const Checkbox = ({ data, setData, skillId, label }) => {
+  const [checked, setChecked] = useState(false);
 
   const skillButtonClick = () => {
-    console.log("Skill button e ", label)
+    console.log("Skill button e ", label);
     data.skillsToTeach[label]
       ? setData((prevstate) => {
-          delete prevstate.skillsToTeach[label]
-          return prevstate
+          delete prevstate.skillsToTeach[label];
+          return prevstate;
         })
       : setData((prevstate) => {
-          prevstate.skillsToTeach[label] = skillId[label]
-          return prevstate
-        })
-  }
+          prevstate.skillsToTeach[label] = skillId[label];
+          return prevstate;
+        });
+  };
 
   const handleChange = () => {
-    setChecked(!checked)
-    skillButtonClick()
-  }
+    setChecked(!checked);
+    skillButtonClick();
+  };
 
   return (
     <>
@@ -103,5 +102,5 @@ export const Checkbox = ({ data, setData, skillId, label, setSkill }) => {
         <LabelSpan>{label}</LabelSpan>
       </CheckboxWrapper>
     </>
-  )
-}
+  );
+};

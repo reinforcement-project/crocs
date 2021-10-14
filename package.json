@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "dev": "concurrently \"cross-env NODE_ENV='development' webpack-dev-server --history-api-fallback \" \"nodemon ./server/server.js\"",
-    "build": "NODE_ENV='production' webpack"
+    "build": "NODE_ENV='production' webpack",
+    "format": "prettier --write \"client/**/*.{js,jsx}\"",
+    "lint": "eslint \"client/**/*.{js,jsx}\" --quiet"
   },
   "repository": {
     "type": "git",
@@ -61,7 +63,10 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.3.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
     "html-webpack-plugin": "^5.3.2",
     "image-minimizer-webpack-plugin": "^2.2.0",
     "imagemin-gifsicle": "^7.0.0",
@@ -70,6 +75,7 @@
     "imagemin-svgo": "^10.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
+    "prettier": "^2.4.1",
     "sass": "^1.42.0",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
