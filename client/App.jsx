@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import useLocalStorage from "./hooks/useLocalStorage"
-import Chat from "./Components/Chat.jsx"
+import Chat from "./pages/Chat"
 
 // Styles
 import "@fontsource/inter"
@@ -23,15 +23,8 @@ const App = (props) => {
   const authToken = localStorage.getItem("token")
 
   const [isLoading, setIsLoading] = useState(true)
-
-<<<<<<< HEAD
   const [currentUser, setCurrentUser] = useLocalStorage("user", {})
-  const [room, setRoom] = useState()
-=======
-  const [currentUser, setCurrentUser] = useLocalStorage('user', {});
-  const [recipient, setRecipient] = useState();
->>>>>>> dev
-
+  const [recipient, setRecipient] = useState()
   //verifying token from localStorage on mount and auth to avoid hacked localStorage
   //checked every time we refresh browser or load one of urls in browser
 
@@ -115,14 +108,6 @@ const App = (props) => {
               )}
             </Route>
 
-<<<<<<< HEAD
-            <Route exact path="/chat">
-              {" "}
-              <Chat room={room} currentUser={currentUser} />
-            </Route>
-
-=======
->>>>>>> dev
             <Route exact path="/requests">
               {auth ? (
                 <RequestsPage auth={auth} setAuth={setAuth} />
