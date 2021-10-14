@@ -95,7 +95,7 @@ const Signup = ({ auth, setAuth, setCurrentUser }) => {
       } else if (signupResponse.hasLogged) {
         const ssidToken = findSSIDCookie(document.cookie);
         console.log(data);
-        setCurrentUser(data);
+        setCurrentUser(signupResponse.userInfo);
         localStorage.setItem('email', `${data.email}`);
         if (ssidToken) {
           localStorage.setItem('token', ssidToken);

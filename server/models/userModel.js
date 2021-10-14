@@ -14,7 +14,6 @@ const userSchema = new Schema(
     lastName: { type: String, required: true },
     isAdmin: { type: Boolean, required: true, default: false },
     userGroup: { type: String, default: 'user' },
-    newMessage: { type: Boolean, required: true, default: false },
     teach: [
       {
         name: String,
@@ -33,6 +32,16 @@ const userSchema = new Schema(
         },
       },
     ],
+    newMessage: [
+      {
+        from: { type: String, required: [true, 'Please provide email of message origin'] },
+        name: { type: String, required: [true, 'The sender must have a name'] },
+        message: {
+          type: mongoose.Schema.ObjectId,
+          required: [true, 'Please provide id of new message'],
+        },
+      },
+    ],
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
@@ -44,19 +53,6 @@ userSchema.pre('save', function (next) {
   this.name = `${this.firstName} ${this.lastName}`;
 
   next();
-});
-
-// Virtual populate
-userSchema.virtual('messagesSent', {
-  ref: 'Message',
-  foreignField: 'from',
-  localField: '_id',
-});
-
-userSchema.virtual('messagesReceived', {
-  ref: 'Message',
-  foreignField: 'to',
-  localField: '_id',
 });
 
 //set up preprocess for encrypting password
@@ -77,6 +73,6 @@ userSchema.methods.verify = async function (password) {
   return check;
 };
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

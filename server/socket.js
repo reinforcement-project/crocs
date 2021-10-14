@@ -2,6 +2,7 @@ const app = require('./app');
 const server = require('http').createServer(app);
 // const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const User = require('./models/userModel');
 const Message = require('./models/messageModel');
 const Chat = require('./models/chatModel');
 const genRoomId = require('./utils/genRoomId');
@@ -17,10 +18,11 @@ const io = require('socket.io')(server, {
 });
 
 io.use((socket, next) => {
-  const { user, room } = socket.handshake.auth;
+  const { user, room, recipient } = socket.handshake.auth;
   console.log(user, room);
   socket.user = user;
-  socket.room = room;
+  socket.recipient = recipient;
+  // socket.room = room;
 
   next();
 });
@@ -28,7 +30,9 @@ io.use((socket, next) => {
 //io is socket io server, 2nd arg socket is client socket
 io.on('connection', async (socket) => {
   // console.log('Connected: ' + socket.user._id);
-  const { room, user } = socket;
+  const { recipient, user } = socket;
+  // create room id using sender's and recipient's email
+  const room = genRoomId(recipient.email, user.email);
 
   try {
     const users = [];
@@ -63,6 +67,24 @@ io.on('connection', async (socket) => {
 
       // Store message (in database)
       const message = await Message.create({ from, to, content, room });
+
+      // Add message to recipient's newMessage field
+      const recipient = await User.findOneAndUpdate(
+        { email: to },
+        {
+          $push: {
+            newMessage: {
+              from: user.email,
+              name: user.name,
+              message: message._id,
+            },
+          },
+        },
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
 
       // Send message to room
 

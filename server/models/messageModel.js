@@ -5,11 +5,11 @@ const messageSchema = new Schema(
   {
     from: {
       type: String,
-      required: [true, 'A message must have an origin'],
+      required: [true, 'Please provide email of origin'],
     },
     to: {
       type: String,
-      required: [true, 'A message must have a destination'],
+      required: [true, 'Please provide email of destination'],
     },
     content: { type: String, required: [true, 'Message cannot be empty'] },
     sentAt: {
@@ -17,6 +17,8 @@ const messageSchema = new Schema(
       default: Date.now(),
     },
     room: { type: String, required: [true, 'Message must beling to a chat'], ref: 'Chat' },
+    // false if user has not yet seen this message, true if they have.
+    seen: { type: Boolean, default: false },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
