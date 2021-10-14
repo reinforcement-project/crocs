@@ -1,3 +1,4 @@
+<<<<<<< HEAD:client/pages/MainPage.jsx
 import React, { useState } from "react"
 import { useEffect } from "react"
 import { Loading } from "../GlobalStyles"
@@ -6,6 +7,16 @@ import { CircularProgress } from "@material-ui/core"
 import SendMessage from "../components/SendMessage"
 import SkillsList from "../components/Skill/SkillsList"
 import Navbar from "../components/Navbar/Navbar"
+=======
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { ForceGraph } from './ForceGraph/ForceGraph';
+import { CircularProgress } from '@material-ui/core';
+import SendMessage from './SendMessage';
+import SkillsList from './SkillsList';
+import Navbar from './Navbar';
+import Chat from './Chat';
+>>>>>>> dev:client/Components/MainPage.jsx
 
 const MainPage = (props) => {
   //state passed to nodes of ForceGraph to select user on click on node in graph
@@ -88,6 +99,18 @@ const MainPage = (props) => {
         newMessage={newMessage}
         setAuth={props.setAuth}
       />
+<<<<<<< HEAD:client/pages/MainPage.jsx
+=======
+
+      {props.recipient && (
+        <Chat
+          currentUser={props.currentUser}
+          recipient={props.recipient}
+          setRecipient={props.setRecipient}
+        />
+      )}
+
+>>>>>>> dev:client/Components/MainPage.jsx
       {isLoading && (
         <Loading>
           <CircularProgress />
@@ -106,6 +129,7 @@ const MainPage = (props) => {
                 setActiveStyle={setActiveStyle}
               />
               <ForceGraph
+                setRecipient={props.setRecipient}
                 skillsData={graphData.skills}
                 linksData={graphData.links}
                 nodesData={graphData.nodes}
