@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import useLocalStorage from './hooks/useLocalStorage';
-import Chat from './pages/Chat';
+import NewMessages from './Components/NewMessages';
 
 // Styles
 import '@fontsource/inter';
@@ -110,6 +110,10 @@ const App = (props) => {
 
             <Route exact path="/settings">
               {auth ? <Settings auth={auth} setAuth={setAuth} /> : <Redirect to="/" />}
+            </Route>
+
+            <Route exact path="/new-messages">
+              <NewMessages currentUser={currentUser} setRecipient={setRecipient} />
             </Route>
 
             <Route path="/404" component={ErrorPage} />

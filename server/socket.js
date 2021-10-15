@@ -1,13 +1,7 @@
 const app = require('./app');
 const server = require('http').createServer(app);
-// const jwt = require('jsonwebtoken');
-const cors = require('cors');
-const User = require('./models/userModel');
-const Message = require('./models/messageModel');
-const Chat = require('./models/chatModel');
-const genRoomId = require('./utils/genRoomId');
-
-app.use(cors());
+const initSocket = require('./socketControllers/initSocket');
+const connectToRoom = require('./socketControllers/connectToRoom');
 
 const io = require('socket.io')(server, {
   cors: {
@@ -17,84 +11,7 @@ const io = require('socket.io')(server, {
   },
 });
 
-io.use((socket, next) => {
-  const { user, room, recipient } = socket.handshake.auth;
-  console.log(user, room);
-  socket.user = user;
-  socket.recipient = recipient;
-  // socket.room = room;
-
-  next();
-});
-
-//io is socket io server, 2nd arg socket is client socket
-io.on('connection', async (socket) => {
-  // console.log('Connected: ' + socket.user._id);
-  const { recipient, user } = socket;
-  // create room id using sender's and recipient's email
-  const room = genRoomId(recipient.email, user.email);
-
-  try {
-    const users = [];
-
-    // for (const [id, socket] of io.of('/').sockets) {
-    //   users.push({
-    //     ...socket.user,
-    //   });
-    // }
-
-    // // Send a list of all online users to socket
-    // socket.emit('online users', users);
-
-    let chat;
-    // Check if room exists
-    chat = await Chat.findOne({ room: room }).populate('messages');
-    // If room does not exist, create a new one
-    if (!chat) {
-      chat = await Chat.create({ room: room });
-    }
-
-    // Join the room
-    socket.join(room);
-
-    // Send chat history to client
-    if (chat.messages) socket.emit('messages', JSON.stringify(chat.messages));
-
-    // Listen for message
-    socket.on('message', async (data) => {
-      // console.log(data);
-      const { from, to, content } = JSON.parse(data);
-
-      // Store message (in database)
-      const message = await Message.create({ from, to, content, room });
-
-      // Add message to recipient's newMessage field
-      const recipient = await User.findOneAndUpdate(
-        { email: to },
-        {
-          $push: {
-            newMessage: {
-              from: user.email,
-              name: user.name,
-              message: message._id,
-            },
-          },
-        },
-        {
-          new: true,
-          runValidators: true,
-        },
-      );
-
-      // Send message to room
-
-      socket.to(room).emit('message', JSON.stringify(message));
-    });
-  } catch (err) {
-    console.log(err);
-  }
-
-  //
-});
+io.use(initSocket);
+io.on('connection', connectToRoom);
 
 module.exports = server;

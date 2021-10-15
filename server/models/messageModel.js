@@ -17,8 +17,6 @@ const messageSchema = new Schema(
       default: Date.now(),
     },
     room: { type: String, required: [true, 'Message must beling to a chat'], ref: 'Chat' },
-    // false if user has not yet seen this message, true if they have.
-    seen: { type: Boolean, default: false },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );

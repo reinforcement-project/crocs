@@ -10,6 +10,25 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
   const [messages, setMessages] = useState([]);
   // const [onlineUsers, setOnlineUsers] = useState([]);
 
+  socket.on('message', (message) => {
+    setMessages([...messages, JSON.parse(message)]);
+  });
+
+  socket.on('messages', (data) => {
+    const messages = JSON.parse(data);
+    // console.log('messages:', messages);
+    setMessages(messages);
+  });
+
+  // Connect to socket io on component mount
+  useEffect(async () => {
+    socket.auth = {
+      user: currentUser,
+      recipientEmail: recipient.email,
+    };
+    socket.connect();
+  }, []);
+
   const closeChat = (e) => {
     setRecipient(null);
     socket.disconnect();
@@ -40,26 +59,6 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
   // socket.on('online users', (onlineUsers) => {
   //   setOnlineUsers(onlineUsers);
   // });
-
-  socket.on('message', (message) => {
-    setMessages([...messages, JSON.parse(message)]);
-  });
-
-  socket.on('messages', (data) => {
-    const messages = JSON.parse(data);
-    // console.log('messages:', messages);
-    setMessages(messages);
-  });
-
-  // Connect to socket io on component mount
-  useEffect(async () => {
-    socket.auth = {
-      user: currentUser,
-      // room: genRoomId(currentUser.email, recipient.email),
-      recipient,
-    };
-    socket.connect();
-  }, []);
 
   const messageList = messages.map(({ content, from, to, sentAt }, i) => {
     // Check if message is from current user

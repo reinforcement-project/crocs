@@ -24,11 +24,12 @@ authController.verifyUser = async (req, res, next) => {
     // object specifying the fields to be requested from db
     const specifiedFields = {
       _id: 0,
+      name: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
       isAdmin: 1,
-      newMessage: 1,
+      newMessages: 1,
     };
 
     const verification = {
@@ -48,9 +49,9 @@ authController.verifyUser = async (req, res, next) => {
         verification.userInfo[key] = user[key];
       }
 
-      if (user.newMessage) {
-        await User.updateOne({ email }, { $set: { newMessage: false } });
-      }
+      // if (user.newMessages) {
+      //   await User.updateOne({ email }, { $set: { newMessages: false } });
+      // }
 
       res.locals.verification = verification;
       return next();
@@ -103,7 +104,7 @@ authController.createUser = async (req, res, next) => {
       lastName: 1,
       email: 1,
       isAdmin: 1,
-      newMessage: 1,
+      newMessages: 1,
     };
 
     const emailExist = await User.findOne({ email });
@@ -135,8 +136,6 @@ authController.createUser = async (req, res, next) => {
     for (const key in specifiedFields) {
       verification.userInfo[key] = user[key];
     }
-
-    console.log('NEW USER: ', verification.userInfo);
 
     res.locals.verification = verification;
 

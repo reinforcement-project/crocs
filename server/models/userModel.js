@@ -32,14 +32,10 @@ const userSchema = new Schema(
         },
       },
     ],
-    newMessage: [
+    newMessages: [
       {
         from: { type: String, required: [true, 'Please provide email of message origin'] },
         name: { type: String, required: [true, 'The sender must have a name'] },
-        message: {
-          type: mongoose.Schema.ObjectId,
-          required: [true, 'Please provide id of new message'],
-        },
       },
     ],
   },
