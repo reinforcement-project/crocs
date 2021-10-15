@@ -117,6 +117,7 @@ const App = () => {
                   recipient={recipient}
                   auth={auth}
                   setAuth={setAuth}
+                  newMessagesInfo={newMessagesInfo}
                 />
               ) : (
                 <Redirect to="/" />

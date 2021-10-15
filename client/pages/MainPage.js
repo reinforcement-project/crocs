@@ -75,6 +75,7 @@ const MainPage = (props) => {
         isAdmin={isAdmin}
         newMessage={newMessage}
         setAuth={props.setAuth}
+        newMessagesInfo={props.newMessagesInfo}
       />
 
       {props.recipient && (
