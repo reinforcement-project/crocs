@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
-import logo from "../../images/logo-graph.png"
-import Button from "../Button/Button"
+import React, { useState, useEffect } from 'react';
+import logo from '../../images/logo-graph.png';
+import Button from '../Button/Button';
 import {
   Nav,
   NavbarContainer,
@@ -11,28 +11,28 @@ import {
   NavItem,
   NavItemBtn,
   NavLinks,
-} from "./Navbar.elements"
+} from './Navbar.elements';
 
-function Navbar({ setAuth, isAdmin, newMessage }) {
-  const [click, setClick] = useState(false)
-  const [button, setButton] = useState(true)
+function Navbar({ setAuth, isAdmin, newMessage, setCurrentUser }) {
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState(true);
 
-  const handleClick = () => setClick(!click)
-  const closeMobileMenu = () => setClick(false)
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
-      setButton(false)
+      setButton(false);
     } else {
-      setButton(true)
+      setButton(true);
     }
-  }
+  };
 
   useEffect(() => {
-    showButton()
-  }, [])
+    showButton();
+  }, []);
 
-  window.addEventListener("resize", showButton)
+  window.addEventListener('resize', showButton);
 
   return (
     <>
@@ -50,8 +50,9 @@ function Navbar({ setAuth, isAdmin, newMessage }) {
                 variant="fill"
                 size="medium"
                 onClick={(e) => {
-                  localStorage.clear()
-                  setAuth(false)
+                  localStorage.clear();
+                  setAuth(false);
+                  setCurrentUser(null);
                 }}
               >
                 Log Out
@@ -61,7 +62,7 @@ function Navbar({ setAuth, isAdmin, newMessage }) {
         </NavbarContainer>
       </Nav>
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
