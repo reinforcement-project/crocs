@@ -1,12 +1,11 @@
+/* eslint-disable no-param-reassign */
 const app = require('./app');
 const server = require('http').createServer(app);
-// const jwt = require('jsonwebtoken');
-const cors = require('cors');
-const Message = require('./models/messageModel');
+const User = require('./models/userModel');
 const Chat = require('./models/chatModel');
 const genRoomId = require('./utils/genRoomId');
-
-app.use(cors());
+// const sendMessage = require("./sendMessage");
+const Message = require('./models/messageModel');
 
 const io = require('socket.io')(server, {
   cors: {
@@ -17,37 +16,28 @@ const io = require('socket.io')(server, {
 });
 
 io.use((socket, next) => {
-  const { user, room } = socket.handshake.auth;
-  console.log(user, room);
+  const { user, recipientEmail } = socket.handshake.auth;
+
   socket.user = user;
-  socket.room = room;
+  socket.recipientEmail = recipientEmail;
+  // socket.room = room;
 
   next();
 });
 
-//io is socket io server, 2nd arg socket is client socket
 io.on('connection', async (socket) => {
-  // console.log('Connected: ' + socket.user._id);
-  const { room, user } = socket;
-
   try {
-    const users = [];
-
-    // for (const [id, socket] of io.of('/').sockets) {
-    //   users.push({
-    //     ...socket.user,
-    //   });
-    // }
-
-    // // Send a list of all online users to socket
-    // socket.emit('online users', users);
+    // console.log('Connected: ' + socket.user._id);
+    const { user, recipientEmail } = socket;
+    // create room id using sender's and recipient's email
+    const room = genRoomId(recipientEmail, user.email);
 
     let chat;
     // Check if room exists
-    chat = await Chat.findOne({ room: room }).populate('messages');
+    chat = await Chat.findOne({ room }).populate('messages');
     // If room does not exist, create a new one
     if (!chat) {
-      chat = await Chat.create({ room: room });
+      chat = await Chat.create({ room });
     }
 
     // Join the room
@@ -56,7 +46,7 @@ io.on('connection', async (socket) => {
     // Send chat history to client
     if (chat.messages) socket.emit('messages', JSON.stringify(chat.messages));
 
-    // Listen for message
+    // Send message to room
     socket.on('message', async (data) => {
       // console.log(data);
       const { from, to, content } = JSON.parse(data);
@@ -64,15 +54,27 @@ io.on('connection', async (socket) => {
       // Store message (in database)
       const message = await Message.create({ from, to, content, room });
 
-      // Send message to room
+      console.log('MESSAGE: ', message);
 
+      // Add message to recipient's newMessage field
+
+      const recipient = await User.findOne({ email: recipientEmail }).updateOne(
+        {
+          'newMessages.from': { $ne: user.email },
+        },
+        { $push: { newMessages: { from: user.email, name: user.name } } },
+        {
+          new: true,
+          runValidators: true,
+        },
+      );
+
+      // Send message to recipient
       socket.to(room).emit('message', JSON.stringify(message));
     });
   } catch (err) {
     console.log(err);
   }
-
-  //
 });
 
 module.exports = server;

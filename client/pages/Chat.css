@@ -20,7 +20,6 @@ html {
 
 .msger {
   display: flex;
-
   flex-flow: column wrap;
   justify-content: space-between;
   width: 100%;

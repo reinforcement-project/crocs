@@ -25,6 +25,9 @@ function Navbar({ setAuth, setCurrentUser }) {
           </NavLogo>
           <NavMenu onClick={handleClick} click={click}>
             <NavItem>
+              <NavLinks to="/new-messages">New Messages</NavLinks>
+            </NavItem>
+            <NavItem>
               <NavLinks to="/settings">Settings</NavLinks>
             </NavItem>
             <NavItem>

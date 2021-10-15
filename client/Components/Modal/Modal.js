@@ -18,9 +18,7 @@ const ModalContent = styled.div`
 const Modal = ({ close, children }) => {
   return (
     <ModalElement onClick={close}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        {children}
-      </ModalContent>
+      <ModalContent onClick={(e) => e.stopPropagation()}>{children}</ModalContent>
     </ModalElement>
   );
 };

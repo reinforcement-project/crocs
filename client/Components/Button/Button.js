@@ -10,7 +10,7 @@ const SIZES = {
     "--padding": "4px 12px",
   },
   medium: {
-    "--borderRadius": 4 + "px",
+    "--borderRadius": 6 + "px",
     "--fontSize": 18 / 16 + "rem",
     "--padding": "12px 20px",
   },
@@ -21,7 +21,13 @@ const SIZES = {
   },
 };
 
-const Button = ({ type = "button", variant, size, onClick, children }) => {
+const Button = ({
+  type = "button",
+  variant = "fill",
+  size,
+  onClick,
+  children,
+}) => {
   const styles = SIZES[size];
 
   let Component;
