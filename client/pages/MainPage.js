@@ -33,11 +33,6 @@ const MainPage = (props) => {
   // func triggered onclick on node in ForceGraph.
   // sets selectedUser state to render SendMessage component
   function getNodeInfo(nodeInfo) {
-    // console.log(
-    //   "result from setSelectedUser(nodeInfo) --> ",
-    //   setSelectedUser(nodeInfo)
-    // );
-    console.log("nodeInfo is -->", nodeInfo);
     return setSelectedUser(nodeInfo);
   }
 
