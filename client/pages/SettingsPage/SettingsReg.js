@@ -146,7 +146,6 @@ const SettingsReg = (props) => {
       }
     } catch (err) {
       console.log(err);
-    }
   };
 
   const Grid = styled.div`
