@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Checkbox } from "./CheckboxSettings";
 import Input from "../../components/Forms/Input";
 import Button from "../../components/Button/Button";
+import { Container } from "../../GlobalStyles";
 import styled from "styled-components";
 
 const SettingsReg = (props) => {
@@ -148,11 +149,6 @@ const SettingsReg = (props) => {
     }
   };
 
-  const Wrapper = styled.div`
-    margin: 40px auto 0px auto;
-    width: 80%;
-  `;
-
   const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -184,7 +180,7 @@ const SettingsReg = (props) => {
   `;
 
   return (
-    <Wrapper>
+    <Container>
       <div>
         <PageHeading>Settings</PageHeading>
         <Paragraph>
@@ -248,7 +244,7 @@ const SettingsReg = (props) => {
           })}
         </div>
       </Grid>
-    </Wrapper>
+    </Container>
   );
 };
 
