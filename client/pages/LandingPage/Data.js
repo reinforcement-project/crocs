@@ -13,4 +13,4 @@ export const data = {
   img: require("../../images/undraw_connecting_teams.svg"),
   alt: "Credit Card",
   start: "",
-}
+};

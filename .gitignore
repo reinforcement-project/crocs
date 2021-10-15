@@ -1,5 +1,7 @@
 node_modules
 dist/
+.cache/
 .env
-.vscode
+.DS_Store
+.vscode/
 package-lock.json

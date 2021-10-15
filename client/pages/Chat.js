@@ -1,35 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
-import socket from '../socket';
-import './Chat.css';
-import genRoomId from '../utils/genRoomId';
+import React, { useEffect, useState } from "react";
+import socket from "../socket";
+import "./Chat.css";
+import genRoomId from "../utils/genRoomId";
 
-import formatDate from '../utils/formatDate';
+import formatDate from "../utils/formatDate";
 
 const Chat = ({ currentUser, recipient, setRecipient }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   // const [onlineUsers, setOnlineUsers] = useState([]);
 
-  socket.on('message', (message) => {
-    setMessages([...messages, JSON.parse(message)]);
-  });
-
-  socket.on('messages', (data) => {
-    const messages = JSON.parse(data);
-    // console.log('messages:', messages);
-    setMessages(messages);
-  });
-
-  // Connect to socket io on component mount
-  useEffect(async () => {
-    socket.auth = {
-      user: currentUser,
-      recipientEmail: recipient.email,
-    };
-    socket.connect();
-  }, []);
-
-  const closeChat = (e) => {
+  const closeChat = () => {
     setRecipient(null);
     socket.disconnect();
   };
@@ -49,9 +30,9 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
     setMessages([...messages, message]);
 
     // Send message to recipient
-    socket.emit('message', JSON.stringify(message));
+    socket.emit("message", JSON.stringify(message));
 
-    setText('');
+    setText("");
   };
 
   // SOCKET IO EVENT LISTENERS
@@ -60,10 +41,29 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
   //   setOnlineUsers(onlineUsers);
   // });
 
-  const messageList = messages.map(({ content, from, to, sentAt }, i) => {
+  socket.on("message", (message) => {
+    setMessages([...messages, JSON.parse(message)]);
+  });
+
+  socket.on("messages", (data) => {
+    const messages = JSON.parse(data);
+    // console.log('messages:', messages);
+    setMessages(messages);
+  });
+
+  // Connect to socket io on component mount
+  useEffect(async () => {
+    socket.auth = {
+      user: currentUser,
+      room: genRoomId(currentUser.email, recipient.email),
+    };
+    socket.connect();
+  }, []);
+
+  const messageList = messages.map(({ content, from, sentAt }, i) => {
     // Check if message is from current user
     const self = from === currentUser.email;
-    const side = self ? 'right' : 'left';
+    const side = self ? "right" : "left";
     const name = self ? currentUser.name : recipient.name;
 
     return (
@@ -84,7 +84,7 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
     <section className="msger">
       <header className="msger-header">
         <div className="msger-header-title">
-          <i className="fas fa-comment-alt"></i>{' '}
+          <i className="fas fa-comment-alt"></i>{" "}
           {recipient.name === currentUser ? currentUser.name : recipient.name}
         </div>
         <div onClick={closeChat} className="msgr-close">

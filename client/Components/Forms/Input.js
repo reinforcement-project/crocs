@@ -1,5 +1,4 @@
-import React from "react"
-import styled from "styled-components"
+import styled from "styled-components";
 
 const InputElement = styled.input`
   display: block;
@@ -15,12 +14,12 @@ const InputElement = styled.input`
     border-radius: 8px;
     outline: none;
   }
-`
+`;
 
 const Input = ({ type, placeholder, onChange }) => {
   return (
     <InputElement type={type} placeholder={placeholder} onChange={onChange} />
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

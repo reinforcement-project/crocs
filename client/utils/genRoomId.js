@@ -1,5 +1,5 @@
 const genRoomId = (...emails) => {
-  return emails.sort().join('');
+  return emails.sort().join("");
 };
 
 export default genRoomId;
