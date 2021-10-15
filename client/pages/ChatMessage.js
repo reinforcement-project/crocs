@@ -7,7 +7,8 @@ const MessageBubble = styled.div`
   padding: 15px;
   border-radius: ${(props) =>
     props.side === "right" ? "16px 16px 0px 16px" : "16px 16px 16px 0px"};
-  background: #ececec;
+  color: ${(props) => (props.side === "right" ? "white" : "#101728")};
+  background: ${(props) => (props.side === "right" ? "#7f56d9" : "#f2f4f7")}; ;
 `;
 const MessageInfo = styled.div`
   display: flex;
