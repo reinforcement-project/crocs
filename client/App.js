@@ -9,6 +9,7 @@ import GlobalStyles, { Loading } from './GlobalStyles';
 import './index.scss';
 import { CircularProgress } from '@material-ui/core';
 
+
 //lazy loading components to split bundle.js into chunks
 const Landing = lazy(() => import('./pages/LandingPage/Landing'));
 const MainPage = lazy(() => import('./pages/MainPage'));
@@ -122,4 +123,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App; 
