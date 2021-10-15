@@ -1,7 +1,7 @@
-import React from "react"
-import SettingsAdmin from "./SettingsAdmin"
-import SettingsReg from "./SettingsReg"
-import Navbar from "../../components/Navbar/Navbar"
+import PropTypes from "prop-types";
+import SettingsAdmin from "./SettingsAdmin";
+import SettingsReg from "./SettingsReg";
+import Navbar from "../../components/Navbar/Navbar";
 
 /*
 Renders Regular or Admin Settings based on admin prop from localStorage
@@ -9,8 +9,8 @@ that is set on successfull auth;
  */
 
 const Settings = (props) => {
-  const isAdmin = localStorage.getItem("admin")
-  const newMessage = localStorage.getItem("newMessage")
+  const isAdmin = localStorage.getItem("admin");
+  const newMessage = localStorage.getItem("newMessage");
 
   return (
     <div className="requestspage">
@@ -23,7 +23,10 @@ const Settings = (props) => {
       {isAdmin === "true" && <SettingsAdmin />}
       {isAdmin !== "true" && <SettingsReg />}
     </div>
-  )
-}
+  );
+};
 
-export default Settings
+Settings.propTypes = {
+  setAuth: PropTypes.func,
+};
+export default Settings;

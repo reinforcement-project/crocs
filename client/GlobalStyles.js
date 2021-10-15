@@ -1,5 +1,5 @@
 // GlobalStyles.js
-import styled, { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
 /* Box sizing rules */
 *,
@@ -77,7 +77,7 @@ select {
     scroll-behavior: auto !important;
   }
 }
-`
+`;
 
 export const Container = styled.div`
   z-index: 1;
@@ -91,7 +91,7 @@ export const Container = styled.div`
     padding-right: 30px;
     padding-left: 30px;
   }
-`
+`;
 
 export const Loading = styled.div`
   margin: 0;
@@ -99,6 +99,6 @@ export const Loading = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`
+`;
 
-export default GlobalStyles
+export default GlobalStyles;

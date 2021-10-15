@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { runForceGraph } from './ForceGraphGenerator';
-import styles from './forceGraph.module.css';
-import * as d3 from 'd3';
+import React, { useEffect } from "react";
+import { runForceGraph } from "./ForceGraphGenerator";
+import styles from "./forceGraph.module.css";
+import * as d3 from "d3";
 
 export function ForceGraph({
   skillsData,
@@ -18,7 +18,7 @@ export function ForceGraph({
   useEffect(() => {
     let destroyFn;
 
-    d3.select('svg').remove();
+    d3.select("svg").remove();
 
     if (containerRef.current) {
       const { destroy } = runForceGraph(
@@ -30,7 +30,7 @@ export function ForceGraph({
         getNodeInfo,
         setActiveStyle,
         activeStyle,
-        setRecipient,
+        setRecipient
       );
       destroyFn = destroy;
     }

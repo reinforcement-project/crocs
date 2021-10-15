@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 // Components
-import Input from './Input';
-import Label from './Label';
-import Button from '../Button/Button';
-import Form from './Form';
-import findSSIDCookie from '../../utils/findSSIDCookie';
+import Input from "./Input";
+import Label from "./Label";
+import Button from "../Button/Button";
+import Form from "./Form";
+import findSSIDCookie from "../../utils/findSSIDCookie";
 
 const Login = ({ setAuth, setCurrentUser }) => {
   //data to set initial state
@@ -31,10 +31,10 @@ const Login = ({ setAuth, setCurrentUser }) => {
   // if new messages available - set newMessage property in localStorage
   // get cookie and store in localStorage,
   const postLogin = async (loginData) => {
-    return fetch('/auth/login', {
-      method: 'POST',
+    return fetch("/auth/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(loginData),
     });
@@ -50,21 +50,21 @@ const Login = ({ setAuth, setCurrentUser }) => {
         setErrorOnLogin(true);
       } else if (loginResponse.hasLogged) {
         const ssidToken = findSSIDCookie(document.cookie);
-        localStorage.setItem('email', `${login.email}`);
+        localStorage.setItem("email", `${login.email}`);
         //! ////////////////////////////////////////////////////////////////
         setCurrentUser(loginResponse.userInfo);
         if (ssidToken) {
           // Set the token in Local Storage
-          localStorage.setItem('token', ssidToken);
+          localStorage.setItem("token", ssidToken);
           // Set the name in Local Storage
           localStorage.setItem(
-            'name',
-            `${loginResponse.userInfo.firstName} ${loginResponse.userInfo.lastName}`,
+            "name",
+            `${loginResponse.userInfo.firstName} ${loginResponse.userInfo.lastName}`
           );
         }
         // Set the state of the app to reflect administrative privileges
         if (loginResponse.userInfo.isAdmin) {
-          localStorage.setItem('admin', 'true');
+          localStorage.setItem("admin", "true");
         }
         // setAuth of in a parent component
         setAuth(true);
@@ -86,14 +86,18 @@ const Login = ({ setAuth, setCurrentUser }) => {
         <Input
           type="email"
           placeholder="me@you.com"
-          onChange={(e) => setLogin((login) => ({ ...login, email: e.target.value }))}
+          onChange={(e) =>
+            setLogin((login) => ({ ...login, email: e.target.value }))
+          }
         />
       </Label>
       <Label>
         Password:
         <Input
           type="password"
-          onChange={(e) => setLogin((login) => ({ ...login, password: e.target.value }))}
+          onChange={(e) =>
+            setLogin((login) => ({ ...login, password: e.target.value }))
+          }
         />
       </Label>
       <Button variant="submit" onClick={authorize}>
