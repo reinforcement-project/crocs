@@ -247,5 +247,4 @@ const SettingsReg = (props) => {
     </Container>
   );
 };
-
 export default SettingsReg;
