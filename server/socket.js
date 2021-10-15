@@ -24,24 +24,24 @@ io.use((socket, next) => {
 });
 
 io.on('connection', async (socket) => {
-  // * DEV: seeing if you connected
-  socket.emit('connected');
-
   const { user } = socket;
+
+  //
+  // Join personal room (so that you can send notifications to this socket)
+  socket.join(user._id);
 
   try {
     // A) Send new messages details
     const { newMessages } = await User.findById(user._id).select('newMessages');
-    // B)  If there are new messages, send them to socket client
+
     if (newMessages[0]) {
-      /* console.log(newMessages); */
+      // B) If there are new messages, send them to socket client
+      socket.emit('new messages', JSON.stringify(newMessages));
     }
 
+    //
     socket.on('connect to room', async (recipientEmail) => {
       // create room id using sender's and recipient's email
-      console.log(recipientEmail);
-      console.log('connected to room 👻. Recipient: ', recipientEmail);
-
       const room = genRoomId(recipientEmail, user.email);
 
       let chat;
@@ -83,6 +83,19 @@ io.on('connection', async (socket) => {
         // Send message to recipient
         socket.to(room).emit('message', JSON.stringify(message));
       });
+    });
+
+    socket.on('clicked new message', async (email) => {
+      // { $pull: { results: { $elemMatch: { score: 8 , item: "B" } } } }
+      await User.findOne({ email: socket.user.email }).exec(
+        async (err, user) => {
+          user.newMessages = user.newMessages.filter(
+            (newMessage) => newMessage.from != email,
+          );
+          const updatedUser = await user.save();
+          socket.emit('new messages', JSON.stringify(updatedUser.newMessages));
+        },
+      );
     });
   } catch (err) {
     console.log(err);

@@ -2,13 +2,13 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import useLocalStorage from './hooks/useLocalStorage';
 import NewMessages from './Components/NewMessages';
+import socket from './socket';
 
 // Styles
 import '@fontsource/inter';
 import GlobalStyles, { Loading } from './GlobalStyles';
 import './index.scss';
 import { CircularProgress } from '@material-ui/core';
-
 
 //lazy loading components to split bundle.js into chunks
 const Landing = lazy(() => import('./pages/LandingPage/Landing'));
@@ -23,16 +23,30 @@ const App = () => {
   const authToken = localStorage.getItem('token');
 
   const [isLoading, setIsLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useLocalStorage('user', {});
 
   // Do not change; default state must be null;
+  const [currentUser, setCurrentUser] = useLocalStorage('user', {});
+  const [newMessagesInfo, setNewMessagesInfo] = useLocalStorage(
+    'new-messages',
+    [],
+  );
   const [recipient, setRecipient] = useState(null);
+
   //verifying token from localStorage on mount and auth to avoid hacked localStorage
   //checked every time we refresh browser or load one of urls in browser
 
   useEffect(() => {
     fetchData();
   }, [auth]);
+
+  ////////////////////////////////////////
+  // Socket.io stuff 😎 💬
+  useEffect(() => {
+    socket.on('new messages', (data) => {
+      setNewMessagesInfo(JSON.parse(data));
+    });
+  }, []);
+  ////////////////////////////////////////
 
   const fetchData = async () => {
     try {
@@ -86,7 +100,11 @@ const App = () => {
               {auth ? (
                 <Redirect to="/main" />
               ) : (
-                <Landing setCurrentUser={setCurrentUser} auth={auth} setAuth={setAuth} />
+                <Landing
+                  setCurrentUser={setCurrentUser}
+                  auth={auth}
+                  setAuth={setAuth}
+                />
               )}
             </Route>
 
@@ -106,11 +124,20 @@ const App = () => {
             </Route>
 
             <Route exact path="/settings">
-              {auth ? <Settings auth={auth} setAuth={setAuth} /> : <Redirect to="/" />}
+              {auth ? (
+                <Settings auth={auth} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/" />
+              )}
             </Route>
 
             <Route exact path="/new-messages">
-              <NewMessages currentUser={currentUser} setRecipient={setRecipient} />
+              <NewMessages
+                currentUser={currentUser}
+                setRecipient={setRecipient}
+                newMessagesInfo={newMessagesInfo}
+                setNewMessagesInfo={setNewMessagesInfo}
+              />
             </Route>
 
             <Route path="/404" component={ErrorPage} />
@@ -123,4 +150,4 @@ const App = () => {
   );
 };
 
-export default App; 
+export default App;

@@ -1,0 +1,9 @@
+.NewMessages {
+  display: flex;
+  flex-direction: column;
+}
+
+.NewMessages--user {
+  cursor: pointer;
+  background-color: aqua;
+}

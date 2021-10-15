@@ -37,6 +37,7 @@ const userSchema = new Schema(
         from: {
           type: String,
           required: [true, 'Please provide email of message origin'],
+          unique: true,
         },
         name: { type: String, required: [true, 'The sender must have a name'] },
       },
