@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react"
-import SkillAdmin from "../../components/Skill/SkillAdmin"
+import React, { useEffect, useState } from "react";
+import SkillAdmin from "../../components/Skill/SkillAdmin";
 
-const SettingsAdmin = (props) => {
+const SettingsAdmin = () => {
   //handles all skills received on mount from fetch,
-  const [allSkills, setAllSkills] = useState([])
+  const [allSkills, setAllSkills] = useState([]);
   //holds newSkill state that is set on Change of input value;
-  const [newSkill, setNewSkill] = useState("")
+  const [newSkill, setNewSkill] = useState("");
   // state updates if newSkill is not set but submit clicked.
   // conditionally renders error div
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   //state updates if newSkill is already existing in list of allSkills
   //conditionally renders error div
-  const [errorExist, setErrorExist] = useState(false)
+  const [errorExist, setErrorExist] = useState(false);
 
   //triggers func to fetch all skills on mount
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (error === true) {
       setTimeout(() => {
-        setError(false)
-      }, 1500)
+        setError(false);
+      }, 1500);
     }
-  }, [error])
+  }, [error]);
 
   useEffect(() => {
     if (errorExist === true) {
       setTimeout(() => {
-        setErrorExist(false)
-      }, 1500)
+        setErrorExist(false);
+      }, 1500);
     }
-  }, [errorExist])
+  }, [errorExist]);
 
   // func to delete skill, triggered in SkillAdmin component,
   // receives new skills and sets state to hold all skills, rerenders component
@@ -45,33 +45,33 @@ const SettingsAdmin = (props) => {
           "Content-type": "application/json",
         },
         body: JSON.stringify({ skillName: arg }),
-      })
-      const newReq = await response.json()
-      newReq.sort((a, b) => (a.name > b.name ? 1 : -1))
+      });
+      const newReq = await response.json();
+      newReq.sort((a, b) => (a.name > b.name ? 1 : -1));
 
-      setAllSkills(newReq)
+      setAllSkills(newReq);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   // receives new skills and sets state to hold all skills, rerenders component on mount
   // sorts all skills in ascending order
   const fetchData = async () => {
     try {
-      const res = await fetch("/api/allSkills/all")
-      const response = await res.json()
-      console.log("skillsinsettings", response)
-      response.sort((a, b) => (a.name > b.name ? 1 : -1))
-      setAllSkills(response)
+      const res = await fetch("/api/allSkills/all");
+      const response = await res.json();
+      console.log("skillsinsettings", response);
+      response.sort((a, b) => (a.name > b.name ? 1 : -1));
+      setAllSkills(response);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const skillTyped = (e) => {
-    setNewSkill(e.target.value)
-  }
+    setNewSkill(e.target.value);
+  };
 
   // func to add skill, receives skill from state that is set as value of input on change
   // receives new skills and sets state to hold all skills, rerenders component
@@ -79,13 +79,13 @@ const SettingsAdmin = (props) => {
   const addSkill = async () => {
     try {
       if (!newSkill) {
-        setError(true)
-        return
+        setError(true);
+        return;
       }
       for (let i = 0; i < allSkills.length; i++) {
         if (allSkills[i].name.toLowerCase() === newSkill.toLowerCase()) {
-          setErrorExist(true)
-          return
+          setErrorExist(true);
+          return;
         }
       }
       const res = await fetch("api/addSkill", {
@@ -94,15 +94,15 @@ const SettingsAdmin = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ skillName: newSkill }),
-      })
+      });
 
-      const data = await res.json()
-      data.sort((a, b) => (a.name > b.name ? 1 : -1))
-      setAllSkills(data)
+      const data = await res.json();
+      data.sort((a, b) => (a.name > b.name ? 1 : -1));
+      setAllSkills(data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div className="admin-settings-internal">
@@ -117,7 +117,7 @@ const SettingsAdmin = (props) => {
                 handleClick={handleClick}
                 name={skill.name}
               />
-            )
+            );
           })}
         </div>
       </div>
@@ -152,7 +152,7 @@ const SettingsAdmin = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SettingsAdmin
+export default SettingsAdmin;

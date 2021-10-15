@@ -24,11 +24,12 @@ authController.verifyUser = async (req, res, next) => {
     // object specifying the fields to be requested from db
     const specifiedFields = {
       _id: 0,
+      name: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
       isAdmin: 1,
-      newMessage: 1,
+      newMessages: 1,
     };
 
     const verification = {
@@ -48,9 +49,9 @@ authController.verifyUser = async (req, res, next) => {
         verification.userInfo[key] = user[key];
       }
 
-      if (user.newMessage) {
-        await User.updateOne({ email }, { $set: { newMessage: false } });
-      }
+      // if (user.newMessages) {
+      //   await User.updateOne({ email }, { $set: { newMessages: false } });
+      // }
 
       res.locals.verification = verification;
       return next();
@@ -66,7 +67,7 @@ authController.createUser = async (req, res, next) => {
     const verification = {
       hasLogged: false,
     };
-    // console.log(req.body);
+
     if (!email || !password || !firstName || !lastName) {
       res.locals.verification = {
         hasLogged: 'empty',
@@ -96,16 +97,16 @@ authController.createUser = async (req, res, next) => {
       teach,
     };
 
-    // console.log('user doc submit:', userDoc);
     // object specifying the fields to be returned from db
     const specifiedFields = {
+      name: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
       isAdmin: 1,
-      newMessage: 1,
+      newMessages: 1,
     };
-    // console.log('hit db lines');
+
     const emailExist = await User.findOne({ email });
 
     if (emailExist) {
@@ -137,7 +138,7 @@ authController.createUser = async (req, res, next) => {
     }
 
     res.locals.verification = verification;
-    // console.log('verification: ', verification);
+
     return next();
   } catch (err) {
     return next(err);
@@ -153,7 +154,7 @@ authController.createSession = async (req, res, next) => {
     res.cookie('ssid', token, { maxAge: 300000 });
     return next();
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
@@ -162,7 +163,6 @@ authController.verifyToken = async (req, res, next) => {
     const token = req.body.token;
     const isToken = await jwt.verify(token, process.env.ID_SALT);
     if (isToken.id) {
-      console.log('isToken is', isToken);
       res.locals.tokenVerif = true;
 
       // const queryFilter = {

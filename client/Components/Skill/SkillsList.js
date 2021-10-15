@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react";
 
 /*
 component is rendered on MainPage;
@@ -6,39 +6,39 @@ onClick on button which is skill will fetch GraphData and pass it to parent comp
  */
 
 const SkillsList = (props) => {
-  const [allSkills, setAllSkills] = useState(props.skills)
-  const [classname, setClassName] = useState("skillslist-button")
-  const [selectedSkill, setSelectedSkill] = useState("")
+  const [allSkills, setAllSkills] = useState(props.skills);
+  const [classname, setClassName] = useState("skillslist-button");
+  const [selectedSkill, setSelectedSkill] = useState("");
 
   const handleClick = async (e) => {
     try {
       if (props.activeStyle === "text-inactive") {
-        props.setActiveStyle("text-active")
+        props.setActiveStyle("text-active");
       }
-      props.setSelectedUser({})
+      props.setSelectedUser({});
       if (selectedSkill !== e.target.id) {
-        setSelectedSkill(e.target.id)
-        const resp = await fetch("/api/nodes/" + e.target.id)
-        const data = await resp.json()
-        props.setGraphData(data)
+        setSelectedSkill(e.target.id);
+        const resp = await fetch("/api/nodes/" + e.target.id);
+        const data = await resp.json();
+        props.setGraphData(data);
       } else if (selectedSkill === e.target.id) {
-        setSelectedSkill("")
+        setSelectedSkill("");
         // props.setSelectedUser({});
-        const resp = await fetch("/api/nodes/all")
-        const data = await resp.json()
-        props.setGraphData(data)
+        const resp = await fetch("/api/nodes/all");
+        const data = await resp.json();
+        props.setGraphData(data);
       }
-      const container = document.querySelector(".skills-inner")
-      const buttons = container.querySelectorAll("button")
+      const container = document.querySelector(".skills-inner");
+      const buttons = container.querySelectorAll("button");
       buttons.forEach((button) => {
         button.id === e.target.id && button.className === classname
           ? (button.className = "skillslist-button-a")
-          : (button.className = classname)
-      })
+          : (button.className = classname);
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div className="skills-container">
@@ -60,7 +60,7 @@ const SkillsList = (props) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SkillsList
+export default SkillsList;

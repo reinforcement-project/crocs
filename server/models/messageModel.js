@@ -5,11 +5,11 @@ const messageSchema = new Schema(
   {
     from: {
       type: String,
-      required: [true, 'A message must have an origin'],
+      required: [true, 'Please provide email of origin'],
     },
     to: {
       type: String,
-      required: [true, 'A message must have a destination'],
+      required: [true, 'Please provide email of destination'],
     },
     content: { type: String, required: [true, 'Message cannot be empty'] },
     sentAt: {

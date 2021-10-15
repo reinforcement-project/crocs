@@ -1,5 +1,5 @@
-import React from "react"
-import styled from "styled-components"
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const GroupElement = styled.div`
   display: flex;
@@ -7,10 +7,14 @@ const GroupElement = styled.div`
   > * {
     margin-right: 8px;
   }
-`
+`;
 
 const ButtonGroup = ({ children }) => {
-  return <GroupElement>{children}</GroupElement>
-}
+  return <GroupElement>{children}</GroupElement>;
+};
 
-export default ButtonGroup
+ButtonGroup.propTypes = {
+  children: PropTypes.node,
+};
+
+export default ButtonGroup;
