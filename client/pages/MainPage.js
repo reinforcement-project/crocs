@@ -114,7 +114,7 @@ MainPage.propTypes = {
   setAuth: PropTypes.func,
   currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func,
-  recipient: PropTypes.string,
+  recipient: PropTypes.object,
   setRecipient: PropTypes.func,
 };
 

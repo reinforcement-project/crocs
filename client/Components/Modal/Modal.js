@@ -11,14 +11,21 @@ const ModalElement = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 `;
 const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
+  width: 80%;
+  height: 60%;
 `;
 const Modal = ({ close, children }) => {
   return (
     <ModalElement onClick={close}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>{children}</ModalContent>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        {children}
+      </ModalContent>
     </ModalElement>
   );
 };
