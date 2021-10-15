@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { InfoSec as Wrapper } from "../../pages/LandingPage/Landing.elements";
 
 // Styles
 const ModalElement = styled.div`
@@ -19,7 +20,13 @@ const ModalContent = styled.div`
   background-color: #fff;
   width: 80%;
   height: 60%;
+
+  ${Wrapper} & {
+    width: auto;
+    height: auto;
+  }
 `;
+
 const Modal = ({ close, children }) => {
   return (
     <ModalElement onClick={close}>
