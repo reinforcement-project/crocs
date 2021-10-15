@@ -34,7 +34,10 @@ const userSchema = new Schema(
     ],
     newMessages: [
       {
-        from: { type: String, required: [true, 'Please provide email of message origin'] },
+        from: {
+          type: String,
+          required: [true, 'Please provide email of message origin'],
+        },
         name: { type: String, required: [true, 'The sender must have a name'] },
       },
     ],
@@ -47,6 +50,7 @@ userSchema.pre('save', function (next) {
   this.firstName = capitalize(this.firstName);
   this.lastName = capitalize(this.lastName);
   this.name = `${this.firstName} ${this.lastName}`;
+  this.email = this.email.toLowerCase();
 
   next();
 });
