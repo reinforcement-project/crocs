@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import { Checkbox } from "./CheckboxSettings";
+import Input from "../../components/Forms/Input";
+import Button from "../../components/Button/Button";
 import styled from "styled-components";
 
 const SettingsReg = (props) => {
@@ -173,6 +175,10 @@ const SettingsReg = (props) => {
     color: #171717;
   `;
 
+  const InputGroup = styled.div`
+    display: flex;
+  `;
+
   const Paragraph = styled.p`
     color: #171717;
   `;
@@ -195,12 +201,17 @@ const SettingsReg = (props) => {
         {wrongEmail && <div>Please enter correct email</div>}
         <Grid>
           <Paragraph>Update your email here.</Paragraph>
-          <div>
-            <input type="text" placeholder={`${email}`} onChange={emailTyped} />
-            <button type="button" onClick={updateEmail}>
+          <InputGroup>
+            <Input
+              type="email"
+              variant="with-button"
+              placeholder={`${email}`}
+              onChange={emailTyped}
+            />
+            <Button type="button" size="small" onClick={updateEmail}>
               Update
-            </button>
-          </div>
+            </Button>
+          </InputGroup>
         </Grid>
       </div>
       <Gap />
