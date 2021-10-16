@@ -15,28 +15,23 @@ const ButtonStyled = styled.button`
   }
 `;
 
-const SkillButton = ({
-  setSelectedUser,
-  setGraphData,
-  setSelectedSkill,
-  selectedSkill,
-  children,
-}) => {
+const SkillButton = ({ setSelectedUser, setGraphData, children }) => {
   const [selected, setSelected] = useState(false);
 
   const handleClick = async (e) => {
-    const skill = e.target.innerHTML;
-    setSelected(!selected);
+    console.log("Clicked target ", e.currentTarget.parentElement);
     try {
+      const selectedSkill = e.target.innerHTML;
+      console.log("Selected skill ", selectedSkill);
       setSelectedUser({});
-      if (selectedSkill !== skill) {
-        setSelectedSkill(skill);
+      if (!selected) {
+        setSelected(true);
         // Filter the graph
-        const resp = await fetch("/api/nodes/" + skill);
+        const resp = await fetch("/api/nodes/" + selectedSkill);
         const data = await resp.json();
         setGraphData(data);
-      } else if (selectedSkill === skill) {
-        setSelectedSkill("");
+      } else {
+        setSelected(false);
         // Unfilter the graph
         const resp = await fetch("/api/nodes/all");
         const data = await resp.json();
