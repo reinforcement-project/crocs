@@ -1,65 +1,47 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+import SkillButton from "./SkillButtonMain";
 
 /*
 component is rendered on MainPage;
 onClick on button which is skill will fetch GraphData and pass it to parent component to rerender ForceGraph;
  */
+const SkillsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 0 20px 0;
+`;
+
+const SkillsInnerContainer = styled.div`
+  max-width: 800px;
+  max-height: 80px;
+  margin-top: 20px;
+`;
 
 const SkillsList = (props) => {
   const [allSkills, setAllSkills] = useState(props.skills);
   const [classname, setClassName] = useState("skillslist-button");
   const [selectedSkill, setSelectedSkill] = useState("");
 
-  const handleClick = async (e) => {
-    try {
-      if (props.activeStyle === "text-inactive") {
-        props.setActiveStyle("text-active");
-      }
-      props.setSelectedUser({});
-      if (selectedSkill !== e.target.id) {
-        setSelectedSkill(e.target.id);
-        const resp = await fetch("/api/nodes/" + e.target.id);
-        const data = await resp.json();
-        props.setGraphData(data);
-      } else if (selectedSkill === e.target.id) {
-        setSelectedSkill("");
-        // props.setSelectedUser({});
-        const resp = await fetch("/api/nodes/all");
-        const data = await resp.json();
-        props.setGraphData(data);
-      }
-      const container = document.querySelector(".skills-inner");
-      const buttons = container.querySelectorAll("button");
-      buttons.forEach((button) => {
-        button.id === e.target.id && button.className === classname
-          ? (button.className = "skillslist-button-a")
-          : (button.className = classname);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
-    <div className="skills-container">
-      <div className={props.activeStyle}>
-        Please select a skill to find out who can help you learn it
-      </div>
-
-      <div className="skills-inner">
+    <SkillsContainer>
+      <SkillsInnerContainer>
         {allSkills.map((skill) => (
-          <button
+          <SkillButton
             type="button"
             key={skill}
             id={skill}
-            onClick={handleClick}
-            className={classname}
+            setSelectedUser={props.setSelectedUser}
+            selectedSkill={selectedSkill}
+            setSelectedSkill={setSelectedSkill}
+            setGraphData={props.setGraphData}
           >
             {skill}
-          </button>
+          </SkillButton>
         ))}
-      </div>
-    </div>
+      </SkillsInnerContainer>
+    </SkillsContainer>
   );
 };
 

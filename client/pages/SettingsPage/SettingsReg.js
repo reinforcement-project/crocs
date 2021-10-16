@@ -147,105 +147,105 @@ const SettingsReg = (props) => {
     } catch (err) {
       console.log(err);
     }
-
-    const Grid = styled.div`
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr;
-      gap: 0px 20px;
-      grid-template-areas: ". .";
-    `;
-
-    const Gap = styled.hr`
-      margin-top: 40px;
-      margin-bottom: 40px;
-      border: 1px solid #d8ddfd;
-    `;
-
-    const PageHeading = styled.h1`
-      color: #171717;
-    `;
-
-    const SectionHeading = styled.h2`
-      color: #171717;
-    `;
-
-    const InputGroup = styled.div`
-      display: flex;
-    `;
-
-    const Paragraph = styled.p`
-      color: #171717;
-    `;
-
-    return (
-      <Container>
-        <div>
-          <PageHeading>Settings</PageHeading>
-          <Paragraph>
-            The adjustments made here will take effect as soon as they are set.
-          </Paragraph>
-        </div>
-        <Gap />
-        <div>
-          <SectionHeading>Email</SectionHeading>
-          {emailChange && <div>Email successfully updated</div>}
-          {errorEmail && (
-            <div>Technical error occured. Please contact Support</div>
-          )}
-          {wrongEmail && <div>Please enter correct email</div>}
-          <Grid>
-            <Paragraph>Update your email here.</Paragraph>
-            <InputGroup>
-              <Input
-                type="email"
-                variant="with-button"
-                placeholder={`${email}`}
-                onChange={emailTyped}
-              />
-              <Button type="button" size="small" onClick={updateEmail}>
-                Update
-              </Button>
-            </InputGroup>
-          </Grid>
-        </div>
-        <Gap />
-        <SectionHeading>Skills</SectionHeading>
-        <Grid>
-          <Paragraph>
-            Add or remove skills you would like to teach be checking the boxes.
-          </Paragraph>
-          <div>
-            {availableSkills.map((skill) => {
-              return (
-                <Checkbox
-                  type="checkbox"
-                  key={skill._id}
-                  email={email}
-                  setAvailableSkills={setAvailableSkills}
-                  setCurrentSkills={setCurrentSkills}
-                  label={skill.name}
-                />
-              );
-            })}
-            {currentSkills.map((skill) => {
-              return (
-                <Checkbox
-                  type="checkbox"
-                  key={skill._id}
-                  email={email}
-                  isChecked={true}
-                  setAvailableSkills={setAvailableSkills}
-                  setCurrentSkills={setCurrentSkills}
-                  label={skill.name}
-                />
-              );
-            })}
-          </div>
-        </Grid>
-      </Container>
-    );
   };
+
+  const Grid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 20px;
+    grid-template-areas: ". .";
+  `;
+
+  const Gap = styled.hr`
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border: 1px solid #f5f5f5;
+  `;
+
+  const PageHeading = styled.h1`
+    color: #171717;
+  `;
+
+  const SectionHeading = styled.h2`
+    color: #171717;
+  `;
+
+  const InputGroup = styled.div`
+    display: flex;
+  `;
+
+  const Paragraph = styled.p`
+    color: #171717;
+  `;
+
+  return (
+    <Container>
+      <div>
+        <PageHeading>Settings</PageHeading>
+        <Paragraph>
+          The adjustments made here will take effect as soon as they are set.
+        </Paragraph>
+      </div>
+      <Gap />
+      <div>
+        <SectionHeading>Email</SectionHeading>
+        {emailChange && <div>Email successfully updated</div>}
+        {errorEmail && (
+          <div>Technical error occured. Please contact Support</div>
+        )}
+        {wrongEmail && <div>Please enter correct email</div>}
+        <Grid>
+          <Paragraph>Update your email here.</Paragraph>
+          <InputGroup>
+            <Input
+              type="email"
+              variant="with-button"
+              placeholder={`${email}`}
+              onChange={emailTyped}
+            />
+            <Button type="button" size="small" onClick={updateEmail}>
+              Update
+            </Button>
+          </InputGroup>
+        </Grid>
+      </div>
+      <Gap />
+      <SectionHeading>Skills</SectionHeading>
+      <Grid>
+        <Paragraph>
+          Add or remove skills you would like to teach be checking the boxes.
+        </Paragraph>
+        <div>
+          {availableSkills.map((skill) => {
+            return (
+              <Checkbox
+                type="checkbox"
+                key={skill._id}
+                email={email}
+                setAvailableSkills={setAvailableSkills}
+                setCurrentSkills={setCurrentSkills}
+                label={skill.name}
+              />
+            );
+          })}
+          {currentSkills.map((skill) => {
+            return (
+              <Checkbox
+                type="checkbox"
+                key={skill._id}
+                email={email}
+                isChecked={true}
+                setAvailableSkills={setAvailableSkills}
+                setCurrentSkills={setCurrentSkills}
+                label={skill.name}
+              />
+            );
+          })}
+        </div>
+      </Grid>
+    </Container>
+  );
 };
 
 export default SettingsReg;
