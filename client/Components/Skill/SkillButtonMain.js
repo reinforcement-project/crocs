@@ -19,12 +19,11 @@ const SkillButton = ({ setSelectedUser, setGraphData, children }) => {
   const [selected, setSelected] = useState(false);
 
   const handleClick = async (e) => {
-    console.log("Clicked target ", e.currentTarget.parentElement);
     try {
       const selectedSkill = e.target.innerHTML;
-      console.log("Selected skill ", selectedSkill);
       setSelectedUser({});
-      if (!selected) {
+      if (!selected && children === selectedSkill) {
+        console.log("Selected skill ", selectedSkill);
         setSelected(true);
         // Filter the graph
         const resp = await fetch("/api/nodes/" + selectedSkill);
