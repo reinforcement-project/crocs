@@ -248,7 +248,7 @@ const SettingsAdmin = () => {
       </div>
       <Gap />
       <div>
-      <SectionHeading>Add Skills</SectionHeading>
+      <SectionHeading>Add Skills to App</SectionHeading>
       <Grid>  
         <Paragraph>
           To add a skill to the app, enter it here.
@@ -257,7 +257,7 @@ const SettingsAdmin = () => {
             <Input
               type="email"
               variant="with-button"
-              placeholder={`${email}`}
+              placeholder="ex: Jedi mind tricks"
               onChange={emailTyped}
             />
             <Button type="button" size="small" onClick={()=>{ console.log('new skill button added') }}>
@@ -267,10 +267,10 @@ const SettingsAdmin = () => {
       </Grid>
       </div>
       <Gap />
-      <SectionHeading>Remove a Skill</SectionHeading>
+      <SectionHeading>Remove Skills from App</SectionHeading>
       <Grid>  
         <Paragraph>
-          To remove a skill from the app, uncheck it below.
+          Select a skill to remove a skill from the app.
         </Paragraph>
         <div>  
           {allSkills.map((skill) => {
@@ -278,6 +278,7 @@ const SettingsAdmin = () => {
               <Checkbox
                 type="checkbox"
                 key={skill._id}
+                isChecked={false}
                 email={email}
                 label={skill.name}
               />
