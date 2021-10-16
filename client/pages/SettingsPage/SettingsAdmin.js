@@ -71,7 +71,7 @@ const SettingsAdmin = () => {
         setWrongEmail(false);
       }, 1500);
     }
-  }, [wrongEmail]);  
+  }, [wrongEmail]);
 
   // func to delete skill, triggered in SkillAdmin component,
   // receives new skills and sets state to hold all skills, rerenders component
@@ -195,7 +195,7 @@ const SettingsAdmin = () => {
   const Gap = styled.hr`
     margin-top: 40px;
     margin-bottom: 40px;
-    border: 1px solid #d8ddfd;
+    border: 1px solid #f5f5f5;
   `;
 
   const PageHeading = styled.h1`
@@ -217,7 +217,7 @@ const SettingsAdmin = () => {
   return (
     <Container>
       <div>
-        <br/>
+        <br />
         <PageHeading>Admin Settings</PageHeading>
         <Paragraph>
           The adjustments made here will take effect as soon as they are set.
@@ -248,11 +248,9 @@ const SettingsAdmin = () => {
       </div>
       <Gap />
       <div>
-      <SectionHeading>Add Skills to App</SectionHeading>
-      <Grid>  
-        <Paragraph>
-          To add a skill to the app, enter it here.
-        </Paragraph>
+        <SectionHeading>Add Skills to App</SectionHeading>
+        <Grid>
+          <Paragraph>To add a skill to the app, enter it here.</Paragraph>
           <InputGroup>
             <Input
               type="email"
@@ -260,19 +258,23 @@ const SettingsAdmin = () => {
               placeholder="ex: Jedi mind tricks"
               onChange={emailTyped}
             />
-            <Button type="button" size="small" onClick={()=>{ console.log('new skill button added') }}>
+            <Button
+              type="button"
+              size="small"
+              onClick={() => {
+                console.log("new skill button added");
+              }}
+            >
               Update
             </Button>
           </InputGroup>
-      </Grid>
+        </Grid>
       </div>
       <Gap />
       <SectionHeading>Remove Skills from App</SectionHeading>
-      <Grid>  
-        <Paragraph>
-          Select a skill to remove a skill from the app.
-        </Paragraph>
-        <div>  
+      <Grid>
+        <Paragraph>Select a skill to remove a skill from the app.</Paragraph>
+        <div>
           {allSkills.map((skill) => {
             return (
               <Checkbox
