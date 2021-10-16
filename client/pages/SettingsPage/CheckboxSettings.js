@@ -52,17 +52,18 @@ const LabelSpan = styled.span`
   color: black;
 `;
 
-export const Checkbox = ({
-  setAvailableSkills,
-  setCurrentSkills,
-  email,
-  label,
-  isChecked,
-}) => {
+//   {
+//   setAvailableSkills,
+//   setCurrentSkills,
+//   email,
+//   label,
+//   isChecked,
+// }
+export const Checkbox = (props) => {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    if (isChecked) setChecked(true);
+    if (props.isChecked) setChecked(true);
   }, []);
 
   // const skillButtonClick = () => {
@@ -86,7 +87,7 @@ export const Checkbox = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ skillName: arg, email: email }),
+        body: JSON.stringify({ skillName: arg, email: props.email }),
       });
       const response = await res.json();
       console.log("Response from add new skill ", response);
@@ -96,7 +97,7 @@ export const Checkbox = ({
       const userCurrentSkills = [];
       for (let i = 0; i < response.length; i++) {
         for (let j = 0; j < response[i].teachers.length; j++) {
-          if (response[i].teachers[j].email === email) {
+          if (response[i].teachers[j].email === props.email) {
             userCurrentSkills.push(response[i]);
             break;
           }
@@ -110,8 +111,8 @@ export const Checkbox = ({
           userAvailableSkills.push(response[i]);
         }
       }
-      setAvailableSkills(userAvailableSkills);
-      setCurrentSkills(userCurrentSkills);
+      props.setAvailableSkills(userAvailableSkills);
+      props.setCurrentSkills(userCurrentSkills);
     } catch (err) {
       console.log(err);
     }
@@ -124,7 +125,7 @@ export const Checkbox = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ skillName: arg, email: email }),
+        body: JSON.stringify({ skillName: arg, email: props.email }),
       });
       const response = await res.json();
       response.sort((a, b) => (a.name > b.name ? 1 : -1));
@@ -133,7 +134,7 @@ export const Checkbox = ({
       const userCurrentSkills = [];
       for (let i = 0; i < response.length; i++) {
         for (let j = 0; j < response[i].teachers.length; j++) {
-          if (response[i].teachers[j].email === email) {
+          if (response[i].teachers[j].email === props.email) {
             userCurrentSkills.push(response[i]);
             break;
           }
@@ -147,8 +148,8 @@ export const Checkbox = ({
           userAvailableSkills.push(response[i]);
         }
       }
-      setAvailableSkills(userAvailableSkills);
-      setCurrentSkills(userCurrentSkills);
+      props.setAvailableSkills(userAvailableSkills);
+      props.setCurrentSkills(userCurrentSkills);
     } catch (err) {
       console.log(err);
     }
@@ -156,9 +157,9 @@ export const Checkbox = ({
 
   const handleChange = () => {
     if (checked) {
-      deleteUserSkill(label);
+      deleteUserSkill(props.label);
     } else {
-      addNewSkill(label);
+      addNewSkill(props.label);
     }
     setChecked(!checked);
   };
@@ -189,7 +190,7 @@ export const Checkbox = ({
             </svg>
           </CheckboxControl>
         </CheckboxSpan>
-        <LabelSpan>{label}</LabelSpan>
+        <LabelSpan>{props.label}</LabelSpan>
       </CheckboxWrapper>
     </>
   );
