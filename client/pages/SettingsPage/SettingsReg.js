@@ -183,6 +183,7 @@ const SettingsReg = (props) => {
   return (
     <Container>
       <div>
+        <br />
         <PageHeading>Settings</PageHeading>
         <Paragraph>
           The adjustments made here will take effect as soon as they are set.
