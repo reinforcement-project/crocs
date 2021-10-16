@@ -1,15 +1,62 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
-import socket from '../socket';
-import './Chat.css';
-import genRoomId from '../utils/genRoomId';
+import React, { useEffect, useState } from "react";
+import socket from "../socket";
+import styled from "styled-components";
+import Modal from "../components/Modal/Modal";
+import { ChatMessageList } from "./ChatMessageList";
+import { ChatMessage } from "./ChatMessage";
+import { X } from "react-feather";
 
-import formatDate from '../utils/formatDate';
+const MsgerHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 2px solid #ddd;
+  background: #eee;
+  color: #666;
+`;
+
+const Close = styled.span`
+  margin-right: 4px;
+  cursor: pointer;
+  color: #666;
+`;
+
+const InputArea = styled.form`
+  display: flex;
+  padding: 10px;
+  border-top: var(--border);
+  background: #eee;
+
+  & * {
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+  }
+`;
+
+const MessageInput = styled.input`
+  flex: 1;
+  background: #ddd;
+`;
+
+const SendButton = styled.button`
+  margin-left: 10px;
+  background: rgb(0, 196, 65);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.23s;
+
+  &:hover {
+    background: rgb(0, 180, 50);
+  }
+`;
 
 const Chat = ({ currentUser, recipient, setRecipient }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
-  // const [onlineUsers, setOnlineUsers] = useState([]);
 
   const closeChat = () => {
     setRecipient(null);
@@ -31,9 +78,9 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
     setMessages([...messages, message]);
 
     // Send message to recipient
-    socket.emit('message', JSON.stringify(message));
+    socket.emit("message", JSON.stringify(message));
 
-    setText('');
+    setText("");
   };
 
   // SOCKET IO EVENT LISTENERS
@@ -41,12 +88,11 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
   // socket.on('online users', (onlineUsers) => {
   //   setOnlineUsers(onlineUsers);
   // });
-
-  socket.on('message', (message) => {
+  socket.on("message", (message) => {
     setMessages([...messages, JSON.parse(message)]);
   });
 
-  socket.on('messages', (data) => {
+  socket.on("messages", (data) => {
     const messages = JSON.parse(data);
     // console.log('messages:', messages);
     setMessages(messages);
@@ -54,67 +100,56 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
 
   // Connect to socket io on component mount
   useEffect(async () => {
-    console.log('in useEffect chat.js')
+    console.log("in useEffect chat.js");
     socket.auth = {
       recipientEmail: recipient.email,
       user: currentUser,
     };
-    console.log('users in zoom',currentUser.email,recipient.email);
+    console.log("users in zoom", currentUser.email, recipient.email);
     socket.connect();
   }, []);
 
-  const messageList = messages.map(({ content, from, sentAt }, i) => {
-    // Check if message is from current user
-    const self = from === currentUser.email;
-    const side = self ? 'right' : 'left';
-    const name = self ? currentUser.name : recipient.name;
-
-    return (
-      <div key={i} className={`msg ${side}-msg`}>
-        <div className="msg-bubble">
-          <div className="msg-info">
-            <div className="msg-info-name">{name}</div>
-            <div className="msg-info-time">{formatDate(sentAt)}</div>
-          </div>
-
-          <div className="msg-text">{content}</div>
-        </div>
-      </div>
-    );
-  });
-
   return (
-    <section className="msger">
-      <header className="msger-header">
-        <div className="msger-header-title">
-          <i className="fas fa-comment-alt"></i>{' '}
+    <Modal>
+      {/* Header section */}
+      <MsgerHeader>
+        <div>
           {recipient.name === currentUser ? currentUser.name : recipient.name}
         </div>
-        <div onClick={closeChat} className="msgr-close">
-          <ion-icon name="close"></ion-icon>
-        </div>
-        {/* <div className="msger-header-options">
-          <span>
-            <i className="fas fa-cog"></i>
-          </span>
-        </div> */}
-      </header>
-
-      <main className="msger-chat">{messageList}</main>
-
-      <form className="msger-inputarea" onSubmit={handleSubmit}>
-        <input
+        <Close
+          onClick={closeChat}
+          onKeyDown={closeChat}
+          role="button"
+          tabIndex={0}
+        >
+          <X />
+        </Close>
+      </MsgerHeader>
+      {/* Message section */}
+      <ChatMessageList>
+        {messages.map((message, i) => {
+          return (
+            <ChatMessage
+              message={message}
+              key={i}
+              index={i}
+              currentUser={currentUser}
+              recipient={recipient}
+            />
+          );
+        })}
+      </ChatMessageList>
+      {/* Input area section */}
+      <InputArea onSubmit={handleSubmit}>
+        <MessageInput
           value={text}
           onChange={(e) => setText(e.target.value)}
           type="text"
-          className="msger-input"
           placeholder="Enter your message..."
         />
-        <button type="submit" className="msger-send-btn">
-          Send
-        </button>
-      </form>
-    </section>
+        <SendButton>Send</SendButton>
+      </InputArea>
+    </Modal>
   );
 };
 
