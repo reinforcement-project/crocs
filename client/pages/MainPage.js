@@ -13,7 +13,6 @@ const MainPage = (props) => {
   const [selectedUser, setSelectedUser] = useState({});
   //state to hold all data fetched on mount and passed to ForceGraph
   const [graphData, setGraphData] = useState({});
-  console.log("Checking graph data on MainPage ", graphData);
   const [isLoading, setIsLoading] = useState(true);
   const [activeStyle, setActiveStyle] = useState("text-active");
   // checking if user has new messages/requests in localStorage
@@ -89,8 +88,6 @@ const MainPage = (props) => {
                 selectedUser={selectedUser}
                 skills={graphData.skills}
                 setGraphData={setGraphData}
-                activeStyle={activeStyle}
-                setActiveStyle={setActiveStyle}
               />
               <ForceGraph
                 setRecipient={props.setRecipient}
@@ -114,7 +111,7 @@ MainPage.propTypes = {
   setAuth: PropTypes.func,
   currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func,
-  recipient: PropTypes.string,
+  recipient: PropTypes.object,
   setRecipient: PropTypes.func,
 };
 

@@ -146,6 +146,7 @@ const SettingsReg = (props) => {
       }
     } catch (err) {
       console.log(err);
+    }
   };
 
   const Grid = styled.div`
@@ -159,10 +160,11 @@ const SettingsReg = (props) => {
   const Gap = styled.hr`
     margin-top: 40px;
     margin-bottom: 40px;
-    border: 1px solid #d8ddfd;
+    border: 1px solid #f5f5f5;
   `;
 
   const PageHeading = styled.h1`
+    margin-top: 40px;
     color: #171717;
   `;
 
@@ -181,6 +183,7 @@ const SettingsReg = (props) => {
   return (
     <Container>
       <div>
+        <br />
         <PageHeading>Settings</PageHeading>
         <Paragraph>
           The adjustments made here will take effect as soon as they are set.
