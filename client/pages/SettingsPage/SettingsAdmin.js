@@ -107,7 +107,7 @@ const SettingsAdmin = () => {
   return (
     <div className="admin-settings-internal">
       <div className="admin-settings-skills">
-        <div className="form-title">LIST OF SKILLS</div>
+        <div className="form-title">SKILLS AVAILABLE TO USERS</div>
         <div className="listofskills">
           {allSkills.map((skill) => {
             return (
@@ -123,7 +123,7 @@ const SettingsAdmin = () => {
       </div>
       <div className="admin-settings-addskill">
         <div className="admin-settings-addcontainer">
-          <div className="form-title">ADD NEW SKILL</div>
+          <div className="form-title">CREATE A SKILL</div>
           {error && (
             <div className="skill-add-error">
               Please enter skill to add to the system
@@ -138,7 +138,7 @@ const SettingsAdmin = () => {
             <input
               type="text"
               className="form-control-admin"
-              placeholder="Enter skill"
+              placeholder="Type a skill"
               onChange={skillTyped}
             />
             <button
