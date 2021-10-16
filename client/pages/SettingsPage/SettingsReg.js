@@ -164,6 +164,7 @@ const SettingsReg = (props) => {
   `;
 
   const PageHeading = styled.h1`
+    margin-top: 40px;
     color: #171717;
   `;
 
