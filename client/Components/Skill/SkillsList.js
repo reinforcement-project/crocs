@@ -28,18 +28,15 @@ const SkillsList = (props) => {
       hydrateSkills[skill] = false;
     }
     setSkillSelection(hydrateSkills);
-    console.log("Hydration ", hydrateSkills);
-    console.log("Skill state ", skillSelection);
   }, []);
 
   const handleClick = async (e) => {
     const selectedSkill = e.target.innerHTML;
     try {
-      // props.setSelectedUser({});
+      // If the selected skill doesn't have the value true, we need to set all other skills to false, but set it to true.
       if (!skillSelection[selectedSkill]) {
         setSkillSelection((prevState) => {
           for (let skill in prevState) {
-            console.log(skill === selectedSkill ? true : false);
             if (skill === selectedSkill) {
               prevState[skill] = true;
             } else {
@@ -52,7 +49,9 @@ const SkillsList = (props) => {
         const resp = await fetch("/api/nodes/" + selectedSkill);
         const data = await resp.json();
         props.setGraphData(data);
-      } else if (skillSelection[selectedSkill]) {
+      }
+      // If the selected skill does have the value true, we need to set all of the skills to false.
+      else if (skillSelection[selectedSkill]) {
         setSkillSelection((prevState) => {
           for (let skill in prevState) {
             prevState[skill] = false;
