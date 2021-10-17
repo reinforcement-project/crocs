@@ -10,7 +10,8 @@ export function runForceGraph(
   getNodeInfo,
   setActiveStyle,
   activeStyle,
-  setRecipient
+  setRecipient,
+  setIsChat
 ) {
   // D3 requires an array of links and nodes for the force graph.
   const links = linksData.map((d) => Object.assign({}, d));
@@ -149,6 +150,7 @@ export function runForceGraph(
     })
     .on("click", (d) => {
       setRecipient(d);
+      setIsChat(true);
       showMessageContainer(getNodeInfo, d);
     });
 

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import socket from "../socket";
 import styled from "styled-components";
-import Modal from "../components/Modal/Modal";
 import { ChatMessageList } from "./ChatMessageList";
 import { ChatMessage } from "./ChatMessage";
 import { X } from "react-feather";
@@ -110,7 +109,7 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
   }, []);
 
   return (
-    <Modal>
+    <div>
       {/* Header section */}
       <MsgerHeader>
         <div>
@@ -149,7 +148,7 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
         />
         <SendButton>Send</SendButton>
       </InputArea>
-    </Modal>
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ export function ForceGraph({
   setActiveStyle,
   activeStyle,
   setRecipient,
+  setIsChat,
 }) {
   const containerRef = React.useRef(null);
 
@@ -30,7 +31,8 @@ export function ForceGraph({
         getNodeInfo,
         setActiveStyle,
         activeStyle,
-        setRecipient
+        setRecipient,
+        setIsChat
       );
       destroyFn = destroy;
     }

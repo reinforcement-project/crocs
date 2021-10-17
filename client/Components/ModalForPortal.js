@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { InfoSec as Wrapper } from "../pages/LandingPage/Landing.elements";
+import MainPage from "../pages/MainPage";
 // import "wicg-inert";
 
 import Portal from "./Portal";

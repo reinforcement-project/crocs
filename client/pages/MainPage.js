@@ -5,6 +5,7 @@ import { ForceGraph } from "../components/ForceGraph/ForceGraph";
 import { CircularProgress } from "@material-ui/core";
 import SkillsList from "../components/Skill/SkillsList";
 import Navbar from "../components/Navbar/Navbar";
+import Modal from "../components/ModalForPortal";
 import Chat from "./Chat";
 
 const MainPage = (props) => {
@@ -15,6 +16,8 @@ const MainPage = (props) => {
   const [graphData, setGraphData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [activeStyle, setActiveStyle] = useState("text-active");
+  const [isChat, setIsChat] = React.useState(false);
+  console.log("isChat from Main Page ", isChat);
   // checking if user has new messages/requests in localStorage
   // stored upon successful auth
   const newMessage = localStorage.getItem("newMessage");
@@ -67,11 +70,18 @@ const MainPage = (props) => {
       />
 
       {props.recipient && (
-        <Chat
-          currentUser={props.currentUser}
-          recipient={props.recipient}
-          setRecipient={props.setRecipient}
-        />
+        <Modal
+          onClose={() => {
+            setIsChat(false);
+          }}
+          open={isChat}
+        >
+          <Chat
+            currentUser={props.currentUser}
+            recipient={props.recipient}
+            setRecipient={props.setRecipient}
+          />
+        </Modal>
       )}
 
       {isLoading && (
@@ -98,6 +108,7 @@ const MainPage = (props) => {
                 getNodeInfo={getNodeInfo}
                 setActiveStyle={setActiveStyle}
                 activeStyle={activeStyle}
+                setIsChat={setIsChat}
               />
             </>
           )}
