@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { data } from "./Data";
 import Button from "../../components/Button/Button";
 import ButtonGroup from "../../components/Button/ButtonGroup";
-import Modal from "../../components/Modal/Modal";
 import Login from "../../components/Forms/Login";
 import Signup from "../../components/Forms/Signup";
 import { Container } from "../../GlobalStyles";
+import Modal from "../../components/ModalForPortal";
 import {
   InfoSec,
   InfoRow,
@@ -20,25 +20,11 @@ import {
 } from "./Landing.elements";
 
 function Landing({ auth, setAuth, setCurrentUser }) {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [isSignUp, setIsSignUp] = React.useState(false);
   return (
     <>
       <InfoSec lightBg={data.lightBg}>
-        {showLoginModal && (
-          <Modal close={() => setShowLoginModal(false)}>
-            <Login setCurrentUser={setCurrentUser} setAuth={setAuth}></Login>
-          </Modal>
-        )}
-        {showRegistrationModal && (
-          <Modal close={() => setShowRegistrationModal(false)}>
-            <Signup
-              setCurrentUser={setCurrentUser}
-              auth={auth}
-              setAuth={setAuth}
-            ></Signup>
-          </Modal>
-        )}
         <Container>
           <InfoRow imgStart={data.imgStart}>
             <InfoColumn>
@@ -52,19 +38,46 @@ function Landing({ auth, setAuth, setCurrentUser }) {
                 </Subtitle>
                 <ButtonGroup>
                   <Button
-                    onClick={() => setShowLoginModal(true)}
+                    onClick={() => {
+                      setIsLogin(true);
+                    }}
                     variant="fill"
                     size="medium"
                   >
                     Login
                   </Button>
+                  <Modal
+                    onClose={() => {
+                      setIsLogin(false);
+                    }}
+                    open={isLogin}
+                  >
+                    <Login
+                      setCurrentUser={setCurrentUser}
+                      setAuth={setAuth}
+                    ></Login>
+                  </Modal>
                   <Button
-                    onClick={() => setShowRegistrationModal(true)}
+                    onClick={() => {
+                      setIsSignUp(true);
+                    }}
                     variant="fill"
                     size="medium"
                   >
                     Sign Up
                   </Button>
+                  <Modal
+                    onClose={() => {
+                      setIsSignUp(false);
+                    }}
+                    open={isSignUp}
+                  >
+                    <Signup
+                      setCurrentUser={setCurrentUser}
+                      auth={auth}
+                      setAuth={setAuth}
+                    ></Signup>
+                  </Modal>
                 </ButtonGroup>
               </TextWrapper>
             </InfoColumn>
