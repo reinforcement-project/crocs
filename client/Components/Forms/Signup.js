@@ -34,6 +34,7 @@ const Signup = ({ setAuth, setCurrentUser }) => {
   useEffect(() => {
     fetchData();
   }, []);
+
   const fetchData = async () => {
     try {
       const res = await fetch("/api/allSkills/all");

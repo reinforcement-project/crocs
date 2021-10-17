@@ -15,32 +15,7 @@ const ButtonStyled = styled.button`
   }
 `;
 
-const SkillButton = ({ setSelectedUser, setGraphData, children }) => {
-  const [selected, setSelected] = useState(false);
-
-  const handleClick = async (e) => {
-    try {
-      const selectedSkill = e.target.innerHTML;
-      setSelectedUser({});
-      if (!selected && children === selectedSkill) {
-        console.log("Selected skill ", selectedSkill);
-        setSelected(true);
-        // Filter the graph
-        const resp = await fetch("/api/nodes/" + selectedSkill);
-        const data = await resp.json();
-        setGraphData(data);
-      } else {
-        setSelected(false);
-        // Unfilter the graph
-        const resp = await fetch("/api/nodes/all");
-        const data = await resp.json();
-        setGraphData(data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+const SkillButton = ({ selected, handleClick, children }) => {
   return (
     <ButtonStyled selected={selected} onClick={handleClick}>
       {children}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SkillButton from "./SkillButtonMain";
 
@@ -20,6 +20,54 @@ const SkillsInnerContainer = styled.div`
 
 const SkillsList = (props) => {
   const [allSkills, setAllSkills] = useState(props.skills);
+  const [skillSelection, setSkillSelection] = useState({});
+
+  useEffect(() => {
+    const hydrateSkills = {};
+    for (let skill of allSkills) {
+      hydrateSkills[skill] = false;
+    }
+    setSkillSelection(hydrateSkills);
+    console.log("Hydration ", hydrateSkills);
+    console.log("Skill state ", skillSelection);
+  }, []);
+
+  const handleClick = async (e) => {
+    const selectedSkill = e.target.innerHTML;
+    try {
+      // props.setSelectedUser({});
+      if (!skillSelection[selectedSkill]) {
+        setSkillSelection((prevState) => {
+          for (let skill in prevState) {
+            console.log(skill === selectedSkill ? true : false);
+            if (skill === selectedSkill) {
+              prevState[skill] = true;
+            } else {
+              prevState[skill] = false;
+            }
+          }
+          return prevState;
+        });
+        // Filter the graph
+        const resp = await fetch("/api/nodes/" + selectedSkill);
+        const data = await resp.json();
+        props.setGraphData(data);
+      } else if (skillSelection[selectedSkill]) {
+        setSkillSelection((prevState) => {
+          for (let skill in prevState) {
+            prevState[skill] = false;
+          }
+          return prevState;
+        });
+        // Unfilter the graph
+        const resp = await fetch("/api/nodes/all");
+        const data = await resp.json();
+        props.setGraphData(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <SkillsContainer>
@@ -31,6 +79,8 @@ const SkillsList = (props) => {
             id={skill}
             setSelectedUser={props.setSelectedUser}
             setGraphData={props.setGraphData}
+            handleClick={handleClick}
+            selected={skillSelection[skill]}
           >
             {skill}
           </SkillButton>
