@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox } from "./CheckboxSettings";
-import Input from "../../component/Forms/Input";
+// import Input from "../../component/Forms/Input";
 import Button from "../../component/Button/Button";
 import { Container } from "../../GlobalStyles";
 import styled from "styled-components";
@@ -72,33 +72,8 @@ const SettingsAdmin = () => {
     }
   }, [wrongEmail]);
 
-  // func to delete skill, triggered in SkillAdmin component,
-  // receives new skills and sets state to hold all skills, rerenders component
-  // sorts all skills in ascending order
-  const handleClick = async (arg) => {
-    try {
-      const response = await fetch("/api/delSkill", {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ skillName: arg }),
-      });
-      const newReq = await response.json();
-      newReq.sort((a, b) => (a.name > b.name ? 1 : -1));
-
-      setAllSkills(newReq);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleEmailChange = (e) => {
-    if (e.target.value === "") {
-      setEmail(localStorage.getItem("email"));
-    } else {
-      setEmail(e.target.value);
-    }
+    setEmail(e.target.value);
   };
 
   const updateEmail = async () => {
@@ -123,7 +98,7 @@ const SettingsAdmin = () => {
         localStorage.setItem("email", email);
         setEmailChange(true);
         setEmail(email);
-        document.getElementsByClassName("change-email-form")[0].reset();
+        // document.getElementsByClassName("change-email-form")[0].reset();
       } else {
         setErrorEmail(true);
       }
@@ -181,37 +156,7 @@ const SettingsAdmin = () => {
     }
   };
 
-  const Grid = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 0px 20px;
-    grid-template-areas: ". .";
-  `;
-
-  const Gap = styled.hr`
-    margin-top: 40px;
-    margin-bottom: 40px;
-    border: 1px solid #f5f5f5;
-  `;
-
-  const PageHeading = styled.h1`
-    color: #171717;
-  `;
-
-  const SectionHeading = styled.h2`
-    color: #171717;
-  `;
-
-  const InputGroup = styled.div`
-    display: flex;
-  `;
-
-  const Paragraph = styled.p`
-    color: #171717;
-  `;
-
-  console.log("email set ", email);
+  console.log("ADMIN PAGE RENDERED");
 
   return (
     <Container>
@@ -233,11 +178,11 @@ const SettingsAdmin = () => {
         <Grid>
           <Paragraph>Update your email here.</Paragraph>
           <InputGroup>
-            <Input
+            <InputElement
               type="email"
               variant="with-button"
               placeholder={email}
-              onChange={(e) => handleEmailChange(e)}
+              onChange={handleEmailChange}
             />
             <Button type="button" size="small" onClick={updateEmail}>
               Update
@@ -251,7 +196,7 @@ const SettingsAdmin = () => {
         <Grid>
           <Paragraph>To add a skill to the app, enter it here.</Paragraph>
           <InputGroup>
-            <Input
+            <InputElement
               type="text"
               variant="with-button"
               placeholder="ex: Jedi mind tricks"
@@ -332,5 +277,52 @@ const SettingsAdmin = () => {
 //     </div>
 //   </div>
 // </div>
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 20px;
+  grid-template-areas: ". .";
+`;
+
+const Gap = styled.hr`
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border: 1px solid #f5f5f5;
+`;
+
+const PageHeading = styled.h1`
+  color: #171717;
+`;
+
+const SectionHeading = styled.h2`
+  color: #171717;
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+`;
+
+const Paragraph = styled.p`
+  color: #171717;
+`;
+
+const InputElement = styled.input`
+  display: block;
+  width: 100%;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-right: ${(props) => (props.variant === "with-button" ? "8px" : "0px")};
+
+  &:focus {
+    border: 1px solid #d6bbfb;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f4ebff;
+    border-radius: 8px;
+    outline: none;
+  }
+`;
 
 export default SettingsAdmin;
