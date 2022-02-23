@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox } from "./CheckboxSettings";
-import Input from "../../components/Forms/Input";
-import Button from "../../components/Button/Button";
+import Input from "../../component/Forms/Input";
+import Button from "../../component/Button/Button";
 import { Container } from "../../GlobalStyles";
 import styled from "styled-components";
 
@@ -18,9 +18,8 @@ const SettingsAdmin = () => {
   const [errorExist, setErrorExist] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [wrongEmail, setWrongEmail] = useState(false);
-  const [email, setNewEmail] = useState(localStorage.getItem("email"));
+  const [email, setEmail] = useState(() => localStorage.getItem("email"));
   const [emailChange, setEmailChange] = useState(false);
-
   // email validation func, returns boolean;
   function validateEmail(str) {
     const re =
@@ -94,11 +93,11 @@ const SettingsAdmin = () => {
     }
   };
 
-  const emailTyped = (e) => {
+  const handleEmailChange = (e) => {
     if (e.target.value === "") {
-      setNewEmail(localStorage.getItem("email"));
+      setEmail(localStorage.getItem("email"));
     } else {
-      setNewEmail(e.target.value);
+      setEmail(e.target.value);
     }
   };
 
@@ -119,13 +118,11 @@ const SettingsAdmin = () => {
         }),
       });
       const data = await res.json();
-      console.log("data:", data);
       if (data === true) {
-        console.log("update local and state email");
         localStorage.removeItem("email");
         localStorage.setItem("email", email);
         setEmailChange(true);
-        setNewEmail(email);
+        setEmail(email);
         document.getElementsByClassName("change-email-form")[0].reset();
       } else {
         setErrorEmail(true);
@@ -149,14 +146,14 @@ const SettingsAdmin = () => {
     }
   };
 
-  const skillTyped = (e) => {
+  const handleSkillChange = (e) => {
     setNewSkill(e.target.value);
   };
 
   // func to add skill, receives skill from state that is set as value of input on change
   // receives new skills and sets state to hold all skills, rerenders component
   // sorts all skills in ascending order
-  const addSkill = async () => {
+  const handleUpdateSkill = async () => {
     try {
       if (!newSkill) {
         setError(true);
@@ -214,6 +211,8 @@ const SettingsAdmin = () => {
     color: #171717;
   `;
 
+  console.log("email set ", email);
+
   return (
     <Container>
       <div>
@@ -237,8 +236,8 @@ const SettingsAdmin = () => {
             <Input
               type="email"
               variant="with-button"
-              placeholder={`${email}`}
-              onChange={emailTyped}
+              placeholder={email}
+              onChange={(e) => handleEmailChange(e)}
             />
             <Button type="button" size="small" onClick={updateEmail}>
               Update
@@ -253,18 +252,12 @@ const SettingsAdmin = () => {
           <Paragraph>To add a skill to the app, enter it here.</Paragraph>
           <InputGroup>
             <Input
-              type="email"
+              type="text"
               variant="with-button"
               placeholder="ex: Jedi mind tricks"
-              onChange={emailTyped}
+              onChange={handleSkillChange}
             />
-            <Button
-              type="button"
-              size="small"
-              onClick={() => {
-                console.log("new skill button added");
-              }}
-            >
+            <Button type="button" size="small" onClick={handleUpdateSkill}>
               Update
             </Button>
           </InputGroup>

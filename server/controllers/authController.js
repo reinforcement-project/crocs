@@ -42,7 +42,7 @@ authController.verifyUser = async (req, res, next) => {
     // console.log("FOUND USER ", user);
 
     const verifiedUser = await user.verify(password);
-    console.log("verifiedUser ", verifiedUser);
+    // console.log("verifiedUser ", verifiedUser);
 
     if (!user || (await user.verify(password)) === false) {
       verification.hasLogged = false;
@@ -71,21 +71,21 @@ authController.verifyUser = async (req, res, next) => {
 
 authController.createUser = async (req, res, next) => {
   try {
-    console.log("createUser START");
+    // console.log("createUser START");
     const { email, password, firstName, lastName, skillsToTeach } = req.body;
     const verification = {
       hasLogged: false,
     };
 
     if (!email || !password || !firstName || !lastName) {
-      console.log("Missing information");
+      // console.log("Missing information");
       res.locals.verification = {
         hasLogged: "empty",
       };
       return next();
     }
     if (!validateEmail(email)) {
-      console.log("Cannot validate email");
+      // console.log("Cannot validate email");
       verification.hasLogged = "format";
       res.locals.verification = verification;
       return next();
@@ -119,11 +119,11 @@ authController.createUser = async (req, res, next) => {
     };
 
     const emailExist = await User.findOne({ email });
-    console.log("emailExists ", emailExist);
+    // console.log("emailExists ", emailExist);
 
     if (emailExist) {
       res.locals.verification = verification;
-      console.log("email verification ", res.locals.verification);
+      // console.log("email verification ", res.locals.verification);
       return next();
     }
 
@@ -153,7 +153,7 @@ authController.createUser = async (req, res, next) => {
       verification.userInfo[key] = user[key];
     }
 
-    console.log("verifiction ", verification);
+    // console.log("verifiction ", verification);
     res.locals.verification = verification;
 
     return next();
