@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
-const Skill = require('../models/skillModel');
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
+const Skill = require("../models/skillModel");
 
 const authController = {};
 
@@ -13,6 +13,7 @@ function validateEmail(str) {
 
 authController.verifyUser = async (req, res, next) => {
   try {
+    // console.log("verifyUser START");
     const { email, password } = req.body;
     if (!email || !password) {
       res.locals.verification = {
@@ -38,6 +39,11 @@ authController.verifyUser = async (req, res, next) => {
 
     const user = await User.findOne({ email });
 
+    // console.log("FOUND USER ", user);
+
+    const verifiedUser = await user.verify(password);
+    console.log("verifiedUser ", verifiedUser);
+
     if (!user || (await user.verify(password)) === false) {
       verification.hasLogged = false;
       res.locals.verification = verification;
@@ -54,8 +60,10 @@ authController.verifyUser = async (req, res, next) => {
       // }
 
       res.locals.verification = verification;
+      // console.log("verification ", res.locals.verification);
       return next();
     }
+    // console.log("verifyUser END");
   } catch (err) {
     return next(err);
   }
@@ -63,19 +71,22 @@ authController.verifyUser = async (req, res, next) => {
 
 authController.createUser = async (req, res, next) => {
   try {
+    console.log("createUser START");
     const { email, password, firstName, lastName, skillsToTeach } = req.body;
     const verification = {
       hasLogged: false,
     };
 
     if (!email || !password || !firstName || !lastName) {
+      console.log("Missing information");
       res.locals.verification = {
-        hasLogged: 'empty',
+        hasLogged: "empty",
       };
       return next();
     }
     if (!validateEmail(email)) {
-      verification.hasLogged = 'format';
+      console.log("Cannot validate email");
+      verification.hasLogged = "format";
       res.locals.verification = verification;
       return next();
     }
@@ -108,9 +119,11 @@ authController.createUser = async (req, res, next) => {
     };
 
     const emailExist = await User.findOne({ email });
+    console.log("emailExists ", emailExist);
 
     if (emailExist) {
       res.locals.verification = verification;
+      console.log("email verification ", res.locals.verification);
       return next();
     }
 
@@ -126,7 +139,10 @@ authController.createUser = async (req, res, next) => {
 
     const skills = Object.keys(skillsToTeach);
     if (skills.length != 0) {
-      await Skill.updateMany({ name: { $in: skills } }, { $push: { teachers: newTeacher } });
+      await Skill.updateMany(
+        { name: { $in: skills } },
+        { $push: { teachers: newTeacher } }
+      );
     }
 
     verification.hasLogged = true;
@@ -137,6 +153,7 @@ authController.createUser = async (req, res, next) => {
       verification.userInfo[key] = user[key];
     }
 
+    console.log("verifiction ", verification);
     res.locals.verification = verification;
 
     return next();
@@ -150,8 +167,9 @@ authController.createSession = async (req, res, next) => {
     if (res.locals.verification.hasLogged !== true) {
       return next();
     }
+
     const token = await jwt.sign({ id: req.body.email }, process.env.ID_SALT);
-    res.cookie('ssid', token, { maxAge: 300000 });
+    res.cookie("ssid", token);
     return next();
   } catch (err) {
     next(err);
