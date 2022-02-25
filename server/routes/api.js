@@ -1,6 +1,6 @@
 const express = require("express");
 const dbController = require("../controllers/dbController");
-const graphController = require("../controllers/graphController");
+import graphController from '../controllers/graphController.ts';
 
 const router = express.Router();
 
