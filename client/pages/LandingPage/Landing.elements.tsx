@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { data } from "./Data";
 
-export const InfoSec = styled.section`
+export const InfoSec = styled.section<{ lightBg: boolean }>`
   padding: 160px 0;
-  background: ${({ lightBg }) => (lightBg ? "#fff" : "#101522")};
+  background: ${(lightBg) => (lightBg ? "#fff" : "#101522")};
 `;
 
-export const InfoRow = styled.div`
+export const InfoRow = styled.div<{ imgStart: any }>`
   display: flex;
   margin: 0 -15px -15px -15px;
   flex-wrap: wrap;
@@ -39,14 +40,14 @@ export const TextWrapper = styled.div`
   }
 `;
 
-export const ImgWrapper = styled.div`
+export const ImgWrapper = styled.div<{ start: any }>`
   max-width: 555px;
   display: flex;
-  justify-content: ${({ start }) => (start ? "flex-start" : "flex-end")};
+  justify-content: ${(start) => (start ? "flex-start" : "flex-end")};
 `;
 
-export const TopLine = styled.div`
-  color: ${({ lightTopLine }) => (lightTopLine ? "#a9b3c1" : "#7f56d9")};
+export const TopLine = styled.div<{ lightTopLine: boolean }>`
+  color: ${(lightTopLine) => (lightTopLine ? "#a9b3c1" : "#7f56d9")};
   font-size: 18px;
   line-height: 16px;
   font-weight: 700;
@@ -63,18 +64,18 @@ export const Img = styled.img`
   max-height: 500px;
 `;
 
-export const Heading = styled.h1`
+export const Heading = styled.h1<{ lightText: boolean }>`
   margin-bottom: 24px;
   font-size: 48px;
   line-height: 1.1;
   font-weight: 600;
-  color: ${({ lightText }) => (lightText ? "#f7f8fa" : "#1c2237")};
+  color: ${(lightText) => (lightText ? "#f7f8fa" : "#1c2237")};
 `;
 
-export const Subtitle = styled.p`
+export const Subtitle = styled.p<{ lightTextDesc: boolean }>`
   max-width: 440px;
   margin-bottom: 35px;
   font-size: 18px;
   line-height: 24px;
-  color: ${({ lightTextDesc }) => (lightTextDesc ? "#a9b3c1" : "#1c2237")};
+  color: ${(lightTextDesc) => (lightTextDesc ? "#a9b3c1" : "#1c2237")};
 `;

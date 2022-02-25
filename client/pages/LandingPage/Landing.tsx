@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState} from "react";
 import PropTypes from "prop-types";
 import { data } from "./Data";
 import Button from "../../component/Button/Button";
@@ -19,9 +19,12 @@ import {
   Img,
 } from "./Landing.elements";
 
-function Landing({ auth, setAuth, setCurrentUser }) {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
+
+const Landing = ({ auth, setAuth, setCurrentUser })=> {
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const [showRegistrationModal, setShowRegistrationModal] = useState<boolean>(false);
+
   return (
     <>
       <InfoSec lightBg={data.lightBg}>
@@ -34,7 +37,6 @@ function Landing({ auth, setAuth, setCurrentUser }) {
           <Modal close={() => setShowRegistrationModal(false)}>
             <Signup
               setCurrentUser={setCurrentUser}
-              auth={auth}
               setAuth={setAuth}
             ></Signup>
           </Modal>
@@ -78,11 +80,11 @@ function Landing({ auth, setAuth, setCurrentUser }) {
       </InfoSec>
     </>
   );
-}
-
-Landing.propTypes = {
-  auth: PropTypes.bool,
-  setAuth: PropTypes.func,
-  setCurrentUser: PropTypes.func,
 };
+
+// Landing.propTypes = {
+//   auth: PropTypes.bool,
+//   setAuth: PropTypes.func,
+//   setCurrentUser: PropTypes.func,
+// };
 export default Landing;
