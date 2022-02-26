@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
-import socket from "../socket";
-import styled from "styled-components";
-import Modal from "../component/Modal/Modal";
-import { ChatMessageList } from "./ChatMessageList";
-import { ChatMessage } from "./ChatMessage";
-import { X } from "react-feather";
+import React, { useEffect, useState } from "react"
+import socket from "../socket"
+import styled from "styled-components"
+import Modal from "../component/Modal/Modal"
+import { ChatMessageList } from "./ChatMessageList"
+import { ChatMessage } from "./ChatMessage"
+import { X } from "react-feather"
 
 const MsgerHeader = styled.div`
   display: flex;
@@ -14,13 +14,13 @@ const MsgerHeader = styled.div`
   border-bottom: 2px solid #ddd;
   background: #eee;
   color: #666;
-`;
+`
 
 const Close = styled.span`
   margin-right: 4px;
   cursor: pointer;
   color: #666;
-`;
+`
 
 const InputArea = styled.form`
   display: flex;
@@ -34,12 +34,12 @@ const InputArea = styled.form`
     border-radius: 3px;
     font-size: 1em;
   }
-`;
+`
 
 const MessageInput = styled.input`
   flex: 1;
   background: #ddd;
-`;
+`
 
 const SendButton = styled.button`
   margin-left: 10px;
@@ -52,21 +52,21 @@ const SendButton = styled.button`
   &:hover {
     background: rgb(0, 180, 50);
   }
-`;
+`
 
 const Chat = ({ currentUser, recipient, setRecipient }) => {
-  const [text, setText] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [text, setText] = useState("")
+  const [messages, setMessages] = useState([])
 
   const closeChat = () => {
-    setRecipient(null);
-    socket.disconnect();
-  };
+    setRecipient(null)
+    socket.disconnect()
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!text) return;
+    if (!text) return
 
     // Add message to sender's messages
     const message = {
@@ -74,14 +74,14 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
       to: recipient.email,
       content: text,
       sentAt: Date.now(),
-    };
-    setMessages([...messages, message]);
+    }
+    setMessages([...messages, message])
 
     // Send message to recipient
-    socket.emit("message", JSON.stringify(message));
+    socket.emit("message", JSON.stringify(message))
 
-    setText("");
-  };
+    setText("")
+  }
 
   // SOCKET IO EVENT LISTENERS
   // // 1) get all online users
@@ -89,25 +89,25 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
   //   setOnlineUsers(onlineUsers);
   // });
   socket.on("message", (message) => {
-    setMessages([...messages, JSON.parse(message)]);
-  });
+    setMessages([...messages, JSON.parse(message)])
+  })
 
   socket.on("messages", (data) => {
-    const messages = JSON.parse(data);
+    const messages = JSON.parse(data)
     // console.log('messages:', messages);
-    setMessages(messages);
-  });
+    setMessages(messages)
+  })
 
   // Connect to socket io on component mount
   useEffect(async () => {
-    console.log("in useEffect chat.js");
+    console.log("in useEffect chat.js")
     socket.auth = {
       recipientEmail: recipient.email,
       user: currentUser,
-    };
-    console.log("users in zoom", currentUser.email, recipient.email);
-    socket.connect();
-  }, []);
+    }
+    console.log("users in zoom", currentUser.email, recipient.email)
+    socket.connect()
+  }, [])
 
   return (
     <Modal>
@@ -136,7 +136,7 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
               currentUser={currentUser}
               recipient={recipient}
             />
-          );
+          )
         })}
       </ChatMessageList>
       {/* Input area section */}
@@ -150,7 +150,7 @@ const Chat = ({ currentUser, recipient, setRecipient }) => {
         <SendButton>Send</SendButton>
       </InputArea>
     </Modal>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

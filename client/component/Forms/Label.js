@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const LabelElement = styled.label`
   display: block;
   margin-bottom: 16px;
-`;
+`
 
 const Label = ({ children }) => {
-  return <LabelElement>{children}</LabelElement>;
-};
+  return <LabelElement>{children}</LabelElement>
+}
 
-export default Label;
+export default Label

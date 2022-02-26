@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from "react"
+import styled from "styled-components"
 
 const ButtonStyled = styled.button`
   background: ${(p) => (p.selected ? "#5c93f0" : "white")};
@@ -13,40 +13,40 @@ const ButtonStyled = styled.button`
     background: #5c93f0;
     color: white;
   }
-`;
+`
 
 const SkillButton = ({ setSelectedUser, setGraphData, children }) => {
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState(false)
 
   const handleClick = async (e) => {
-    console.log("Clicked target ", e.currentTarget.parentElement);
+    console.log("Clicked target ", e.currentTarget.parentElement)
     try {
-      const selectedSkill = e.target.innerHTML;
-      console.log("Selected skill ", selectedSkill);
-      setSelectedUser({});
+      const selectedSkill = e.target.innerHTML
+      console.log("Selected skill ", selectedSkill)
+      setSelectedUser({})
       if (!selected) {
-        setSelected(true);
+        setSelected(true)
         // Filter the graph
-        const resp = await fetch("/api/nodes/" + selectedSkill);
-        const data = await resp.json();
-        setGraphData(data);
+        const resp = await fetch("/api/nodes/" + selectedSkill)
+        const data = await resp.json()
+        setGraphData(data)
       } else {
-        setSelected(false);
+        setSelected(false)
         // Unfilter the graph
-        const resp = await fetch("/api/nodes/all");
-        const data = await resp.json();
-        setGraphData(data);
+        const resp = await fetch("/api/nodes/all")
+        const data = await resp.json()
+        setGraphData(data)
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   return (
     <ButtonStyled selected={selected} onClick={handleClick}>
       {children}
     </ButtonStyled>
-  );
-};
+  )
+}
 
-export default SkillButton;
+export default SkillButton

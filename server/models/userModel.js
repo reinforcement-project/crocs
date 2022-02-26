@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const capitalize = require("../utils/capitalize");
-const { Schema } = mongoose;
+const mongoose = require("mongoose")
+const bcrypt = require("bcryptjs")
+const capitalize = require("../utils/capitalize")
+const { Schema } = mongoose
 
 // sets a schema for the 'user' collection
 const userSchema = new Schema(
@@ -42,36 +42,36 @@ const userSchema = new Schema(
       },
     ],
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
-);
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
+)
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
 userSchema.pre("save", function (next) {
-  this.firstName = capitalize(this.firstName);
-  this.lastName = capitalize(this.lastName);
-  this.name = `${this.firstName} ${this.lastName}`;
+  this.firstName = capitalize(this.firstName)
+  this.lastName = capitalize(this.lastName)
+  this.name = `${this.firstName} ${this.lastName}`
 
-  next();
-});
+  next()
+})
 
 //set up preprocess for encrypting password
 userSchema.pre("save", async function save(next) {
   try {
-    const SALT_WORK_FACTOR = 10;
-    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-    this.password = await bcrypt.hash(this.password, salt);
-    return next();
+    const SALT_WORK_FACTOR = 10
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR)
+    this.password = await bcrypt.hash(this.password, salt)
+    return next()
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-});
+})
 
 //cannot access password with arrow func
 userSchema.methods.verify = async function (password) {
-  const check = bcrypt.compare(password, this.password);
-  return check;
-};
+  const check = bcrypt.compare(password, this.password)
+  return check
+}
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema)
 
-module.exports = User;
+module.exports = User

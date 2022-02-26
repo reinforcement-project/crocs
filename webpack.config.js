@@ -1,6 +1,6 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin")
 
 module.exports = {
   entry: ["./client/index.tsx"],
@@ -26,7 +26,7 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" },
+      { test: /\.(ts|tsx)$/, loader: "ts-loader" },
       {
         test: /.(js|jsx)$/,
         exclude: /node_modules/,
@@ -35,6 +35,7 @@ module.exports = {
           options: {
             presets: [
               "@babel/preset-env",
+              "@babel/preset-flow",
               ["@babel/preset-react", { runtime: "automatic" }],
             ],
             plugins: ["@babel/plugin-transform-runtime"],
@@ -69,6 +70,6 @@ module.exports = {
   ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
-    extensions: [".js", ".jsx", ".scss"],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"],
   },
-};
+}
