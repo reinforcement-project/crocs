@@ -15,17 +15,14 @@ const MainPage = lazy(() => import("./pages/MainPage"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const Settings = lazy(() => import("./pages/SettingsPage/SettingsPage"));
 
-// interface IAuth{
-//   auth: boolean;
-//   setAuth: boolean;
-// };
-const App: React.FC = (): JSX.Element => {
+
+const App = () => {
   //state updated on login, signup
-  const [auth, setAuth] = useState<boolean>(false);
+  const [auth, setAuth] = useState(false);
   //token stored upon successful auth to replace sessions.
   const authToken = localStorage.getItem("token");
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useLocalStorage("user", {});
 
   // Do not change; default state must be null;

@@ -1,5 +1,4 @@
 import React, {  useState} from "react";
-import PropTypes from "prop-types";
 import { data } from "./Data";
 import Button from "../../component/Button/Button";
 import ButtonGroup from "../../component/Button/ButtonGroup";
@@ -82,9 +81,5 @@ const Landing = ({ auth, setAuth, setCurrentUser })=> {
   );
 };
 
-// Landing.propTypes = {
-//   auth: PropTypes.bool,
-//   setAuth: PropTypes.func,
-//   setCurrentUser: PropTypes.func,
-// };
+
 export default Landing;
