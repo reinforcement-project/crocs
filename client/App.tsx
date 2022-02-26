@@ -15,6 +15,7 @@ const MainPage = lazy(() => import("./pages/MainPage"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const Settings = lazy(() => import("./pages/SettingsPage/SettingsPage"));
 
+
 const App = () => {
   //state updated on login, signup
   const [auth, setAuth] = useState(false);
@@ -100,14 +101,12 @@ const App = () => {
                   setCurrentUser={setCurrentUser}
                   setRecipient={setRecipient}
                   recipient={recipient}
-                  auth={auth}
                   setAuth={setAuth}
                 />
               ) : (
                 <Redirect to="/" />
               )}
             </Route>
-
             <Route exact path="/settings">
               {auth ? (
                 <Settings auth={auth} setAuth={setAuth} />
@@ -118,8 +117,7 @@ const App = () => {
 
             <Route exact path="/new-messages">
               <NewMessages
-                currentUser={currentUser}
-                setRecipient={setRecipient}
+             
               />
             </Route>
 

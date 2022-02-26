@@ -35,6 +35,7 @@ module.exports = {
           options: {
             presets: [
               "@babel/preset-env",
+              "@babel/preset-flow",
               ["@babel/preset-react", { runtime: "automatic" }],
             ],
             plugins: ["@babel/plugin-transform-runtime"],
