@@ -10,12 +10,7 @@
   "rules": {
     "strict": ["error", "never"],
     "react/prop-types": 0,
-    "react/react-in-jsx-scope": 0,
-    "valid-typeof": 2,
-    "no-unsafe-negation": 2,
-    "no-unused-vars": 2,
-    "no-unexpected-multiline": 2,
-    "no-undef": 2
+    "react/react-in-jsx-scope": 0
   },
   "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {
