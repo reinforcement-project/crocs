@@ -77,6 +77,8 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^17.0.21",
     "@types/styled-components": "5.1.23",
+    "@typescript-eslint/eslint-plugin": "5.12.1",
+    "@typescript-eslint/parser": "5.12.1",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.13.2",
