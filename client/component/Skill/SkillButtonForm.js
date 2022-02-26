@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from "react"
+import styled from "styled-components"
 
 const ButtonStyled = styled.button`
   background: ${(p) =>
@@ -10,7 +10,7 @@ const ButtonStyled = styled.button`
   font-weight: ${(p) => (p.stat === "inactiveskillbutton" ? "400" : "600")};
   height: 25px;
   margin: 0.2vh 0.2vw;
-`;
+`
 
 /*
 rendered in PopUpReg component
@@ -19,19 +19,19 @@ and changes it's state to change class and render different style of component
  */
 
 const SkillButton = (props) => {
-  const [stat, setStat] = useState("inactiveskillbutton");
+  const [stat, setStat] = useState("inactiveskillbutton")
   const clicked = (e) => {
-    props.onClick(e.target.id);
-    console.log(stat);
+    props.onClick(e.target.id)
+    console.log(stat)
     stat === "inactiveskillbutton"
       ? setStat("activeskillbutton")
-      : setStat("inactiveskillbutton");
-  };
+      : setStat("inactiveskillbutton")
+  }
   return (
     <ButtonStyled type="button" id={props.id} stat={stat} onClick={clicked}>
       {props.skill}
     </ButtonStyled>
-  );
-};
+  )
+}
 
-export default SkillButton;
+export default SkillButton

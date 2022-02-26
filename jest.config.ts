@@ -1,22 +1,22 @@
-import type { InitialOptionsTsJest } from 'ts-jest';
-import { defaults as tsjPreset } from 'ts-jest/presets';
+import type { InitialOptionsTsJest } from "ts-jest"
+import { defaults as tsjPreset } from "ts-jest/presets"
 
 const config: InitialOptionsTsJest = {
-  preset: 'ts-jest',
+  preset: "ts-jest",
   globals: {
-	  'ts-jest': {
-		  tsconfig: {
-			  "jsx": "react-jsxdev",
-			  allowJs: true,
-			  allowSyntheticDefaultImports: true
-		  }
-	  }
+    "ts-jest": {
+      tsconfig: {
+        jsx: "react-jsxdev",
+        allowJs: true,
+        allowSyntheticDefaultImports: true,
+      },
+    },
   },
-  testEnvironment: 'jsdom',
+  testEnvironment: "jsdom",
   clearMocks: true,
   collectCoverage: false,
-  coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
+  coverageDirectory: "coverage",
+  coverageProvider: "v8",
   coverageThreshold: {
     global: {
       branches: 100,
@@ -27,13 +27,12 @@ const config: InitialOptionsTsJest = {
   },
   transform: {
     "^.+\\.(ts|tsx)?$": "ts-jest",
-    "^.+\\.(js|jsx)$": "babel-jest"
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
   verbose: true,
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ["/node_modules/"],
   // roots: ['<rootDir>/client'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json']
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
 }
 
-
-export default config;
+export default config

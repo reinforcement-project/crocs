@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const dbConnect = (uri = process.env.DB_URI) => {
   mongoose
@@ -10,7 +10,7 @@ const dbConnect = (uri = process.env.DB_URI) => {
       dbName: "cohort-connect",
     })
     .then(() => console.log("Connected to MongoDB."))
-    .catch((err) => console.log(err));
-};
+    .catch((err) => console.log(err))
+}
 
-module.exports = dbConnect;
+module.exports = dbConnect

@@ -1,9 +1,9 @@
-const server = require('./socket');
+const server = require("./socket")
 
-const dbConnect = require('./db.js');
-require('dotenv').config();
+const dbConnect = require("./db.js")
+require("dotenv").config()
 
-const PORT = 3000;
+const PORT = 3000
 
 // app.get('*', function(req, res) {
 //   res.sendFile(path.resolve(__dirname, '../dist/index.html'), function(err) {
@@ -13,6 +13,6 @@ const PORT = 3000;
 //   });
 // });
 server.listen(PORT, () => {
-  dbConnect();
-  console.log(`Server listening on ${PORT}`);
-});
+  dbConnect()
+  console.log(`Server listening on ${PORT}`)
+})

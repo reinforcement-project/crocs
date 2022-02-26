@@ -1,6 +1,6 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin")
 
 module.exports = {
   entry: ["./client/index.tsx"],
@@ -72,4 +72,4 @@ module.exports = {
     // Enable importing JS / JSX files without specifying their extension
     extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"],
   },
-};
+}

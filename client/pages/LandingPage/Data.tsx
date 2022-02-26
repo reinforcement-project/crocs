@@ -1,19 +1,18 @@
-
 export interface IData {
-  lightBg: boolean;
-  primary: boolean;
-  lightTopLine: boolean;
-  lightText: boolean;
-  lightTextDesc: boolean;
-  imgStart: string;
-  topLine: string;
-  headline: string;
-  description: string;
-  buttonLabel: string;
-  imageStart?: string;
-  img?: string;
-  alt?: string;
-  start?: string;
+  lightBg: boolean
+  primary: boolean
+  lightTopLine: boolean
+  lightText: boolean
+  lightTextDesc: boolean
+  imgStart: string
+  topLine: string
+  headline: string
+  description: string
+  buttonLabel: string
+  imageStart?: string
+  img?: string
+  alt?: string
+  start?: string
 }
 
 export const data: IData = {
@@ -31,4 +30,4 @@ export const data: IData = {
   img: require("../../images/undraw_connecting_teams.svg"),
   alt: "Credit Card",
   start: "",
-};
+}

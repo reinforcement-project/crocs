@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import findSSIDCookie from "../../utils/findSSIDCookie";
+import React, { useState, useEffect } from "react"
+import styled from "styled-components"
+import findSSIDCookie from "../../utils/findSSIDCookie"
 // Components
-import Input from "./Input";
-import Label from "./Label";
-import Button from "../Button/Button";
-import { Checkbox } from "../Checkbox";
-import Form from "./Form";
+import Input from "./Input"
+import Label from "./Label"
+import Button from "../Button/Button"
+import { Checkbox } from "../Checkbox"
+import Form from "./Form"
 
 const SkillWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 8px 4px;
-`;
+`
 
 const Signup = ({ setAuth, setCurrentUser }) => {
   //state to hold info for authorization
@@ -23,34 +23,34 @@ const Signup = ({ setAuth, setCurrentUser }) => {
     email: null,
     password: null,
     skillsToTeach: {},
-  });
+  })
   //state to handle skills available in database
-  const [skills, setSkills] = useState([]);
-  const [skillId, setSkillId] = useState({});
+  const [skills, setSkills] = useState([])
+  const [skillId, setSkillId] = useState({})
   //state to conditionally render error message on unsuccessfull signup
-  const [errorOnSignup, setErrorOnSignup] = useState(false);
+  const [errorOnSignup, setErrorOnSignup] = useState(false)
 
   //getting skills on mount from backend
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   const fetchData = async () => {
     try {
-      const res = await fetch("/api/allSkills/all");
-      const response = await res.json();
-      const skillNames = [];
+      const res = await fetch("/api/allSkills/all")
+      const response = await res.json()
+      const skillNames = []
       for (let i = 0; i < response.length; i++) {
-        skillNames.push(response[i].name);
+        skillNames.push(response[i].name)
         setSkillId((prevstate) => {
-          prevstate[response[i].name] = response[i]._id;
-          return prevstate;
-        });
+          prevstate[response[i].name] = response[i]._id
+          return prevstate
+        })
       }
-      setSkills(skillNames);
+      setSkills(skillNames)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   // func to submit auth info. updates states of errors on unsuccessful signup.
   // on successful signup stores cookie as token in localStorage;
@@ -63,40 +63,40 @@ const Signup = ({ setAuth, setCurrentUser }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(signupData),
-    });
-  };
+    })
+  }
 
   const authorize = async () => {
     try {
-      const signupData = await postSignup(data);
-      const signupResponse = await signupData.json();
+      const signupData = await postSignup(data)
+      const signupResponse = await signupData.json()
       if (!signupResponse.hasLogged) {
-        setErrorOnSignup(true);
+        setErrorOnSignup(true)
       } else if (signupResponse.hasLogged === "format") {
-        setErrorOnSignup("format");
+        setErrorOnSignup("format")
       } else if (signupResponse.hasLogged === "empty") {
-        setErrorOnSignup("empty");
+        setErrorOnSignup("empty")
       } else if (signupResponse.hasLogged) {
-        const ssidToken = findSSIDCookie(document.cookie);
-        console.log(data);
-        setCurrentUser(data);
-        localStorage.setItem("email", `${data.email}`);
+        const ssidToken = findSSIDCookie(document.cookie)
+        console.log(data)
+        setCurrentUser(data)
+        localStorage.setItem("email", `${data.email}`)
         if (ssidToken) {
-          localStorage.setItem("token", ssidToken);
+          localStorage.setItem("token", ssidToken)
           localStorage.setItem(
             "name",
-            `${signupResponse.userInfo.firstName} ${signupResponse.userInfo.lastName}`
-          );
+            `${signupResponse.userInfo.firstName} ${signupResponse.userInfo.lastName}`,
+          )
         }
         if (signupResponse.userInfo.isAdmin) {
-          localStorage.setItem("admin", "true");
+          localStorage.setItem("admin", "true")
         }
-        setAuth(true);
+        setAuth(true)
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   useEffect(() => {
     if (
@@ -105,10 +105,10 @@ const Signup = ({ setAuth, setCurrentUser }) => {
       errorOnSignup === "empty"
     ) {
       setTimeout(() => {
-        setErrorOnSignup(false);
-      }, 3000);
+        setErrorOnSignup(false)
+      }, 3000)
     }
-  }, [errorOnSignup]);
+  }, [errorOnSignup])
 
   return (
     <Form>
@@ -186,7 +186,7 @@ const Signup = ({ setAuth, setCurrentUser }) => {
         Sign Up
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
