@@ -15,7 +15,7 @@
     "test:client": "jest ./client",
     "test": "jest",
     "check-types": "tsc",
-    "validate": "npm run check-types && npm run check-format && npm run lint && npm run test && npm run build",
+    "validate": "npm run check-types && npm run check-format && npm run lint && npm run test:client && npm run build",
     "prepare": "husky install"
   },
   "repository": {
