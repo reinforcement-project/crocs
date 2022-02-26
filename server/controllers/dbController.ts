@@ -1,20 +1,19 @@
-/* eslint-disable prefer-const */
-const User = require("../models/userModel");
-import mongoose from "mongoose";
-const UserGroup = require("../models/userGroupModel");
-const Skill = require("../models/skillModel");
-const SkillGroup = require("../models/skillGroupModel.js");
-const Message = require("../models/messageModel");
-import type { Request, Response, NextFunction } from "express";
+import User from "../models/userModel"
+import mongoose from "mongoose"
+import UserGroup from "../models/userGroupModel"
+import Skill from "../models/skillModel"
+import SkillGroup from "../models/skillGroupModel.js"
+import Message from "../models/messageModel"
+import type { Request, Response, NextFunction } from "express"
 
 type Controller = (
   req: Request,
   res: Response,
-  next: NextFunction
-) => Promise<ReturnType<NextFunction>>;
+  next: NextFunction,
+) => Promise<ReturnType<NextFunction>>
 
 interface DbController {
-  [key: string]: Controller;
+  [key: string]: Controller
 }
 
 const dbController: DbController = {
@@ -23,23 +22,23 @@ const dbController: DbController = {
       // Obtain all users matching query filter and returning specified fields
       try {
         // object specifying the filters on query
-        const queryFilter = {};
+        const queryFilter = {}
 
         // object specifying the fields to be requested from db
         const specifiedFields = {
           firstName: 1,
           lastName: 1,
           email: 1,
-        };
+        }
 
-        const users = await User.find(queryFilter, specifiedFields);
-        res.locals.users = users;
-        res.locals.userCount = users.length;
+        const users = await User.find(queryFilter, specifiedFields)
+        res.locals.users = users
+        res.locals.userCount = users.length
         // next();
 
-        res.status(200).json({ status: "success", users });
+        res.status(200).json({ status: "success", users })
       } catch (err) {
-        next(err);
+        next(err)
       }
     }
   },
@@ -47,61 +46,61 @@ const dbController: DbController = {
     // Obtain all user groups matching query filter and returning specified fields
     try {
       // object specifying the filters on query
-      const queryFilter = {};
+      const queryFilter = {}
 
       // object specifying the fields to be requested from db
       const specifiedFields = {
         name: 1,
         color: 1,
-      };
+      }
 
-      const userGroups = await UserGroup.find(queryFilter, specifiedFields);
-      res.locals.userGroups = userGroups;
-      next();
+      const userGroups = await UserGroup.find(queryFilter, specifiedFields)
+      res.locals.userGroups = userGroups
+      next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   async getSkills(req, res, next) {
     // Obtain all skills matching query filter and returning specified fields
     try {
       // object specifying the filters on query
-      const queryFilter: { name?: typeof req.params.skill[] } = {};
+      const queryFilter: { name?: typeof req.params.skill[] } = {}
       if (res.locals.getSkills == undefined && req.params.skill != "all") {
-        queryFilter.name = [req.params.skill];
+        queryFilter.name = [req.params.skill]
       }
       // object specifying the fields to be requested from db
       const specifiedFields = {
         name: 1,
         skillGroup: 1,
         teachers: 1,
-      };
+      }
 
-      const skills = await Skill.find(queryFilter, specifiedFields);
-      res.locals.skills = skills;
-      res.locals.skillCount = skills.length;
-      next();
+      const skills = await Skill.find(queryFilter, specifiedFields)
+      res.locals.skills = skills
+      res.locals.skillCount = skills.length
+      next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   async getSkillGroups(req, res, next) {
     // Obtain all user groups matching query filter and returning specified fields
     try {
       // object specifying the filters on query
-      const queryFilter = {};
+      const queryFilter = {}
 
       // object specifying the fields to be requested from db
       const specifiedFields = {
         name: 1,
         color: 1,
-      };
+      }
 
-      const skillGroups = await SkillGroup.find(queryFilter, specifiedFields);
-      res.locals.skillGroups = skillGroups;
-      next();
+      const skillGroups = await SkillGroup.find(queryFilter, specifiedFields)
+      res.locals.skillGroups = skillGroups
+      next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   async createMessage(req, res, next) {
@@ -113,10 +112,10 @@ const dbController: DbController = {
         targetEmail,
         targetName,
         skill,
-      } = req.body;
+      } = req.body
 
       if (!contactEmail) {
-        contactEmail = sourceEmail;
+        contactEmail = sourceEmail
       }
 
       const genMessage = (fromName, toName, skill) => {
@@ -127,8 +126,8 @@ const dbController: DbController = {
           skill +
           " and was wondering if I can learn from you. If you are available, please contact me at: " +
           contactEmail
-        );
-      };
+        )
+      }
 
       const messageDoc = {
         contactEmail,
@@ -138,18 +137,18 @@ const dbController: DbController = {
         targetName,
         messageBody: genMessage(sourceName, targetName, skill),
         skill,
-      };
+      }
 
-      const message = await Message.create(messageDoc);
+      const message = await Message.create(messageDoc)
       await User.updateOne(
         { email: targetEmail },
-        { $set: { newMessage: true } }
-      );
+        { $set: { newMessage: true } },
+      )
 
-      return next();
+      return next()
     } catch (err) {
-      console.log(err);
-      return next();
+      console.log(err)
+      return next()
     }
   },
   async getMessages(req, res, next) {
@@ -157,205 +156,205 @@ const dbController: DbController = {
       // if (res.locals.tokenVerif == false) {
       //   return next();
       // }
-      let targetEmail;
+      let targetEmail
 
       if (req.params.targetEmail) {
-        targetEmail = req.params.targetEmail;
+        targetEmail = req.params.targetEmail
       } else {
-        targetEmail = req.body.targetEmail;
+        targetEmail = req.body.targetEmail
       }
 
       const queryFilter = {
         targetEmail,
-      };
+      }
 
-      const specifiedFields = {};
+      const specifiedFields = {}
 
       const updateFields = {
         $set: {
           isRead: true,
         },
-      };
+      }
 
       const messages = await Message.find(queryFilter, specifiedFields).sort({
         createdAt: -1,
-      });
-      await Message.updateMany(queryFilter, updateFields);
+      })
+      await Message.updateMany(queryFilter, updateFields)
 
-      res.locals.messages = messages;
+      res.locals.messages = messages
 
-      return next();
+      return next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   async delMessages(req, res, next) {
     try {
-      res.locals.deleted = false;
+      res.locals.deleted = false
 
       if (!req.body.messageID) {
-        return next();
+        return next()
       }
 
       const queryFilter = {
         _id: new mongoose.Types.ObjectId(req.body.messageID),
-      };
-
-      const message = await Message.findOneAndDelete(queryFilter);
-
-      if (message) {
-        res.locals.deleted = true;
       }
 
-      return next();
+      const message = await Message.findOneAndDelete(queryFilter)
+
+      if (message) {
+        res.locals.deleted = true
+      }
+
+      return next()
     } catch (err) {
-      console.log("Error at dbController.delMessages");
-      console.log(err);
-      res.locals.deleted = false;
-      return next(err);
+      console.log("Error at dbController.delMessages")
+      console.log(err)
+      res.locals.deleted = false
+      return next(err)
     }
   },
   async addSkill(req, res, next) {
     try {
       const skillDoc = {
         name: req.body.skillName,
-      };
+      }
 
-      await Skill.create(skillDoc);
+      await Skill.create(skillDoc)
 
-      res.locals.getSkills = true;
-      return next();
+      res.locals.getSkills = true
+      return next()
     } catch (err) {
-      console.log("Error at dbController.addSkill");
-      console.log(err);
-      res.locals.deleted = false;
-      return next(err);
+      console.log("Error at dbController.addSkill")
+      console.log(err)
+      res.locals.deleted = false
+      return next(err)
     }
   },
   async delSkill(req, res, next) {
     try {
       if (!req.body.skillName) {
-        return next();
+        return next()
       }
 
       const queryFilter = {
         name: req.body.skillName,
-      };
+      }
 
-      const skill = await Skill.findOneAndDelete(queryFilter);
+      const skill = await Skill.findOneAndDelete(queryFilter)
 
-      const teachers = skill.teachers;
+      const teachers = skill.teachers
 
-      const userIDs = [];
+      const userIDs = []
       for (const teacher of teachers) {
-        userIDs.push(new mongoose.Types.ObjectId(teacher._id));
+        userIDs.push(new mongoose.Types.ObjectId(teacher._id))
       }
 
       await User.updateMany(
         { _id: { $in: userIDs } },
-        { $pull: { teach: { name: skill.name } } }
-      );
+        { $pull: { teach: { name: skill.name } } },
+      )
 
-      res.locals.getSkills = true;
-      return next();
+      res.locals.getSkills = true
+      return next()
     } catch (err) {
-      console.log("Error at dbController.delSkill");
-      console.log(err);
-      return next(err);
+      console.log("Error at dbController.delSkill")
+      console.log(err)
+      return next(err)
     }
   },
   async addUserSkill(req, res, next) {
     try {
-      const { skillName, email } = req.body;
+      const { skillName, email } = req.body
       // console.log('req body: ', req.body);
 
-      const userInfo = await User.findOne({ email }, {});
+      const userInfo = await User.findOne({ email }, {})
 
       const newTeacher = {
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         email,
         _id: userInfo._id,
-      };
+      }
 
       const skillInfo = await Skill.findOneAndUpdate(
         { name: skillName },
-        { $push: { teachers: newTeacher } }
-      );
+        { $push: { teachers: newTeacher } },
+      )
 
       const newSkill = {
         name: skillInfo.name,
         _id: skillInfo._id,
-      };
+      }
 
-      await User.updateOne({ email }, { $push: { teach: newSkill } });
+      await User.updateOne({ email }, { $push: { teach: newSkill } })
 
-      res.locals.getSkills = true;
-      return next();
+      res.locals.getSkills = true
+      return next()
     } catch (err) {
-      console.log("Error at dbController.addUserSkill");
-      console.log(err);
-      return next(err);
+      console.log("Error at dbController.addUserSkill")
+      console.log(err)
+      return next(err)
     }
   },
   async delUserSkill(req, res, next) {
     try {
-      const { skillName, email } = req.body;
+      const { skillName, email } = req.body
 
       const userInfo = await User.findOneAndUpdate(
         { email },
-        { $pull: { teach: { name: skillName } } }
-      );
+        { $pull: { teach: { name: skillName } } },
+      )
 
       const skillInfo = await Skill.findOneAndUpdate(
         { name: skillName },
-        { $pull: { teachers: { email: email } } }
-      );
+        { $pull: { teachers: { email: email } } },
+      )
 
-      res.locals.getSkills = true;
-      return next();
+      res.locals.getSkills = true
+      return next()
     } catch (err) {
-      console.log("Error at dbController.delUserSkill");
-      console.log(err);
-      return next(err);
+      console.log("Error at dbController.delUserSkill")
+      console.log(err)
+      return next(err)
     }
   },
   async updateemail(req, res, next) {
     try {
-      const { newEmail, currentEmail } = req.body;
+      const { newEmail, currentEmail } = req.body
 
-      const conflict = await User.findOne({ email: newEmail });
+      const conflict = await User.findOne({ email: newEmail })
 
       if (conflict != null) {
-        res.locals.update = false;
-        return next();
+        res.locals.update = false
+        return next()
       }
 
-      const skillFilter = { "teachers.email": currentEmail };
-      const skillUpdate = { $set: { "teachers.$.email": newEmail } };
-      await Skill.updateMany(skillFilter, skillUpdate);
+      const skillFilter = { "teachers.email": currentEmail }
+      const skillUpdate = { $set: { "teachers.$.email": newEmail } }
+      await Skill.updateMany(skillFilter, skillUpdate)
 
-      const targetEmailFilter = { targetEmail: currentEmail };
-      const targetEmailUpdate = { $set: { targetEmail: newEmail } };
-      await Message.updateMany(targetEmailFilter, targetEmailUpdate);
+      const targetEmailFilter = { targetEmail: currentEmail }
+      const targetEmailUpdate = { $set: { targetEmail: newEmail } }
+      await Message.updateMany(targetEmailFilter, targetEmailUpdate)
 
-      const sourceEmailFilter = { sourceEmail: currentEmail };
-      const sourceEmailUpdate = { $set: { sourceEmail: newEmail } };
-      await Message.updateMany(sourceEmailFilter, sourceEmailUpdate);
+      const sourceEmailFilter = { sourceEmail: currentEmail }
+      const sourceEmailUpdate = { $set: { sourceEmail: newEmail } }
+      await Message.updateMany(sourceEmailFilter, sourceEmailUpdate)
 
-      const userFilter = { email: currentEmail };
-      const userUpdate = { $set: { email: newEmail } };
-      await User.updateOne(userFilter, userUpdate);
+      const userFilter = { email: currentEmail }
+      const userUpdate = { $set: { email: newEmail } }
+      await User.updateOne(userFilter, userUpdate)
 
-      res.locals.update = true;
-      return next();
+      res.locals.update = true
+      return next()
     } catch (err) {
-      console.log("Error at dbController.delUserSkill");
-      console.log(err);
-      res.locals.update = false;
-      return next(err);
+      console.log("Error at dbController.delUserSkill")
+      console.log(err)
+      res.locals.update = false
+      return next(err)
     }
   },
-};
+}
 
-module.exports = dbController;
+module.exports = dbController
