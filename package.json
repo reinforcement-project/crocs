@@ -14,7 +14,7 @@
     "lint:client": "eslint --ignore-path .gitignore \"client/**/*.{ts,tsx,js,jsx}\" --quiet",
     "lint:server": "eslint --ignore-path .gitignore \"server/**/*.{ts,tsx,js,jsx}\" --quiet",
     "test": "jest",
-    "validate": "npm run lint:server && npm run lint:client && npm run check-format && npm run build"
+    "validate": "npm run check-format && npm run lint:server && npm run lint:client && npm run test && npm run build"
   },
   "repository": {
     "type": "git",
