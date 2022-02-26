@@ -8,7 +8,7 @@
     "dev": "concurrently \"cross-env NODE_ENV='development' webpack-dev-server --history-api-fallback \" \"nodemon\"",
     "build": "NODE_ENV='production' webpack",
     "build:server": "NODE_ENV=production tsc --project tsconfig.server.json",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,jsx}\"",
     "lint:client": "eslint --ignore-path .gitignore \"client/**/*.{ts,tsx,js,jsx}\" --quiet",
     "lint:server": "eslint --ignore-path .gitignore \"server/**/*.{ts,tsx,js,jsx}\" --quiet",
     "test": "jest"
