@@ -8,4 +8,4 @@ export const COLORS = {
   transparentGray75: "hsl(240deg 10% 50% / 0.75)",
   black: "hsl(0deg 0% 0%)",
   focusOutline: "hsla(267, 100%, 96%, 1)",
-};
+}

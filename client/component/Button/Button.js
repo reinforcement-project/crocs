@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import { COLORS } from "../../utils/constants";
+import { COLORS } from "../../utils/constants"
 
 const SIZES = {
   small: {
@@ -19,7 +19,7 @@ const SIZES = {
     "--fontSize": 21 / 16 + "rem",
     "--padding": "16px 32px",
   },
-};
+}
 
 const Button = ({
   type = "button",
@@ -28,27 +28,27 @@ const Button = ({
   onClick,
   children,
 }) => {
-  const styles = SIZES[size];
+  const styles = SIZES[size]
 
-  let Component;
+  let Component
   if (variant === "fill") {
-    Component = FillButton;
+    Component = FillButton
   } else if (variant === "outline") {
-    Component = OutlineButton;
+    Component = OutlineButton
   } else if (variant === "ghost") {
-    Component = GhostButton;
+    Component = GhostButton
   } else if (variant === "submit") {
-    Component = SubmitButton;
+    Component = SubmitButton
   } else {
-    throw new Error(`Unrecognized Button variant: ${variant}`);
+    throw new Error(`Unrecognized Button variant: ${variant}`)
   }
 
   return (
     <Component type={type} style={styles} onClick={onClick}>
       {children}
     </Component>
-  );
-};
+  )
+}
 
 const ButtonBase = styled.button`
   font-size: var(--fontSize);
@@ -61,7 +61,7 @@ const ButtonBase = styled.button`
     outline-color: ${COLORS.primary};
     outline-offset: 4px;
   }
-`;
+`
 
 const FillButton = styled(ButtonBase)`
   background-color: ${COLORS.primary};
@@ -70,7 +70,7 @@ const FillButton = styled(ButtonBase)`
   &:hover {
     background-color: ${COLORS.primaryHover};
   }
-`;
+`
 const OutlineButton = styled(ButtonBase)`
   background-color: ${COLORS.white};
   color: ${COLORS.primary};
@@ -79,7 +79,7 @@ const OutlineButton = styled(ButtonBase)`
   &:hover {
     background-color: ${COLORS.offwhite};
   }
-`;
+`
 const GhostButton = styled(ButtonBase)`
   color: ${COLORS.gray};
   background-color: transparent;
@@ -89,7 +89,7 @@ const GhostButton = styled(ButtonBase)`
     background: ${COLORS.transparentGray15};
     color: ${COLORS.black};
   }
-`;
+`
 const SubmitButton = styled.button`
   display: block;
   margin-top: 20px;
@@ -113,7 +113,7 @@ const SubmitButton = styled.button`
     border-radius: 8px;
     outline: none;
   }
-`;
+`
 
 Button.propTypes = {
   type: PropTypes.string,
@@ -121,6 +121,6 @@ Button.propTypes = {
   size: PropTypes.string,
   onClick: PropTypes.func,
   children: PropTypes.node,
-};
+}
 
-export default Button;
+export default Button

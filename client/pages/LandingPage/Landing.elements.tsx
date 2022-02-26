@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { data } from "./Data";
+import styled from "styled-components"
+import { data } from "./Data"
 
 export const InfoSec = styled.section<{ lightBg: boolean }>`
   padding: 160px 0;
   background: ${(lightBg) => (lightBg ? "#fff" : "#101522")};
-`;
+`
 
 export const InfoRow = styled.div<{ imgStart: any }>`
   display: flex;
@@ -12,7 +12,7 @@ export const InfoRow = styled.div<{ imgStart: any }>`
   flex-wrap: wrap;
   align-items: center;
   flex-direction: ${({ imgStart }) => (imgStart ? "row-reverse" : "row")};
-`;
+`
 
 export const InfoColumn = styled.div`
   margin-bottom: 15px;
@@ -28,7 +28,7 @@ export const InfoColumn = styled.div`
     display: flex;
     justify-content: center;
   }
-`;
+`
 
 export const TextWrapper = styled.div`
   max-width: 540px;
@@ -38,13 +38,13 @@ export const TextWrapper = styled.div`
   @media screen and (max-width: 768px) {
     padding-bottom: 65px;
   }
-`;
+`
 
 export const ImgWrapper = styled.div<{ start: any }>`
   max-width: 555px;
   display: flex;
   justify-content: ${(start) => (start ? "flex-start" : "flex-end")};
-`;
+`
 
 export const TopLine = styled.div<{ lightTopLine: boolean }>`
   color: ${(lightTopLine) => (lightTopLine ? "#a9b3c1" : "#7f56d9")};
@@ -53,7 +53,7 @@ export const TopLine = styled.div<{ lightTopLine: boolean }>`
   font-weight: 700;
   letter-spacing: 1.4px;
   margin-bottom: 16px;
-`;
+`
 
 export const Img = styled.img`
   padding-right: 0;
@@ -62,7 +62,7 @@ export const Img = styled.img`
   vertical-align: middle;
   display: inline-block;
   max-height: 500px;
-`;
+`
 
 export const Heading = styled.h1<{ lightText: boolean }>`
   margin-bottom: 24px;
@@ -70,7 +70,7 @@ export const Heading = styled.h1<{ lightText: boolean }>`
   line-height: 1.1;
   font-weight: 600;
   color: ${(lightText) => (lightText ? "#f7f8fa" : "#1c2237")};
-`;
+`
 
 export const Subtitle = styled.p<{ lightTextDesc: boolean }>`
   max-width: 440px;
@@ -78,4 +78,4 @@ export const Subtitle = styled.p<{ lightTextDesc: boolean }>`
   font-size: 18px;
   line-height: 24px;
   color: ${(lightTextDesc) => (lightTextDesc ? "#a9b3c1" : "#1c2237")};
-`;
+`

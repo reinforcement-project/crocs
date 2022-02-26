@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import SkillButton from "./SkillButtonMain";
+import React, { useState } from "react"
+import styled from "styled-components"
+import SkillButton from "./SkillButtonMain"
 
 /*
 component is rendered on MainPage;
@@ -11,13 +11,13 @@ const SkillsContainer = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 20px 0 20px 0;
-`;
+`
 
 const SkillsInnerContainer = styled.div`
   max-width: 800px;
   max-height: 80px;
   margin-top: 20px;
-`;
+`
 
 const ButtonStyled = styled.button`
   background: ${(p) => (p.selected ? "#5c93f0" : "white")};
@@ -31,36 +31,36 @@ const ButtonStyled = styled.button`
     background: #5c93f0;
     color: white;
   }
-`;
+`
 
 const SkillsList = (props) => {
-  const [allSkills, setAllSkills] = useState(props.skills);
-  const [classname, setClassName] = useState("skillslist-button");
-  const [selectedSkill, setSelectedSkill] = useState("");
-  const [selected, setSelected] = useState(false);
+  const [allSkills, setAllSkills] = useState(props.skills)
+  const [classname, setClassName] = useState("skillslist-button")
+  const [selectedSkill, setSelectedSkill] = useState("")
+  const [selected, setSelected] = useState(false)
 
   const handleClick = async (e) => {
     try {
-      const selectedSkill = e.target.innerHTML;
-      console.log("Selected skill ", selectedSkill);
-      props.setSelectedUser({});
+      const selectedSkill = e.target.innerHTML
+      console.log("Selected skill ", selectedSkill)
+      props.setSelectedUser({})
       if (!selected) {
-        setSelected(true);
+        setSelected(true)
         // Filter the graph
-        const resp = await fetch("/api/nodes/" + selectedSkill);
-        const data = await resp.json();
-        props.setGraphData(data);
+        const resp = await fetch("/api/nodes/" + selectedSkill)
+        const data = await resp.json()
+        props.setGraphData(data)
       } else {
-        setSelected(false);
+        setSelected(false)
         // Unfilter the graph
-        const resp = await fetch("/api/nodes/all");
-        const data = await resp.json();
-        props.setGraphData(data);
+        const resp = await fetch("/api/nodes/all")
+        const data = await resp.json()
+        props.setGraphData(data)
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   return (
     <SkillsContainer>
@@ -81,7 +81,7 @@ const SkillsList = (props) => {
         ))}
       </SkillsInnerContainer>
     </SkillsContainer>
-  );
-};
+  )
+}
 
-export default SkillsList;
+export default SkillsList

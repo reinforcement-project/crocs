@@ -1,6 +1,6 @@
-import React from "react";
-import formatDate from "../utils/formatDate";
-import styled from "styled-components";
+import React from "react"
+import formatDate from "../utils/formatDate"
+import styled from "styled-components"
 
 const MessageBubble = styled.div`
   max-width: 450px;
@@ -9,20 +9,20 @@ const MessageBubble = styled.div`
     props.side === "right" ? "16px 16px 0px 16px" : "16px 16px 16px 0px"};
   color: ${(props) => (props.side === "right" ? "white" : "#101728")};
   background: ${(props) => (props.side === "right" ? "#7f56d9" : "#f2f4f7")}; ;
-`;
+`
 const MessageInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-`;
+`
 const MessageInfoName = styled.div`
   margin-right: 10px;
   font-weight: bold;
-`;
+`
 const MessageInfoTime = styled.div`
   font-size: 0.85em;
-`;
+`
 const Message = styled.div`
   display: flex;
   flex-direction: ${(props) =>
@@ -33,12 +33,12 @@ const Message = styled.div`
   &:last-of-type {
     margin: 0;
   }
-`;
+`
 
 export const ChatMessage = ({ message, currentUser, recipient }) => {
-  const self = message.from === currentUser.email;
-  const side = self ? "right" : "left";
-  const name = self ? currentUser.name : recipient.name;
+  const self = message.from === currentUser.email
+  const side = self ? "right" : "left"
+  const name = self ? currentUser.name : recipient.name
 
   return (
     <Message side={side}>
@@ -50,5 +50,5 @@ export const ChatMessage = ({ message, currentUser, recipient }) => {
         <div>{message.content}</div>
       </MessageBubble>
     </Message>
-  );
-};
+  )
+}

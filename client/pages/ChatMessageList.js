@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
 const Messages = styled.main`
   flex: 1;
@@ -17,8 +17,8 @@ const Messages = styled.main`
   &:-webkit-scrollbar-thumb {
     background: #bdbdbd;
   }
-`;
+`
 
 export const ChatMessageList = ({ children }) => {
-  return <Messages>{children}</Messages>;
-};
+  return <Messages>{children}</Messages>
+}

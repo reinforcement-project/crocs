@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import logo from "../../images/logo-graph.png";
-import Button from "../Button/Button";
+import React, { useState } from "react"
+import logo from "../../images/logo-graph.png"
+import Button from "../Button/Button"
 import {
   Nav,
   NavbarContainer,
@@ -9,12 +9,12 @@ import {
   NavMenu,
   NavItem,
   NavLinks,
-} from "./Navbar.elements";
+} from "./Navbar.elements"
 
 function Navbar({ setAuth, setCurrentUser }) {
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState(false)
 
-  const handleClick = () => setClick(!click);
+  const handleClick = () => setClick(!click)
 
   return (
     <>
@@ -32,9 +32,9 @@ function Navbar({ setAuth, setCurrentUser }) {
                 variant="fill"
                 size="medium"
                 onClick={() => {
-                  localStorage.clear();
-                  setAuth(false);
-                  setCurrentUser(null);
+                  localStorage.clear()
+                  setAuth(false)
+                  setCurrentUser(null)
                 }}
               >
                 Log Out
@@ -44,7 +44,7 @@ function Navbar({ setAuth, setCurrentUser }) {
         </NavbarContainer>
       </Nav>
     </>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

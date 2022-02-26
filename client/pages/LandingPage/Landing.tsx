@@ -1,11 +1,11 @@
-import React, {  useState} from "react";
-import { data } from "./Data";
-import Button from "../../component/Button/Button";
-import ButtonGroup from "../../component/Button/ButtonGroup";
-import Modal from "../../component/Modal/Modal";
-import Login from "../../component/Forms/Login";
-import Signup from "../../component/Forms/Signup";
-import { Container } from "../../GlobalStyles";
+import React, { useState } from "react"
+import { data } from "./Data"
+import Button from "../../component/Button/Button"
+import ButtonGroup from "../../component/Button/ButtonGroup"
+import Modal from "../../component/Modal/Modal"
+import Login from "../../component/Forms/Login"
+import Signup from "../../component/Forms/Signup"
+import { Container } from "../../GlobalStyles"
 import {
   InfoSec,
   InfoRow,
@@ -16,13 +16,14 @@ import {
   Subtitle,
   ImgWrapper,
   Img,
-} from "./Landing.elements";
+} from "./Landing.elements"
 
+const random = "Hi  Mom 👋"
 
-
-const Landing = ({ auth, setAuth, setCurrentUser })=> {
-  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const [showRegistrationModal, setShowRegistrationModal] = useState<boolean>(false);
+const Landing = ({ auth, setAuth, setCurrentUser }) => {
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
+  const [showRegistrationModal, setShowRegistrationModal] =
+    useState<boolean>(false)
 
   return (
     <>
@@ -34,10 +35,7 @@ const Landing = ({ auth, setAuth, setCurrentUser })=> {
         )}
         {showRegistrationModal && (
           <Modal close={() => setShowRegistrationModal(false)}>
-            <Signup
-              setCurrentUser={setCurrentUser}
-              setAuth={setAuth}
-            ></Signup>
+            <Signup setCurrentUser={setCurrentUser} setAuth={setAuth}></Signup>
           </Modal>
         )}
         <Container>
@@ -78,8 +76,7 @@ const Landing = ({ auth, setAuth, setCurrentUser })=> {
         </Container>
       </InfoSec>
     </>
-  );
-};
+  )
+}
 
-
-export default Landing;
+export default Landing
