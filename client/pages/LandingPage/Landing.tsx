@@ -1,4 +1,4 @@
-import React, {  useState} from "react";
+import React, { useState } from "react";
 import { data } from "./Data";
 import Button from "../../component/Button/Button";
 import ButtonGroup from "../../component/Button/ButtonGroup";
@@ -18,11 +18,12 @@ import {
   Img,
 } from "./Landing.elements";
 
+const random = "Hi  Mom 👋";
 
-
-const Landing = ({ auth, setAuth, setCurrentUser })=> {
+const Landing = ({ auth, setAuth, setCurrentUser }) => {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const [showRegistrationModal, setShowRegistrationModal] = useState<boolean>(false);
+  const [showRegistrationModal, setShowRegistrationModal] =
+    useState<boolean>(false);
 
   return (
     <>
@@ -34,10 +35,7 @@ const Landing = ({ auth, setAuth, setCurrentUser })=> {
         )}
         {showRegistrationModal && (
           <Modal close={() => setShowRegistrationModal(false)}>
-            <Signup
-              setCurrentUser={setCurrentUser}
-              setAuth={setAuth}
-            ></Signup>
+            <Signup setCurrentUser={setCurrentUser} setAuth={setAuth}></Signup>
           </Modal>
         )}
         <Container>
@@ -80,6 +78,5 @@ const Landing = ({ auth, setAuth, setCurrentUser })=> {
     </>
   );
 };
-
 
 export default Landing;
