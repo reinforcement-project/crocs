@@ -11,7 +11,7 @@ const config: InitialOptionsTsJest = {
       },
     },
   },
-  testEnvironment: "jsdom",
+  testEnvironment: "node",
   clearMocks: true,
   collectCoverage: false,
   coverageDirectory: "coverage",
@@ -30,7 +30,7 @@ const config: InitialOptionsTsJest = {
   },
   verbose: true,
   testPathIgnorePatterns: ["/node_modules/"],
-  roots: ['<rootDir>/client'],
+  roots: ['<rootDir>/server'],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
 }
 
