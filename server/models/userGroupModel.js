@@ -8,3 +8,5 @@ const userGroupSchema = new Schema({
 })
 
 const UserGroup = mongoose.model("userGroup", userGroupSchema)
+
+module.exports = UserGroup
