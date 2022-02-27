@@ -12,7 +12,9 @@
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx}\" --quiet",
-    "test": "jest",
+    "test:client": "jest",
+    "test:server": "jest -c ./jest-server.config.ts",
+    "test": "npm run test:client && npm run test:server",
     "check-types": "tsc",
     "validate": "npm run check-types && npm run check-format && npm run lint && npm run test && npm run build",
     "prepare": "husky install"
