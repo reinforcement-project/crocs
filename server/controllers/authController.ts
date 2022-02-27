@@ -210,4 +210,4 @@ function validateEmail(str: string): boolean {
   return re.test(String(str).toLowerCase())
 }
 
-module.exports = authController
+export default authController;
