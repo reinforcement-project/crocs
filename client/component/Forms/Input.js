@@ -17,9 +17,16 @@ const InputElement = styled.input`
   }
 `
 
-const Input = ({ type, variant = "standard", placeholder, onChange }) => {
+const Input = ({
+  inputId,
+  type,
+  variant = "standard",
+  placeholder,
+  onChange,
+}) => {
   return (
     <InputElement
+      id={inputId}
       data-testid="input-component"
       type={type}
       variant={variant}
