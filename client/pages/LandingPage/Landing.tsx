@@ -45,7 +45,12 @@ const Landing = ({ auth, setAuth, setCurrentUser }) => {
                 <TopLine lightTopLine={data.lightTopLine}>
                   {data.topLine}
                 </TopLine>
-                <Heading lightText={data.lightText}>{data.headline}</Heading>
+                <Heading
+                  data-testid="heading-landing-page"
+                  lightText={data.lightText}
+                >
+                  {data.headline}
+                </Heading>
                 <Subtitle lightTextDesc={data.lightTextDesc}>
                   {data.description}
                 </Subtitle>

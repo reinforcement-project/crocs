@@ -81,9 +81,10 @@ const Login = ({ setAuth, setCurrentUser }) => {
           Information you provided does not match our records.
         </div>
       )}
-      <Label>
+      <Label labelFor="email-input">
         Email:
         <Input
+          inputId="email-input"
           type="email"
           placeholder="me@you.com"
           onChange={(e) =>
@@ -91,9 +92,10 @@ const Login = ({ setAuth, setCurrentUser }) => {
           }
         />
       </Label>
-      <Label>
+      <Label labelFor="password-input">
         Password:
         <Input
+          inputId="password-input"
           type="password"
           onChange={(e) =>
             setLogin((login) => ({ ...login, password: e.target.value }))

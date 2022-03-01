@@ -5,8 +5,8 @@ const LabelElement = styled.label`
   margin-bottom: 16px;
 `
 
-const Label = ({ children }) => {
-  return <LabelElement>{children}</LabelElement>
+const Label = ({ labelFor, children }) => {
+  return <LabelElement htmlFor={labelFor}>{children}</LabelElement>
 }
 
 export default Label
