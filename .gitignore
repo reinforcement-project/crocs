@@ -6,3 +6,5 @@ dist/
 .vscode/
 package-lock.json
 server_dist/
+cypress/videos
+cypress/screenshots
