@@ -1,33 +1,48 @@
 import authController from '../controllers/authController';
+import User from '../models/userModel'
+import type { Request } from 'express';
 
-describe('should do stuff', () => {
+jest.mock('../models/userModel.js');
 
-    test('should validate object', async () => {
-        const res = {
-            status: jest.fn(() => res),
-            json: jest.fn(() => res),
-            locals: {}
-        };
+const makeReq = (overrides?: Record<string, any>): Partial<Request> => {
+    return {
+        ...overrides
+    }
+}
 
-        const req: any = {
-            body: {
-                email: 'fake@email.com',
-                firstName: 'jack',
-                lastName: 'foo',
-                skillsToTeach: [ 'TypeScript' ]
-            }
-        }
+const makeRes = (overrides?: Record<string, any>) => {
+    const res = {
+        status: jest.fn(() => res),
+        json: jest.fn(() => res),
+        locals: {},
+        ...overrides
+    }
+    return res;
+}
 
-        const next = jest.fn();
+describe('authController tests', () => {
+    test('should verify user if valid', async () => {
+      const verifiedUser = {
+        _id: 123,
+        name: 'Virginia Wolf',
+        firstName: 'Virginia',
+        lastName: 'Wolf',
+        email: 'vwolf@gmail.com',
+        isAdmin: true,
+        newMessages: [],
+      };
 
-        try {
-            await authController.createUser(req, res, next)
-            expect(res.locals.verification).toEqual(expect.objectContaining({
-                hasLogged: "empty"
-            }))
-        } catch(ex) {
-            // something's wrong 
-            console.log(ex)
-        }
+      const verify = jest.fn(() => Promise.resolve(verifiedUser));
+      jest.spyOn(User, 'findOne').mockImplementation(() => ({ ...verifiedUser, verify } as any));
+
+      const req = makeReq({ body: { email: 'vwolf@gmail.com', password: 'foobar' }});
+      const res = makeRes();
+
+      await authController.verifyUser(req as Request, res, jest.fn())
+
+      expect(res.locals.verification).toEqual(expect.objectContaining({
+          hasLogged: true,
+          userInfo: verifiedUser
+      }));
     });
 });
