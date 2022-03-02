@@ -69,7 +69,7 @@ export const Heading = styled.h1<{ lightText: boolean }>`
   font-size: 48px;
   line-height: 1.1;
   font-weight: 600;
-  color: ${(lightText) => (lightText ? "#f7f8fa" : "#1c2237")};
+  color: ${({ lightText }) => (lightText ? "#f7f8fa" : "#1c2237")};
 `
 
 export const Subtitle = styled.p<{ lightTextDesc: boolean }>`
@@ -77,5 +77,5 @@ export const Subtitle = styled.p<{ lightTextDesc: boolean }>`
   margin-bottom: 35px;
   font-size: 18px;
   line-height: 24px;
-  color: ${(lightTextDesc) => (lightTextDesc ? "#a9b3c1" : "#1c2237")};
+  color: ${({ lightTextDesc }) => (lightTextDesc ? "#a9b3c1" : "#1c2237")};
 `
